@@ -18,11 +18,11 @@ class Nivel(models.Model):
     numero = models.IntegerField(default=0)
 
 class Carrera(models.Model):
-    nombre = models.CharField(max_length=100)
+    nombre= models.CharField(max_length=100)
 
 class Registro(models.Model):
     periodo = models.ForeignKey(Periodo, on_delete=models.CASCADE)
     nivel = models.ForeignKey(Nivel, on_delete=models.CASCADE)
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
-    carrera = models.ForeignKey(Alumno, on_delete=models.CASCADE)
+    carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
     nota = models.FloatField()

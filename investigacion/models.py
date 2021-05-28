@@ -11,9 +11,9 @@ class Evaluacion(models.Model):
 
 class Formula(models.Model):
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
-    porcentaje = models.DecimalField(decimal_places=10,max_digits=6)
-    maximo = models.DecimalField(decimal_places=10,max_digits=6)
-    minimo = models.DecimalField(decimal_places=10,max_digits=6)
+    porcentaje = models.FloatField()
+    maximo =models.FloatField()
+    minimo = models.FloatField()
     nombre = models.CharField(max_length=100)
 
 class Asignacion(models.Model):
@@ -22,19 +22,16 @@ class Asignacion(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=30)
-    class Meta:
-        verbose_name = 'Asignacion'
-    def __str__(self):
-        return self.alumno
+
 
 class Termino(models.Model):
     formula = models.ForeignKey(Formula, on_delete=models.CASCADE)
     signo = models.CharField(max_length=5)
-    valor = models.DecimalField(decimal_places=10,max_digits=10)
+    valor = models.FloatField()
 class Rendimiento(models.Model):
     formula = models.ForeignKey(Formula, on_delete=models.CASCADE)
-    rendimiento_satisfactorio= models.DecimalField(decimal_places=10)
-    rendimiento_riesgoso = models.DecimalField(decimal_places=10,max_digits=10)
+    rendimiento_satisfactorio= models.FloatField()
+    rendimiento_riesgoso = models.FloatField()
     afinidad =models.BooleanField()
 
 class Parametro(models.Model):
