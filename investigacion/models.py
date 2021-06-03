@@ -23,11 +23,11 @@ class Asignacion(models.Model):
     encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=30)
 
-
 class Termino(models.Model):
     formula = models.ForeignKey(Formula, on_delete=models.CASCADE)
     signo = models.CharField(max_length=5)
     valor = models.FloatField()
+
 class Rendimiento(models.Model):
     formula = models.ForeignKey(Formula, on_delete=models.CASCADE)
     rendimiento_satisfactorio= models.FloatField()
