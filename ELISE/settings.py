@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +26,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'formulario.apps.FormularioConfig',
     'estudiantes.apps.EstudiantesConfig',
     'investigacion.apps.InvestigacionConfig',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
