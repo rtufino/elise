@@ -11,10 +11,10 @@ class Alumno(models.Model):
     carrera_postular = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.nombres + "" + self.apellidos
+        return self.nombres + " " + self.apellidos
 
 class Periodo(models.Model):
-    nombre = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100, verbose_name='Periodo')
     estado = models.IntegerField(default=0)
 
     def __str__(self):
@@ -22,15 +22,15 @@ class Periodo(models.Model):
 
 class Nivel(models.Model):
     numero = models.IntegerField(default=0)
-
     def __str__(self):
-        return self.numero
+        num = str(self.numero)
+        return num
 
 class Carrera(models.Model):
-    nombre= models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.numero
+        return self.nombre
 
 class Registro(models.Model):
     periodo = models.ForeignKey(Periodo, on_delete=models.CASCADE)
@@ -38,6 +38,6 @@ class Registro(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
     nota = models.FloatField()
-
     def __str__(self):
-        return self.nota
+        nota = str(self.nota)
+        return nota
