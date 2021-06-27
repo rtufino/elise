@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'estudiantes.apps.EstudiantesConfig',
     'investigacion.apps.InvestigacionConfig',
     'django_extensions',
+    'import_export',
 ]
 
 MIDDLEWARE = [

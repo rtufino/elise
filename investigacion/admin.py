@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Asignacion, Formula, Evaluacion, Termino, Rendimiento, Parametro
+from .models import Formula, Evaluacion, Termino, Rendimiento, Parametro, Asignacion
 # Register your models here.
 class InvestigacionAdmin(admin.ModelAdmin):
     readonly_fields = ('alumno')
@@ -7,7 +7,7 @@ class InvestigacionAdmin(admin.ModelAdmin):
 
 class AsignacionAdmin(admin.ModelAdmin):
     model = Asignacion
-    list_display = 'alumno', 'evaluacion', 'encuesta'
+    list_display = 'evaluacion', 'encuesta'
     search_fields = ['encuesta']
 
 admin.site.register(Asignacion, AsignacionAdmin)
