@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,6 +45,8 @@ INSTALLED_APPS = [
     'estudiantes.apps.EstudiantesConfig',
     'investigacion.apps.InvestigacionConfig',
     'django_extensions',
+    'core.apps.CoreConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +134,12 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = 'home'
+
+LOGIN_URL = 'login'
