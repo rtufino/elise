@@ -41,12 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'formulario.apps.FormularioConfig',
-    'estudiantes.apps.EstudiantesConfig',
-    'investigacion.apps.InvestigacionConfig',
     'django_extensions',
     'core.apps.CoreConfig',
     'crispy_forms',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -64,8 +62,7 @@ ROOT_URLCONF = 'ELISE.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
