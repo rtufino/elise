@@ -1,7 +1,19 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
+class Usuario(AbstractUser):
+    es_psicologo = models.BooleanField(default=False)
+    es_estudiante = models.BooleanField(default=False)
+    email = models.EmailField(unique=True)
+
+class Psicologo(models.Model):
+    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
+    cedula = models.CharField(max_length=10, default='9999999999')
+    def __str__(self):
+        return self.cedula
 class Alumno(models.Model):
+    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
     cedula = models.CharField(unique=True, max_length=10)
     nombres = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
