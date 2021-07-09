@@ -108,9 +108,9 @@ class Encuesta(models.Model):
     # id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50)
     estado = models.IntegerField()
-    f_vigencia = models.DateTimeField(verbose_name='fecha vigencia')
+    f_vigencia = models.DateField(verbose_name='fecha vigencia')
     tipo = models.CharField(max_length=30)
-    f_inicio = models.DateTimeField(verbose_name='fecha inicio')
+    f_inicio = models.DateField(verbose_name='fecha inicio')
     def __str__(self):
         return self.nombre
 
