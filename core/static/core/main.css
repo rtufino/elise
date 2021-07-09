@@ -238,14 +238,6 @@ background:rgba(255, 227, 208, 0.2);
 text-align:center;
 }
 
-
-
-
-
-
-
-
-
 // Remy function
 @function remy($value) {
 @return ($value / 16px) * 1rem;

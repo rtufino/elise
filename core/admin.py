@@ -1,54 +1,42 @@
 from django.contrib import admin
 from .models import Alumno, Periodo, Nivel, Carrera, Registro
 from .models import Encuesta, Categoria, Opcion, Tpregunta, Relacion, Pregunta
-from .models import Formula, Evaluacion, Termino, Rendimiento, Parametro, Asignacion,Usuario,Psicologo
-
+from .models import Formula, Evaluacion, Termino, Rendimiento, Parametro, Asignacion,User,user_type,Psicologo
 from import_export import fields, resources
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
-# Register your models here.
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+class UserAdmin(BaseUserAdmin):
+    fieldsets = (
+        (None, {'fields': ('email', 'password', 'name', 'last_login')}),
+        ('Permissions', {'fields': (
+            'is_active',
+            'is_staff',
+            'is_superuser',
+            'groups',
+            'user_permissions',
+        )}),
+    )
+    add_fieldsets = (
+        (
+            None,
+            {
+                'classes': ('wide',),
+                'fields': ('email', 'password1', 'password2')
+            }
+        ),
+    )
+
+    list_display = ('email', 'name', 'is_staff', 'last_login')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
+    search_fields = ('email',)
+    ordering = ('email',)
+    filter_horizontal = ('groups', 'user_permissions',)
 
 class AlumnoResource(resources.ModelResource):
     class Meta:
         model = Alumno
 
-class PsicologoAdmin(admin.ModelAdmin):
-    model = Psicologo
-    list_display = ('cedula', 'get_apellido', 'get_nombre', 'es_psicologo')
-
-    def get_nombre(self, obj):
-        return obj.usuario.first_name
-
-    def get_apellido(self, obj):
-        return obj.usuario.last_name
-
-    def es_psicologo(self, obj):
-        return obj.usuario.es_psicologo
-
-    es_psicologo.boolean = True
-
-    get_nombre.short_description = 'Nombres'
-    get_apellido.short_description = 'Apellidos'
-    es_psicologo.short_description = 'Psicologo'
-    get_nombre.admin_order_field = 'usuario__first_name'
-    get_apellido.admin_order_field = 'usuario__last_name'
-    list_filter = ('usuario__is_active', 'usuario__es_psicologo')
-class AlumnoAdmin(ImportExportModelAdmin):
-    model = Alumno
-    list_display = 'cedula', 'nombres', 'apellidos', 'genero', 'edad', 'ciudad', 'colegio', 'carrera_postular'
-    search_fields = ['cedula']
-    # resource_class = AlumnoResource
-    def get_nombre(self, obj):
-        return obj.usuario.first_name
-
-    def get_apellido(self, obj):
-        return obj.usuario.last_name
-
-    get_nombre.short_description = 'Nombres'
-    get_apellido.short_description = 'Apellidos'
-    get_nombre.admin_order_field = 'usuario__first_name'
-    get_apellido.admin_order_field = 'usuario__last_name'
-    list_filter = ('usuario__is_active',)
 
 class PeriodoAdmin(admin.ModelAdmin):
     model = Periodo
@@ -122,7 +110,7 @@ class AsignacionAdmin(admin.ModelAdmin):
     search_fields = ['encuesta']
 
 
-admin.site.register(Alumno, AlumnoAdmin)
+admin.site.register(Alumno)
 admin.site.register(Periodo, PeriodoAdmin)
 admin.site.register(Nivel)
 admin.site.register(Carrera)
@@ -141,5 +129,6 @@ admin.site.register(Evaluacion)
 admin.site.register(Termino)
 admin.site.register(Rendimiento)
 admin.site.register(Parametro)
-admin.site.register(Usuario)
-admin.site.register(Psicologo,PsicologoAdmin)
+admin.site.register(Psicologo)
+admin.site.register(User, UserAdmin)
+admin.site.register(user_type)

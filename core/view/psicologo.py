@@ -1,28 +1,16 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.backends import UserModel
-from ..decorators import psicologo_required
-def inicio(request):
-    if request.method == "POST":
-        email = request.POST.get('email')
-        contrasenia = request.POST.get('password')
-        username = UserModel.objects.get(email=email.lower()).username
-        user = authenticate(username=username, password=contrasenia)
-        if user is not None:
-            login(request,user)
-            return redirect('home')
-        else:
-            messages.warning(request,'Usuario o Contraseña Incorrecta')
-    return render(request,'core/login.html')
+from core.models import user_type
 
-def home(request):
-    return render(request, 'core/Psicologo/home.html')
+def go_psicologo(request):
+    if request.user.is_authenticated and user_type.objects.get(user=request.user).es_psicologo:
+        return render(request, 'core/Psicologo/homeP.html')
+    elif request.user.is_authenticated and user_type.objects.get(user=request.user).es_estudiante:
+        return redirect('go_estudiante')
+    else:
+        return redirect('login')
 
 
 @login_required()
-def profile(request):
+def profile_psicologo(request):
     return render(request, 'core/profile.html')

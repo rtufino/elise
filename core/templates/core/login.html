@@ -17,8 +17,8 @@
 									<div class="text-center">
 										<img src="{% static 'core/img/sale.png' %}" alt="Salesiana">
 									</div>
-									<form action="" method="POST">
-                                              {% csrf_token%}
+									<form method="POST">
+                                              {% csrf_token %}
 										<div class="form-group">
 											<label>Correo</label>
 											<input class="form-control form-control-lg" type="email" name="email" placeholder="Ingresa tu email">
@@ -30,7 +30,7 @@
 										<div>
 											<div class="custom-control custom-checkbox align-items-center">
 												<input type="checkbox" class="custom-control-input" value="remember-me" name="remember-me" checked="">
-												<label class="custom-control-label text-small">Recordare proxima vez</label>
+												<label class="custom-control-label text-small">Recordarme proxima vez</label>
 											</div>
 										</div>
 										<div class="text-center mt-3">

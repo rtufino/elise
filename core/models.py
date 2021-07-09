@@ -1,19 +1,68 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.utils import timezone
 
-# Create your models here.
-class Usuario(AbstractUser):
-    es_psicologo = models.BooleanField(default=False)
+class UserManager(BaseUserManager):
+    def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
+        if not email:
+            raise ValueError('Usuario debe tener un correo ')
+        now = timezone.now()
+        email = self.normalize_email(email)
+        user = self.model(
+            email=email,
+            is_staff=is_staff,
+            is_active=True,
+            is_superuser=is_superuser,
+            last_login=now,
+            date_joined=now,
+            **extra_fields
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, email=None, password=None, **extra_fields):
+        return self._create_user(email, password, False, False, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+        user = self._create_user(email, password, True, True, **extra_fields)
+        user.save(using=self._db)
+        return user
+class User(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(max_length=254, unique=True)
+    name = models.CharField(max_length=254, null=True, blank=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    last_login = models.DateTimeField(null=True, blank=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
+    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = []
+    objects = UserManager()
+    # def get_absolute_url(self):
+    #     return "/users/%i/" % (self.pk)
+    def get_email(self):
+        return self.email
+
+class user_type(models.Model):
     es_estudiante = models.BooleanField(default=False)
-    email = models.EmailField(unique=True)
+    es_psicologo = models.BooleanField(default=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    def __str__(self):
+        if self.es_estudiante == True:
+            return User.get_email(self.user) + " - es_estudiante"
+        else:
+            return User.get_email(self.user) + " - es_psicologo"
 
 class Psicologo(models.Model):
-    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
-    cedula = models.CharField(max_length=10, default='9999999999')
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    cedula = models.CharField(max_length=10)
     def __str__(self):
         return self.cedula
+
 class Alumno(models.Model):
-    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     cedula = models.CharField(unique=True, max_length=10)
     nombres = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
@@ -27,7 +76,6 @@ class Alumno(models.Model):
         return self.cedula
 
 class Periodo(models.Model):
-    # id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100, verbose_name='Periodo')
     estado = models.IntegerField(default=0)
 
@@ -35,7 +83,6 @@ class Periodo(models.Model):
         return self.nombre
 
 class Nivel(models.Model):
-    # id = models.AutoField(primary_key=True)
     numero = models.IntegerField(default=0)
     def __str__(self):
         num = str(self.numero)
