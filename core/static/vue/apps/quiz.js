@@ -3,6 +3,7 @@ var mess = '';
             var typ = '';
             var quizApp = new Vue({
                 el: '#quizApp',
+                delimiters: ['[[',']]'],
                 data() {
                     return {
                         name: '',
@@ -10,7 +11,16 @@ var mess = '';
                         vig_date: '',
                         type: '',
                         start_date: '',
+                        quiz_list: []
                     }
+                },
+                created() {
+                    fetch('/psicologo/api/get_encuestas')
+                        .then(response => response.json())
+                        .then(data => {
+                            this.quiz_list = data;
+                            console.log(this.quiz_list)
+                        })
                 },
                 methods: {
                     addQuiz() {

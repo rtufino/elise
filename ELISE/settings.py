@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'core.apps.CoreConfig',
-    'crispy_forms',
+    'rest_framework',
     'import_export',
 ]
 
