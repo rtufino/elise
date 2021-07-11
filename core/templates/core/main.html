@@ -175,12 +175,9 @@
                 <img src="img\avatars\avatar.jpg" class="avatar img-fluid rounded-circle mr-1" alt="Chris Wood"> <span class="text-dark">Chris Wood</span>
               </a>
 							<div class="dropdown-menu dropdown-menu-right">
-								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle mr-1" data-feather="user"></i> Profile</a>
-								<a class="dropdown-item" href="#"><i class="align-middle mr-1" data-feather="pie-chart"></i> Analytics</a>
+								<a class="dropdown-item" href="{% url 'profile' %}"><i class="align-middle mr-1" data-feather="user"></i> Profile</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="pages-settings.html">Settings & Privacy</a>
-								<a class="dropdown-item" href="#">Help</a>
-								<a class="dropdown-item" href="#">Sign out</a>
+								<a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
 							</div>
 						</li>
 					</ul>
@@ -607,33 +604,15 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</main>
-
 			<footer class="footer">
 				<div class="container-fluid">
 					<div class="row text-muted">
-						<div class="col-6 text-left">
-							<ul class="list-inline">
-								<li class="list-inline-item">
-									<a class="text-muted" href="#">Support</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="#">Help Center</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="#">Privacy</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="#">Terms of Service</a>
-								</li>
-							</ul>
-						</div>
 						<div class="col-6 text-right">
-							<p class="mb-0">
-								&copy; 2019 - <a href="index.html" class="text-muted">AppStack</a>
-							</p>
+                        <p class="mb-0">
+                            &copy; 2021 - <a href="https://www.ups.edu.ec/" class="text-muted">UNIVERSIDAD POLITECNICA SALESIANA</a>
+                        </p>
 						</div>
 					</div>
 				</div>
