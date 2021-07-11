@@ -3,7 +3,7 @@ from .view import estudiante, psicologo, general
 from django.urls import path, include
 from django.contrib.auth import views as auth_view
 
-from .api import api_addQuiz
+from .api import api_addQuiz, EncuestaApiView
 
 urlpatterns = [
     path('estudiante/', include((
@@ -19,6 +19,7 @@ urlpatterns = [
             # API
 
             path('api/addQuiz', api_addQuiz, name='api_addQuiz'),
+            path('api/get_encuestas', EncuestaApiView.as_view(), name='get_encuesta')
         ]))),
     path('', general.login_general, name='login'),
     path('profile/', general.profile, name='profile'),
