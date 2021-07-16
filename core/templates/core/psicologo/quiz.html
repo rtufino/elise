@@ -6,6 +6,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#centeredModalPrimary">
                     Crea una Encuesta
                 </button>
+                <i class="fa fa-trash-o"></i>
             </div>
         </div>
         <div class="col-12 col-xl-12">
@@ -35,8 +36,17 @@
                             <td>[[ encuesta.f_vigencia ]]</td>
                             <td>[[ encuesta.f_inicio ]]</td>
                             <td>[[ encuesta.f_estado ]]</td>
-                            <td>[[ encuesta.tipo ]]</td>
-                            <td>Modificar / Eliminar</td>
+                            <td>[[ encuesta.id ]]</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#updateQuizModal" @click="cargaQuiz(encuesta.id)">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#deleteQuizModal" @click="cargaQuiz(encuesta.id)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -81,16 +91,93 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary" id="toastr-show">Submit</button>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" id="toastr-show">Guardar
+                                            </button>
+                                        </div>
+
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-{#                    <div class="modal-footer">#}
-{#                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
-{#                        <button type="button" class="btn btn-primary">Save changes</button>#}
-{#                    </div>#}
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="updateQuizModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Estas modificando esta encuesta</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body m-3">
+                        <div class="col-12 col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Modifica esta encuesta</h5>
+                                    <h6 class="card-subtitle text-muted">Datos generales de la encuesta.</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form v-on:submit.prevent="updateQuiz()">
+                                        <div class="form-group">
+                                            <label class="form-label">Nombre de la encuesta</label>
+                                            <input type="text" class="form-control" v-model="name"
+                                                   placeholder="Ej. Omnibus version 2021 1">
+                                        </div>
+                                        <div class="col-12 col-xl-4 px-0">
+                                            <div class="form-group">
+                                                <label class="form-label">Fecha de aplicación de la encuesta</label>
+                                                <input class="form-control" type="text" v-model="vig_date"
+                                                       placeholder="Formato: AAAA-MM-DD">
+                                                {#                                <input class="form-control" type="text" v-model="vig_date" name="datesingle">#}
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" v-model="state">
+                                                    <span class="custom-control-label">Vigente</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" id="toastr-show">Guardar
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="deleteQuizModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">¿Confirmas la eliminación?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body m-3">
+                        <div class="col-12 col-xl-12">
+                            <p> Estas seguro de eliminar la encuesta: <h4>'[[name]]'</h4> </p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar
+                        </button>
+                        <button type="submit" class="btn btn-danger" @click="deleteQuiz()">Confirmar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
