@@ -1,0 +1,65 @@
+{% extends 'core/psicologo/home.html' %}
+{% block content %}
+    <div class="row" id="quizApp">
+        <div class="card-body text-center">
+            <div class="mb-3">
+                <a href="{% url 'encuesta_create' %}" class="btn btn-primary" style="text-decoration: none;"> <i class="fas fa-plus"></i> Crear una
+                    Encuesta </a>
+            </div>
+        </div>
+        <div class="col-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Encuestas</h5>
+                    <h6 class="card-subtitle text-muted">Listado de Encuestas</h6>
+                </div>
+                <div class="card-body">
+                    {% if encuesta_list|length_is:0 %}
+                        <h1>No existen encuestas!</h1>
+                    {% else %}
+                        <table id="datatables-basic" class="table table-striped" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Vigencia</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for encuesta in encuesta_list %}
+                                {% if encuesta.estado == 1 %}
+                                    <tr>
+                                        <td>{{ encuesta.nombre }}</td>
+                                        <td>{{ encuesta.f_vigencia }}</td>
+                                        <td>
+                                            <a href="{% url 'encuesta_detalle' encuesta.id %}" class="btn btn-primary"
+                                               style="text-decoration: none;"> <i class="fas fa-eye"></i> Ver preguntas</a>
+                                            <a href="{% url 'encuesta_update' encuesta.id %}" class="btn btn-primary"
+                                               style="text-decoration: none;"><i class="fas fa-pencil-alt"></i> Editar
+                                            </a>
+                                            <a href="{% url 'encuesta_delete' encuesta.id %}" class="btn btn-danger"
+                                               style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar </a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("input[name=\"datesingle\"]").daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true
+            });
+        });
+    </script>
+    {% block scripts %}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'core/psicologo/home.html' %}
+{% block content %}
+    <div class="row" id="questionApp">
+        <div class="card-body text-center">
+            <div class="mb-3">
+                <a href="{% url 'pregunta_create' encuesta.id %}" class="btn btn-primary" style="text-decoration: none;"> Crear una
+                    Pregunta</a>
+                <i class="fa fa-trash-o"></i>
+            </div>
+        </div>
+        <div class="col-12 col-xl-12">
+            <div class="card">
+                <h3 class="text-center">{{ encuesta.nombre }}</h3>
+                <div class="card-header">
+                    <h5 class="card-title">Listado de preguntas </h5>
+                    <h6 class="card-subtitle text-muted">Selecciona una categoria...</h6>
+                </div>
+                <div class="card-body">
+                    {% for categoria in categorias %}
+                        {% if categoria.estado == 1 %}
+                            <ul class="sidebar-item">
+                                <a href="#{{ categoria|cut:' ' }}" data-toggle="collapse" class="sidebar-link collapsed"
+                                   style="background-color: darkgray; color: white">
+                                    <i class="align-middle" data-feather="users"></i> <span
+                                        class="align-middle">{{ categoria }}</span>
+                                    <span class="sidebar-badge"><i class="fas fa-chevron-down"></i></span>
+                                </a>
+                                <ul id="{{ categoria|cut:' ' }}" class="sidebar-dropdown list-unstyled collapse"
+                                    data-parent="#sidebar">
+                                    <table class="table table-striped">
+                                        {% for pregunta in preguntas %}
+                                            {% if pregunta.estado == 1 %}
+                                                {% if pregunta.categoria == categoria %}
+
+                                                    <tr>
+                                                        <td>{{ pregunta.enunciado }}</td>
+                                                        <td>
+                                                            <a href="{% url 'pregunta_detalle' pregunta.id %}"
+                                                               class="btn btn-primary"
+                                                               style="text-decoration: none;"><i
+                                                                    class="fas fa-pencil-alt"></i> Ver opciones
+                                                            </a>
+                                                            <a href="{% url 'pregunta_update' pregunta.id %}"
+                                                               class="btn btn-primary"
+                                                               style="text-decoration: none;"><i
+                                                                    class="fas fa-pencil-alt"></i> Editar
+                                                            </a>
+{#                                                            <a href="{% url 'encuesta_delete' encuesta.id %}"#}
+{#                                                               class="btn btn-danger"#}
+{#                                                               style="text-decoration: none;"><i#}
+{#                                                                    class="fas fa-trash"></i> Eliminar </a>#}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </table>
+
+                                </ul>
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                    {#                    <table id="dic" class="table table-striped" style="width:100%">#}
+                    {#                        <thead>#}
+                    {#                        <tr>#}
+                    {#                            <th>Enunciado</th>#}
+                    {#                            <th>Categoria</th>#}
+                    {#                            <th>Tipo de Pregunta</th>#}
+                    {#                            <th>Número</th>#}
+                    {#                            <th>Acciones</th>#}
+                    {#                        </tr>#}
+                    {#                        </thead>#}
+                    {#                        <tbody>#}
+                    {#                        {% for pregunta in preguntas %}#}
+                    {#                            <tr>#}
+                    {#                                <td>{{ pregunta.enunciado }}</td>#}
+                    {#                                <td>{{ pregunta.categoria }}</td>#}
+                    {#                                <td>{{ pregunta.tpregunta }}</td>#}
+                    {#                                <td>{{ pregunta.numero }}</td>#}
+                    {#                                <td><a href="#"> Modificar </a> / <a href="#"> Eliminar </a></td>#}
+                    {#                            </tr>#}
+                    {#                        {% endfor %}#}
+                    {#                        #}
+                    {##}
+                    {#                        </tbody>#}
+                    {#                    </table>#}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
