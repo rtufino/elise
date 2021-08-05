@@ -1,0 +1,38 @@
+{% extends 'core/psicologo/home.html' %}
+{% block content %}
+    <div class="row" id="questionApp">
+        <div class="card-body text-center">
+            <div class="mb-3">
+            </div>
+        </div>
+        <div class="col-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title"></h5>
+                    <h6 class="card-subtitle text-muted">Edita la encuesta</h6>
+                </div>
+                <div class="card-body">
+                    <form method="post">{% csrf_token %}
+                        {{ form.as_p }}
+                        <a href="/psicologo/encuesta" class="btn btn-outline-danger"> Cancelar</a>
+                        <input type="submit" value="Actualizar" class="btn btn-primary">
+                    </form>
+                </div>
+                {% if 'ok' in request.GET %}
+                    <script>
+                        window.onload = () => {
+                            let message = 'Encuesta exitosamente actualizada!';
+                            let title = "Operación Exitosa";
+                            let type = 'success';
+                            toastr[type](message, title, {
+                                positionClass: 'toast-top-center',
+                                progressBar: true,
+                                timeOut: '3500'
+                            });
+                        }
+                    </script>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

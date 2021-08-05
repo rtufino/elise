@@ -1,0 +1,24 @@
+{% extends 'core/psicologo/home.html' %}
+{% block content %}
+    <div class="row" id="questionApp">
+        <div class="card-body text-center">
+            <div class="mb-3">
+                <h1>Ingresa los datos de la pregunta</h1>
+            </div>
+        </div>
+        <div class="col-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title"></h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">{% csrf_token %}
+                        {{ form.as_p }}
+                        <a href="/psicologo/encuesta" class="btn btn-outline-danger"> Cancelar</a>
+                        <input type="submit" value="Guardar" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

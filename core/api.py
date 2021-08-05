@@ -1,10 +1,9 @@
-import json
-from rest_framework.views import APIView
+
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import EncuestaSerializer
-from .models import Encuesta
+from .serializers import EncuestaSerializer, PreguntaSerializer
+from .models import Encuesta, Pregunta
 from django.shortcuts import get_object_or_404, redirect
 
 from .utils import createQuiz
@@ -22,6 +21,16 @@ def encuesta_api_view(request):
             encuesta_serializer.save()
             return Response(encuesta_serializer.data)
         return Response(encuesta_serializer.errors)
+
+
+@api_view(['GET'])
+def preguntas_api_view(request, fk=None):
+    if request.method == 'GET':
+        preguntas = Pregunta.objects.filter(encuesta=fk)
+        preguntas_serializer = PreguntaSerializer(preguntas, many=True)
+        return Response(preguntas_serializer.data)
+    else:
+        return Response({'message': 'There is no answers with that id'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -43,14 +52,15 @@ def encuesta_detalle_api_view(request, pk=None):
     return Response({'message': 'There is no quiz with that id'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-def api_addQuiz(request):
-    data = json.loads(request.body)
-    jsonresponse = {'success', True}
-    name = data['name']
-    state = data['state']
-    vig_date = data['vig_date']
-    type = data['type']
-    start_date = data['start_date']
 
-    quiz_id = createQuiz(request, name, state, vig_date, type, start_date)
-    return redirect('/')
+# def api_addQuiz(request):
+#     data = json.loads(request.body)
+#     jsonresponse = {'success', True}
+#     name = data['name']
+#     state = data['state']
+#     vig_date = data['vig_date']
+#     type = data['type']
+#     start_date = data['start_date']
+#
+#     quiz_id = createQuiz(request, name, state, vig_date, type, start_date)
+#     return redirect('/')

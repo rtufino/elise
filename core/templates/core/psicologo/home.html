@@ -51,8 +51,18 @@
                     Main
                 </li>
                 <li class="sidebar-item">
-                    <a href="{% url 'quiz' %}" class="sidebar-link collapsed">
-                        <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Quizes</span>
+                    <a href="{% url 'go_psicologo' %}" class="sidebar-link collapsed">
+                        <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Dashboard</span>
+                    </a>
+                    <a href="{% url 'encuesta' %}" class="sidebar-link collapsed">
+                        <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Getión de Encuestas</span>
+                    </a>
+                    <a href="{% url 'categoria' %}" class="sidebar-link collapsed">
+                        <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Gestión de Categorias</span>
+                    </a>
+                    <a href="{% url 'categoria' %}" class="sidebar-link collapsed">
+                        <i class="align-middle" data-feather="layout"></i> <span
+                            class="align-middle">Tipo de Preguntas</span>
                     </a>
                     <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
                         <li class="sidebar-item"><a class="sidebar-link" href="pages-profile.html">Profile</a></li>
@@ -278,7 +288,8 @@
                                  alt="Chris Wood"> <span class="text-dark">USUARIO</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><i class="align-middle mr-1" data-feather="user"></i> Profile</a>
+                            <a class="dropdown-item" href="#"><i class="align-middle mr-1" data-feather="user"></i>
+                                Profile</a>
                             <a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
                         </div>
                     </li>
@@ -296,7 +307,8 @@
                 <div class="row text-muted">
                     <div class="col-6 text-right">
                         <p class="mb-0">
-                            &copy; 2021 - <a href="https://www.ups.edu.ec/" class="text-muted">UNIVERSIDAD POLITECNICA SALESIANA</a>
+                            &copy; 2021 - <a href="https://www.ups.edu.ec/" class="text-muted">UNIVERSIDAD POLITECNICA
+                            SALESIANA</a>
                         </p>
                     </div>
                 </div>
@@ -306,7 +318,9 @@
 </div>
 <script src="{% static 'js/app.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script type="text/javascript" src="{% static 'vue/vue-router.js' %}"></script>
 <script type="text/javascript" src="{% static 'vue/apps/quiz.js' %}"></script>
+<script type="text/javascript" src="{% static 'vue/apps/question.js' %}"></script>
 {% block scripts %}
 
 {% endblock %}

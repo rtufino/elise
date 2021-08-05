@@ -1,0 +1,72 @@
+{% extends 'core/psicologo/home.html' %}
+{% block content %}
+    <div class="row" id="quizApp">
+        <div class="card-body text-center">
+            <div class="mb-3">
+                <a href="{% url 'encuesta_create' %}" class="btn btn-primary" style="text-decoration: none;"><i class="fas fa-plus"></i> Crear una
+                    Categoria </a>
+                <i class="fa fa-trash-o"></i>
+            </div>
+        </div>
+        <div class="col-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Categorias</h5>
+                    <h6 class="card-subtitle text-muted">Listado de Categorias</h6>
+                </div>
+                <div class="card-body">
+                    {% if categoria_list|length_is:0 %}
+                        <h1>No existen Categorias!</h1>
+                    {% else %}
+                        <table id="datatables-basic" class="table table-striped" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Siglas</th>
+                                <th>Calcular</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for categoria in categoria_list %}
+                                {% if categoria.estado == 1 %}
+                                <tr>
+                                    <td>{{ categoria.nombre }}</td>
+                                    <td>{{ categoria.siglas }}</td>
+                                    <td>
+                                        {% if categoria.calcular %}
+                                            <input type="checkbox" checked disabled>
+                                        {% else %}
+                                            <input type="checkbox" disabled>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'categoria_update' categoria.id %}" class="btn btn-primary"
+                                           style="text-decoration: none;"><i class="fas fa-pencil-alt"></i> Editar
+                                        </a>
+                                        <a href="{% url 'categoria_delete' categoria.id %}" class="btn btn-danger"
+                                           style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar </a>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("input[name=\"datesingle\"]").daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true
+            });
+        });
+    </script>
+    {% block scripts %}
+    {% endblock %}
+{% endblock %}
