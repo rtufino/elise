@@ -1,0 +1,45 @@
+{% extends 'core/psicologo/home.html' %}
+{% block content %}
+    <h1>Parents</h1>
+    <form id="form-container" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <h2>children</h2>
+        {{ children.management_form }}
+        {% for child in children %}
+            <div class="card inline-form">
+                {{ child }}
+            </div>
+        {% endfor %}
+
+
+        <button id="add-form" type="button">Add Another Bird</button>
+        {#        <button type="submit">Create Birds</button>#}
+        <input type="submit" value="Save">
+    </form>
+    <script>
+        let birdForm = document.querySelectorAll(".inline-form")
+        let container = document.querySelector("#form-container")
+        let addButton = document.querySelector("#add-form")
+        let totalForms = document.querySelector("#id_termino_set-TOTAL_FORMS")
+
+        let formNum = birdForm.length - 1
+        addButton.addEventListener('click', addForm)
+
+        function addForm(e) {
+            e.preventDefault()
+
+            let newForm = birdForm[0].cloneNode(true)
+            let formRegex = RegExp(`termino_set-(\\d){1}-`, 'g')
+                        console.log('this are the regex: ', formRegex)
+            console.log('this de form: ', newForm)
+
+            formNum++
+            console.log('finally this is formnum: ',formNum);
+
+            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `termino_set-${formNum}-`)
+            container.insertBefore(newForm, addButton)
+            document.getElementById(`id_termino_set-${formNum}-id`).removeAttribute("value");
+            totalForms.setAttribute('value', `${formNum + 1}`)
+        }
+    </script>
+{% endblock %}

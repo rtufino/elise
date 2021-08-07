@@ -1,0 +1,86 @@
+{% extends 'core/psicologo/home.html' %}
+{% block content %}
+    <div class="row">
+        <div class="card-body text-center">
+            <div class="mb-3">
+                <a href="{% url 'formula_create' %}" class="btn btn-primary" style="text-decoration: none;"><i
+                        class="fas fa-plus"></i> Crear una
+                    Fórmula </a>
+                <i class="fa fa-trash-o"></i>
+            </div>
+        </div>
+        <div class="col-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Categorias</h5>
+                    <h6 class="card-subtitle text-muted">Listado de Categorias</h6>
+                </div>
+                <div class="card-body">
+                    {% if categoria_list|length_is:0 %}
+                        <h1>No existen Categorias!</h1>
+                    {% else %}
+                        <table id="datatables-basic" class="table table-striped" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Carrera</th>
+                                <th>Punto de corte</th>
+                                <th>ICAV</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+{#                            <tr>#}
+{#                                {% for fol in formula_list %}#}
+{#                                    <td> tony {{ fol }}</td>#}
+{#                                {% endfor %}#}
+{#                            </tr>#}
+
+                            {% for term in terms_list %}
+                                <tr>
+                                    {#                                    <td>{{ formula.carrera }}</td>#}
+                                    {#                                    <td>{{ formula.nombre }}</td>#}
+                                    {#                                    <td>{{ formula.porcentaje }}</td>#}
+                                    {#                                    <td>{{ formula.maximo }}</td>#}
+                                    {#                                    <td>{{ formula.minimo }}</td>#}
+                                    {#                                        {% for formula in term.formula %}#}
+                                    {#                                            {{ formula.carrera }}#}
+                                    {#                                        {% endfor %}#}
+
+
+                                    <td>{{ term.formula.carrera }}</td>
+                                    <td>{{ term.formula.porcentaje }}</td>
+                                    <td>
+                                        {% for termino in term.termino %}
+                                            {{ termino.signo }}{{ termino.valor }}{{ termino.variable.siglas }}
+                                        {% endfor %}
+                                    </td>
+
+                                    {#                                    <td>{{ term.rend }}</td>#}
+                                    <td>
+                                        <a href="{% url 'formula_update' term.formula.id %}" class="btn btn-primary"
+                                           style="text-decoration: none;"><i class="fas fa-pencil-alt"></i> Editar
+                                        </a>
+                                        {#                                        <a href="{% url 'categoria_delete' %}" class="btn btn-danger"#}
+                                        {#                                           style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar </a>#}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            {#                            {% for term in terms_list %}#}
+                            {#                                <h1>{{ term.signo }}</h1>#}
+                            {#                                <h1>{{ term.valor }}</h1>#}
+                            {#                                <h1>{{ term.formula.carrera }}</h1>#}
+                            {#                                <h1>{{ term.formula }}</h1>#}
+                            {#                                <h1>{{ term.termino }}</h1>#}
+                            {#                                <h1>{{ term.rend.rendimiento_riesgoso }}</h1>#}
+                            {#                            {% endfor %}#}
+                            </tbody>
+                        </table>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block scripts %}
+    {% endblock %}
+{% endblock %}
