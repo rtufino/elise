@@ -2,41 +2,51 @@
 {% block content %}
     <h1>Parents</h1>
     <form id="form-container" method="post">{% csrf_token %}
-        {{ form.as_p }}
+        <div class="row">
+            <div class="col-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Datos generales de la Formula</h5>
+                    </div>
+                    {{ form.as_p }}
+                </div>
+            </div>
+            <div class="col-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Rendimientos para la formula</h5>
+                    </div>
+                    {{ rendimiento.management_form }}
+                    {% for form in rendimiento %}
+                        {{ form }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
         <h2>children</h2>
-        {{ children.management_form }}
-        {% for child in children %}
-            {#            <div class="card inline-form">#}
-            {#                {{ child.signo }}#}
-            {#                {{ child.valor }}#}
-            {#                {{ child.variable }}#}
-            {#                {{ child.DELETE }}#}
-            {#                {{ child.formula }}#}
-            {#                {{ child.id }}#}
-            {##}
-            {#            </div>#}
+        {{ termino.management_form }}
+        {% for form in termino %}
             <div class="inline-form col-md-12 card">
 
                 <div class="card-header">
                     <h5 class="card-title">Crea un Termino</h5>
                 </div>
                 <div class="card-body">
-                    <label class="" for="{{ child.signo.id_for_label }}">Signo</label>
-                    {{ child.signo }}
+                    <label class="" for="{{ form.signo.id_for_label }}">Signo</label>
+                    {{ form.signo }}
 
-                    <label class="" for="{{ child.valor.id_for_label }}">Valor</label>
-                    {{ child.valor }}
-                    <label class="" for="{{ child.variable.id_for_label }}">Variable</label>
-                    {{ child.variable }}
-
+                    <label class="" for="{{ form.valor.id_for_label }}">Valor</label>
+                    {{ form.valor }}
+                    <label class="" for="{{ form.variable.id_for_label }}">Variable</label>
+                    {{ form.variable }}
 
                     <div class="custom-control custom-checkbox mb-1 mr-sm-2">
-                        {{ child.DELETE }}
-                        <label class="custom-control-label" for="{{ child.DELETE.id_for_label }}">Delete</label>
+                        {{ form.DELETE }}
+                        <label class="custom-control-label" for="{{ form.DELETE.id_for_label }}">Delete</label>
                     </div>
 
-                    {{ child.formula }}
-                    {{ child.id }}
+                    {{ form.formula }}
+                    {{ form.id }}
                 </div>
             </div>
 
@@ -64,7 +74,8 @@
             formNum++
             newForm.innerHTML = newForm.innerHTML.replace(formRegex, `termino_set-${formNum}-`)
             container.insertBefore(newForm, addButton)
-            {#addButton.parentNode.insertBefore(newForm, addButton)#}
+            {#document.getElementById(`id_termino_set-${formNum}-signo`).removeAttribute("value");#}
+            {#document.getElementById(`id_termino_set-${formNum}-valor`).removeAttribute("value");#}
 
             totalForms.setAttribute('value', `${formNum + 1}`)
         }

@@ -11,7 +11,7 @@ from core.forms import EncuestaForm, EncuestaDeleteForm, EncuestaUpdateForm, Pre
     CategoriaForm, \
     CategoriaUpdateForm, CategoriaDeleteForm, OpcionForm, OpcionUpdateForm
 
-from django.forms.models import inlineformset_factory
+from django.forms.models import inlineformset_factory, formset_factory
 
 ruta_psicologo = 'core/Psicologo'
 
@@ -249,11 +249,12 @@ class FormulaListView(ListView):
         return super().get_context_data(**context)
 
 
-from django.forms import CheckboxInput
+RendimientoFormset = inlineformset_factory(
+    Formula, Rendimiento, fields=('__all__'), max_num=2, extra=2
+)
 
-ChildFormset = inlineformset_factory(
-    Formula, Termino, fields=('__all__'), extra=1,
-    widgets={'delete': CheckboxInput(attrs={'class': 'custom-control-input'})}
+TerminoFormset = inlineformset_factory(
+    Formula, Termino, fields=('__all__'), extra=1
 )
 
 
@@ -267,18 +268,23 @@ class FormulaCreateView(CreateView):
         # to make sure that our formset is rendered
         data = super().get_context_data(**kwargs)
         if self.request.POST:
-            data["children"] = ChildFormset(self.request.POST)
+            data["termino"] = TerminoFormset(self.request.POST)
+            data["rendimiento"] = RendimientoFormset(self.request.POST)
         else:
-            data["children"] = ChildFormset()
+            data["termino"] = TerminoFormset()
+            data["rendimiento"] = RendimientoFormset()
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
-        children = context["children"]
+        termino = context["termino"]
+        rendimiento = context["rendimiento"]
         self.object = form.save()
-        if children.is_valid():
-            children.instance = self.object
-            children.save()
+        if termino.is_valid() and rendimiento.is_valid():
+            termino.instance = self.object
+            rendimiento.instance = self.object
+            termino.save()
+            rendimiento.save()
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -299,19 +305,23 @@ class FormulaUpdateView(UpdateView):
         # the instance created
         data = super().get_context_data(**kwargs)
         if self.request.POST:
-            data["children"] = ChildFormset(self.request.POST, instance=self.object)
+            data["termino"] = TerminoFormset(self.request.POST, instance=self.object)
+            data["rendimiento"] = RendimientoFormset(self.request.POST, instance=self.object)
         else:
-            data["children"] = ChildFormset(instance=self.object)
+            data["termino"] = TerminoFormset(instance=self.object)
+            data["rendimiento"] = RendimientoFormset(instance=self.object)
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
-        children = context["children"]
+        termino = context["termino"]
+        rendimiento = context["rendimiento"]
         self.object = form.save()
-        print(self.object)
-        if children.is_valid():
-            children.instance = self.object
-            children.save()
+        if termino.is_valid() and rendimiento.is_valid():
+            termino.instance = self.object
+            rendimiento.instance = self.object
+            rendimiento.save()
+            termino.save()
         return super().form_valid(form)
 
     def get_success_url(self):
