@@ -11,24 +11,24 @@
   </head>
   <body id="bg" style="background-image: url({% static 'core/images/bg.png' %});">
   {% load static %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="main-navbar">
-        <div class="container">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page">Home</a>
-            </div>
-            <form class="d-flex" id="authstyle">
-              {% if user.is_authenticated %}
-                <a href="{% url 'profile' %}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" > Perfil </a>
-                <a href="{% url 'login' %}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" > Salir </a>
-              {% endif %}
-              </form>
-          </div>
-        </div>
-    </nav>
+<!--    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="main-navbar">-->
+<!--        <div class="container">-->
+<!--          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--          </button>-->
+<!--&lt;!&ndash;          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="navbar-nav">&ndash;&gt;-->
+<!--&lt;!&ndash;              <a class="nav-link active" aria-current="page">Home</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <form class="d-flex" id="authstyle">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              {% if user.is_authenticated %}&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <a href="{% url 'profile' %}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" > Perfil </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <a href="{% url 'login' %}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" > Salir </a>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              {% endif %}&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              </form>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--        </div>-->
+<!--    </nav>-->
       <div>
         {% block content %}
         {% endblock content %}
