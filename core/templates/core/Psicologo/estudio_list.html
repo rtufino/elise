@@ -1,0 +1,56 @@
+{% extends 'core/psicologo/home.html' %}
+{% block content %}
+    <div class="row">
+        <div class="card-body text-center">
+            <div class="mb-3">
+                <a href="{% url 'estudio_create' %}" class="btn btn-primary" style="text-decoration: none;"><i
+                        class="fas fa-plus"></i> Crear un nuevo Estudio </a>
+                <i class="fa fa-trash-o"></i>
+            </div>
+        </div>
+        <div class="col-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Estudio</h5>
+                    <h6 class="card-subtitle text-muted">Listado de Categorias</h6>
+                </div>
+                <div class="card-body">
+                    {% if not estudio_list %}
+                        <h1>No existen estudios!</h1>
+                    {% else %}
+                        <table id="datatables-basic" class="table table-striped" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Carrera</th>
+                                <th>Punto de corte</th>
+                                <th>ICAV</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for estudio in estudio_list %}
+                                <tr>
+                                    <td>{{ estudio.periodo }}</td>
+                                    <td>{{ estudio.fecha }}</td>
+                                    <td>{{ estudio.observacion }}</td>
+                                    <td>
+{#                                        <a href="{% url 'formula_update' term.formula.id %}" class="btn btn-primary"#}
+{#                                           style="text-decoration: none;"><i class="fas fa-pencil-alt"></i> Editar#}
+{#                                        </a>#}
+{#                                        <a href="{% url 'formula_delete' term.formula.id %}" class="btn btn-danger"#}
+{#                                           style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar </a>#}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block scripts %}
+    {% endblock %}
+{% endblock %}

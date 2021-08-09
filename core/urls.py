@@ -42,6 +42,11 @@ urlpatterns = [
             path('formula/', psicologo.FormulaListView.as_view(), name="formula"),
             path('formula/create/', psicologo.FormulaCreateView.as_view(), name="formula_create"),
             path('formula/update/<int:pk>', psicologo.FormulaUpdateView.as_view(), name="formula_update"),
+            path('formula/delete/<int:pk>', psicologo.FormulaDeleteView.as_view(), name="formula_delete"),
+
+            # CRUD PARA ESTUDIOS
+            path('estudio/', psicologo.EstudioListView.as_view(), name="estudio"),
+            path('estudio/create/', psicologo.EstudioCreateView.as_view(), name="estudio_create"),
             # path('categoria/create/', psicologo.CategoriaCreateView.as_view(), name="categoria_create"),
             # path('categoria/update/<int:pk>/', psicologo.CategoriaUpdateView.as_view(), name="categoria_update"),
             # path('categoria/delete/<int:pk>/', psicologo.CategoriaDeleteView.as_view(), name="categoria_delete"),

@@ -54,6 +54,14 @@
                     <a href="{% url 'go_psicologo' %}" class="sidebar-link collapsed">
                         <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Dashboard</span>
                     </a>
+                    <a href="{% url 'estudio' %}" class="sidebar-link collapsed">
+                        <i class="align-middle" data-feather="layout"></i> <span
+                            class="align-middle">Estudios</span>
+                    </a>
+                    <a href="{% url 'formula' %}" class="sidebar-link collapsed">
+                        <i class="align-middle" data-feather="layout"></i> <span
+                            class="align-middle">Gestión de Fórmulas</span>
+                    </a>
                     <a href="{% url 'encuesta' %}" class="sidebar-link collapsed">
                         <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Getión de Encuestas</span>
                     </a>
@@ -64,10 +72,7 @@
                         <i class="align-middle" data-feather="layout"></i> <span
                             class="align-middle">Tipo de Preguntas</span>
                     </a>
-                    <a href="{% url 'formula' %}" class="sidebar-link collapsed">
-                        <i class="align-middle" data-feather="layout"></i> <span
-                            class="align-middle">Gestión de Fórmulas</span>
-                    </a>
+
                     <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
                         <li class="sidebar-item"><a class="sidebar-link" href="pages-profile.html">Profile</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="pages-settings.html">Settings</a></li>
@@ -320,7 +325,7 @@
         </footer>
     </div>
 </div>
-{#<script src="{% static 'js/app.js' %}"></script>#}
+<script src="{% static 'js/app.js' %}"></script>
 {#<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>#}
 {#<script type="text/javascript" src="{% static 'vue/vue-router.js' %}"></script>#}
 {#<script type="text/javascript" src="{% static 'vue/apps/quiz.js' %}"></script>#}

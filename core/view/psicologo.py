@@ -6,7 +6,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from core.models import user_type
 from django.urls import reverse_lazy
-from core.models import Encuesta, Pregunta, Categoria, Opcion, Formula, Termino, Rendimiento
+from core.models import Encuesta, Pregunta, Categoria, Opcion, Formula, Termino, Rendimiento, Estudio, Asignacion, \
+    Alumno
 from core.forms import EncuestaForm, EncuestaDeleteForm, EncuestaUpdateForm, PreguntaForm, PreguntaUpdateForm, \
     CategoriaForm, \
     CategoriaUpdateForm, CategoriaDeleteForm, OpcionForm, OpcionUpdateForm
@@ -84,28 +85,87 @@ def encuesta_detail(request, pk):
                   context={'preguntas': preguntas, 'categorias': categorias, 'encuesta': encuesta})
 
 
+OpcionFormset = inlineformset_factory(
+    Pregunta, Opcion, fields=('__all__'), extra=1
+)
+
+
 class PreguntaCreateView(CreateView):
     model = Pregunta
-    form_class = PreguntaForm
+    fields = '__all__'
     template_name = ruta_psicologo + '/pregunta_form.html'
 
+    def get_context_data(self, **kwargs):
+        # we need to overwrite get_context_data
+        # to make sure that our formset is rendered
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data["opcion"] = OpcionFormset(self.request.POST)
+        else:
+            data["opcion"] = OpcionFormset()
+        return data
+
     def form_valid(self, form):
-        encuesta_instance = Encuesta.objects.filter(pk=self.kwargs.get('pk')).first()
-        form.instance.encuesta = encuesta_instance
+        context = self.get_context_data()
+        opcion = context["opcion"]
+        self.object = form.save()
+        if opcion.is_valid():
+            opcion.instance = self.object
+            opcion.save()
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('encuesta_detalle', args=[self.object.encuesta.id])
-    # success_url = reverse_lazy('encuesta')
+        return reverse_lazy('encuesta')
 
 
 class PreguntaUpdateView(UpdateView):
     model = Pregunta
-    form_class = PreguntaUpdateForm
+    fields = '__all__'
     template_name = ruta_psicologo + '/pregunta_update_form.html'
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data["opcion"] = OpcionFormset(self.request.POST, instance=self.object)
+        else:
+            data["opcion"] = OpcionFormset(instance=self.object)
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        opcion = context["opcion"]
+        self.object = form.save()
+        if opcion.is_valid():
+            opcion.instance = self.object
+            opcion.save()
+        return super().form_valid(form)
+
     def get_success_url(self):
-        return reverse_lazy('pregunta_update', args=[self.object.id]) + '?ok'
+        return reverse_lazy('encuesta')
+
+
+# class PreguntaCreateView(CreateView):
+#     model = Pregunta
+#     form_class = PreguntaForm
+#     template_name = ruta_psicologo + '/pregunta_form.html'
+#
+#     def form_valid(self, form):
+#         encuesta_instance = Encuesta.objects.filter(pk=self.kwargs.get('pk')).first()
+#         form.instance.encuesta = encuesta_instance
+#         return super().form_valid(form)
+#
+#     def get_success_url(self):
+#         return reverse_lazy('encuesta_detalle', args=[self.object.encuesta.id])
+#     # success_url = reverse_lazy('encuesta')
+
+
+# class PreguntaUpdateView(UpdateView):
+#     model = Pregunta
+#     form_class = PreguntaUpdateForm
+#     template_name = ruta_psicologo + '/pregunta_update_form.html'
+#
+#     def get_success_url(self):
+#         return reverse_lazy('pregunta_update', args=[self.object.id]) + '?ok'
 
 
 class PreguntaDeleteView(DeleteView):
@@ -120,8 +180,6 @@ class PreguntaDeleteView(DeleteView):
 def pregunta_detail(request, pk):
     pregunta = Pregunta.objects.filter(id=pk).first()
     opciones = Opcion.objects.filter(pregunta=pk)
-    # categorias_preguntas = [pregunta.categoria for pregunta in preguntas]
-    # categorias = list(set(categorias_preguntas))
     return render(request, ruta_psicologo + '/pregunta_detail.html',
                   context={'pregunta': pregunta, 'opciones': opciones})
 
@@ -317,7 +375,7 @@ class FormulaUpdateView(UpdateView):
         termino = context["termino"]
         rendimiento = context["rendimiento"]
         self.object = form.save()
-        if termino.is_valid() and rendimiento.is_valid():
+        if termino.is_valid() or rendimiento.is_valid():
             termino.instance = self.object
             rendimiento.instance = self.object
             rendimiento.save()
@@ -326,3 +384,65 @@ class FormulaUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('formula')
+
+
+class FormulaDeleteView(DeleteView):
+    model = Formula
+    template_name = ruta_psicologo + '/formula_delete_form.html'
+
+    success_url = reverse_lazy('formula')
+
+
+class EstudioListView(ListView):
+    model = Estudio
+    template_name = ruta_psicologo + '/estudio_list.html'
+
+
+# class EstudioCreateView(CreateView):
+#     model = Estudio
+#     fields = '__all__'
+#     template_name = ruta_psicologo + '/estudio_form.html'
+#     success_url = reverse_lazy('estudio')
+
+AsignacionFormset = inlineformset_factory(
+    Estudio, Asignacion, fields=('__all__'), extra=int(Alumno.objects.count()), fk_name='estudio'
+)
+
+
+# this will be for model formset
+# form_kwargs={'alumno_name': Alumno.objects.all()}
+
+class EstudioCreateView(CreateView):
+    model = Estudio
+    fields = '__all__'
+    template_name = ruta_psicologo + '/estudio_form.html'
+
+    def get_context_data(self, **kwargs):
+        # we need to overwrite get_context_data
+        # to make sure that our formset is rendered
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            # alumno = Alumno.objects.get(edad=23)
+            # data["asignacion"] = AsignacionFormset(self.request.POST, instance=alumno)
+            data["asignacion"] = AsignacionFormset(self.request.POST)
+            # data["range"] = int(Alumno.objects.count())
+            data["alumnos"] = Alumno.objects.all()
+        else:
+            # alumno = Alumno.objects.get(edad=23)
+            # data["asignacion"] = AsignacionFormset(instance=alumno)
+            data["asignacion"] = AsignacionFormset()
+            # data["range"] = range(int(Alumno.objects.count()))
+            data["alumnos"] = Alumno.objects.all()
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        asignacion = context["asignacion"]
+        self.object = form.save()
+        if asignacion.is_valid():
+            asignacion.instance = self.object
+            asignacion.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('estudio')

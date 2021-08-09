@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import Alumno, Periodo, Nivel, Carrera, Registro
 from .models import Encuesta, Categoria, Opcion, Tpregunta, Relacion, Pregunta
-from .models import Formula, Evaluacion, Termino, Rendimiento, Parametro, Asignacion, User, user_type, Psicologo
+from .models import Formula, Evaluacion, Termino, Rendimiento, Parametro, Asignacion, User, user_type, Psicologo, \
+    Estudio
 from import_export import fields, resources
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
@@ -119,8 +120,14 @@ class InvestigacionAdmin(admin.ModelAdmin):
 
 class AsignacionAdmin(admin.ModelAdmin):
     model = Asignacion
-    list_display = 'evaluacion', 'encuesta'
-    search_fields = ['encuesta']
+    list_display = 'alumno_name', 'tipo', 'estudio'
+    search_fields = ['estudio']
+
+
+class EstudioAdmin(admin.ModelAdmin):
+    model = Estudio
+    list_display = 'periodo', 'fecha'
+    search_fields = ['periodo']
 
 
 admin.site.register(Alumno)
@@ -135,6 +142,7 @@ admin.site.register(Opcion, OpcionAdmin)
 admin.site.register(Tpregunta)
 admin.site.register(Relacion)
 admin.site.register(Pregunta, PreguntaAdmin)
+admin.site.register(Estudio, EstudioAdmin)
 
 admin.site.register(Asignacion, AsignacionAdmin)
 admin.site.register(Formula)
