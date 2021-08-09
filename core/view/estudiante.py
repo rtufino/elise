@@ -13,6 +13,3 @@ def go_estudiante(request):
     else:
         return redirect('login')
 
-# @login_required()
-# def profile_estudiante(request):
-#     return render(request, 'core/profile.html')
