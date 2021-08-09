@@ -142,7 +142,7 @@ class Categoria(models.Model):
     estado = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.nombre
+        return self.siglas
 
 
 class Tpregunta(models.Model):
@@ -226,9 +226,10 @@ class Termino(models.Model):
     formula = models.ForeignKey(Formula, on_delete=models.CASCADE)
     signo = models.CharField(max_length=5)
     valor = models.FloatField()
+    variable = models.ForeignKey(Categoria, on_delete=models.CASCADE, default=0)
 
     def __str__(self):
-        return self.formula
+        return str(self.valor)
 
 
 class Rendimiento(models.Model):
@@ -237,6 +238,9 @@ class Rendimiento(models.Model):
     rendimiento_satisfactorio = models.FloatField()
     rendimiento_riesgoso = models.FloatField()
     afinidad = models.BooleanField()
+
+    def __str__(self):
+        return str(self.formula)
 
 
 class Parametro(models.Model):

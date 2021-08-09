@@ -1,21 +1,20 @@
 {% extends 'core/psicologo/home.html' %}
 {% block content %}
-    <div class="row">
+    <div class="row" id="questionApp">
         <div class="card-body text-center">
             <div class="mb-3">
-{#                <i class="fa fa-trash-o"></i>#}
             </div>
         </div>
         <div class="col-12 col-xl-12">
             <div class="card">
                 <div class="card-header">
+                    <h5 class="card-title"></h5>
+                    <h6 class="card-subtitle text-muted">Ingresa los datos</h6>
                 </div>
                 <div class="card-body">
-                    <form action="" method="post">{% csrf_token %}
+                    <form method="post">{% csrf_token %}
                         {{ form.as_p }}
-                        <h5 class="card-title">¿Esta seguro de eliminar "{{ object }}"?</h5>
-                        <a href="{% url 'pregunta_detalle' object.pregunta.id %}" class="btn btn-outline-secondary">No, Cancelar</a>
-                        <input type="submit" value="Si, Eliminar" class="btn btn-danger">
+                        <input type="submit" value="Guardar" class="btn btn-primary">
                     </form>
                 </div>
             </div>

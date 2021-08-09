@@ -17,7 +17,6 @@ class EncuestaForm(forms.ModelForm):
     class Meta:
         model = Encuesta
         fields = ['nombre', 'f_vigencia']
-        # fields = '__all__'
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'f_vigencia': forms.TextInput(attrs={'class': 'form-control'}),
@@ -74,6 +73,21 @@ class PreguntaForm(forms.ModelForm):
             'encuesta': ''
         }
 
+class PreguntaUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Pregunta
+        fields = ['enunciado', 'numero', 'tpregunta', 'encuesta', 'categoria']
+        widgets = {
+            'enunciado': forms.TextInput(attrs={'class': 'form-control'}),
+            'numero': forms.NumberInput(attrs={'class': 'form-control'}),
+            'tpregunta': forms.Select(attrs={'class': 'form-control'}),
+            'encuesta': forms.Select(attrs={'class': 'form-control d-none'}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'encuesta': ''
+        }
 
 ## Categorias
 
@@ -134,3 +148,17 @@ class OpcionForm(forms.ModelForm):
             'pregunta': ''
         }
 
+class OpcionUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Opcion
+        fields = '__all__'
+        widgets = {
+            'pregunta': forms.Select(attrs={'class': 'form-control d-none'}),
+            'numero': forms.NumberInput(attrs={'class': 'form-control'}),
+            'ponderado': forms.NumberInput(attrs={'class': 'form-control'}),
+            'etiqueta': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'pregunta': ''
+        }

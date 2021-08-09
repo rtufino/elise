@@ -1,0 +1,73 @@
+{% extends 'core/psicologo/home.html' %}
+{% block content %}
+    <h1>Parents</h1>
+    <form id="form-container" method="post">{% csrf_token %}
+        {{ form.as_p }}
+    <h2>rend</h2>
+        {{ rendimiento.management_form }}
+        {% for form in rendimiento %}
+            {{ form }}
+        {% endfor %}
+        <h2>children</h2>
+        {{ termino.management_form }}
+        {% for form in termino %}
+            <div class="inline-form col-md-12 card">
+
+                <div class="card-header">
+                    <h5 class="card-title">Actualiza el Termino</h5>
+                </div>
+                <div class="card-body">
+                    <label class="" for="{{ form.signo.id_for_label }}">Signo</label>
+                    {{ form.signo }}
+
+                    <label class="" for="{{ form.valor.id_for_label }}">Valor</label>
+                    {{ form.valor }}
+                    <label class="" for="{{ form.variable.id_for_label }}">Variable</label>
+                    {{ form.variable }}
+
+                    <div class="custom-control custom-checkbox mb-1 mr-sm-2">
+                        {{ form.DELETE }}
+                        <label class="custom-control-label" for="{{ form.DELETE.id_for_label }}">Delete</label>
+                    </div>
+
+                    {{ form.formula }}
+                    {{ form.id }}
+                </div>
+            </div>
+
+        {% endfor %}
+
+
+        <button id="add-form" type="button">Add Another Bird</button>
+        {#        <button type="submit">Create Birds</button>#}
+        <input type="submit" value="Save">
+    </form>
+    <script>
+        let birdForm = document.querySelectorAll(".inline-form")
+        let container = document.querySelector("#form-container")
+        let addButton = document.querySelector("#add-form")
+        let totalForms = document.querySelector("#id_termino_set-TOTAL_FORMS")
+
+        let formNum = birdForm.length - 1
+        addButton.addEventListener('click', addForm)
+
+        function addForm(e) {
+            e.preventDefault()
+
+            let newForm = birdForm[0].cloneNode(true)
+            let formRegex = RegExp(`termino_set-(\\d){1}-`, 'g')
+            console.log('this are the regex: ', formRegex)
+            console.log('this de form: ', newForm)
+
+            formNum++
+            console.log('finally this is formnum: ', formNum);
+
+            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `termino_set-${formNum}-`)
+            container.insertBefore(newForm, addButton)
+            document.getElementById(`id_termino_set-${formNum}-id`).removeAttribute("value");
+            document.getElementById(`id_termino_set-${formNum}-signo`).removeAttribute("value");
+            document.getElementById(`id_termino_set-${formNum}-valor`).removeAttribute("value");
+            totalForms.setAttribute('value', `${formNum + 1}`)
+        }
+    </script>
+{% endblock %}

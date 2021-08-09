@@ -11,6 +11,7 @@
   </head>
   <body id="bg" style="background-image: url({% static 'core/images/bg.png' %});">
   {% load static %}
+<<<<<<< HEAD
 <!--    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="main-navbar">-->
 <!--        <div class="container">-->
 <!--          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">-->
@@ -29,6 +30,26 @@
 <!--&lt;!&ndash;          </div>&ndash;&gt;-->
 <!--        </div>-->
 <!--    </nav>-->
+=======
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="main-navbar">
+        <div class="container">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page">Home</a>
+            </div>
+            <form class="d-flex" id="authstyle">
+              {% if user.is_authenticated %}
+{#                <a href="{% url 'profile' %}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" > Perfil </a>#}
+                <a href="{% url 'login' %}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" > Salir </a>
+              {% endif %}
+              </form>
+          </div>
+        </div>
+    </nav>
+>>>>>>> e618c519ded71185df2a972cc3da50b26fd45661
       <div>
         {% block content %}
         {% endblock content %}

@@ -1,8 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from core.models import user_type
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
 
 def login_general(request):
     if (request.method == 'POST'):
@@ -17,11 +18,7 @@ def login_general(request):
             elif user.is_authenticated and type_obj.es_psicologo:
                 return redirect('go_psicologo')
         else:
-            messages.warning(request,'Usuario o Contraseña Incorrecta')
+            messages.warning(request, 'Usuario o Contraseña Incorrecta')
             return redirect('login')
 
     return render(request, 'core/login.html')
-
-@login_required()
-def profile(request):
-    return render(request, 'core/profile.html')
