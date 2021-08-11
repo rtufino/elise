@@ -2,138 +2,146 @@
 {% load widget_tweaks %}
 {% block content %}
     <div class="col-12">
-        <form id="smartwizard-validation" class="wizard wizard-primary">
-            {#            {{ form.as_p }}#}
+        <form id="form-container" method="post">{% csrf_token %}
+            <div id="smartwizard-default-primary" class="wizard wizard-primary mb-4">
+                <ul>
+                    <li><a href="#default-primary-step-1">First Step<br><small>Step description</small></a></li>
+                    <li><a href="#default-primary-step-2">Second Step<br><small>Step description</small></a></li>
+                    {#                <li><a href="#default-primary-step-3">Third Step<br><small>Step description</small></a></li>#}
+                    {#                <li><a href="#default-primary-step-4">Fourth Step<br><small>Step description</small></a></li>#}
+                </ul>
 
-            <ul>
-                <li><a href="#validation-step-1">First Step<br><small>Step description</small></a></li>
-                <li><a href="#validation-step-2">Second Step<br><small>Step description</small></a></li>
-                <li><a href="#validation-step-3">Third Step<br><small>Step description</small></a></li>
-            </ul>
-
-            <div>
-                <div id="validation-step-1">
-                    <div class="form-group">
-                        <label class="form-label">Selecciona una encuesta:</label>
-                        {% render_field form.encuesta class="form-control" %}
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">¿A que periodo pertenece este estudio?</label>
-                        {% render_field form.periodo class="form-control" %}
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Dale una breve descripción:</label>
-                        {% render_field form.observacion class="form-control" %}
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Ingresa una fecha:</label>
-                        {% render_field form.fecha class="form-control" %}
-                    </div>
-                    {{ asignacion.management_form }}
-                    {% for i in asignacion %}
-                        <div class="row">
-                            {% render_field i.alumno_name class="form-control" %}
+                <div>
+                    <div id="default-primary-step-1" class="">
+                        <div class="form-group">
+                            <label class="form-label">Selecciona una encuesta:</label>
+                            {% render_field form.encuesta class="form-control" %}
                         </div>
-                    {% endfor %}
-                    {% for i in alumnos %}
-                        alumno: {{ i }}
-                    {% endfor %}
-                </div>
-                <div id="validation-step-2">
-
-                    <script>
-
-                    </script>
-
-                </div>
-                <div id="validation-step-3">
-                    <div class="form-group">
-                        <label class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input">
-                            <span class="custom-control-label">I agree with the Terms and Conditions</span>
-                        </label>
+                        <div class="form-group">
+                            <label class="form-label">¿A que periodo pertenece este estudio?</label>
+                            {% render_field form.periodo class="form-control" %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Dale una breve descripción:</label>
+                            {% render_field form.observacion class="form-control" %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Ingresa una fecha:</label>
+                            {% render_field form.fecha class="form-control" %}
+                        </div>
                     </div>
+                    <div id="default-primary-step-2" class="">
+                        {{ asignacion.management_form }}
+                        <table id="datatables-basic" class="table table-striped" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Alumno</th>
+                                <th>Asignar Todos <input type="checkbox" id="checkAll"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for alumno in asignacion %}
+                                <tr>
+                                    <td>{{ alumno.alumno_name }}</td>
+                                    {#                                    {{ form.rendimiento_satisfactorio.id_for_label }}#}
+                                    <td><input type="checkbox" id="{{ alumno.alumno_name.id_for_label }}"> {% render_field alumno.DELETE class="d-none" %}</td>
+                                    {#                                    <td>{{ alumno.DELETE }}</td>#}
+                                    <td>{% render_field alumno.tipo class="d-none" %} </td>
+                                    {{ alumno.estudio }}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                    {#                <div id="default-primary-step-3" class="">#}
+                    {#                    Step Content 3#}
+                    {#                </div>#}
+                    {#                <div id="default-primary-step-4" class="">#}
+                    {#                    Step Content 4#}
+                    {#                </div>#}
                 </div>
+                <a href="{% url 'estudio' %} " class="btn btn-outline-danger"> Cancelar</a>
+                <input type="submit" value="Guardar" class="btn btn-primary">
             </div>
         </form>
-    </div>
-    <script>
-        $(function () {
-            $("#smartwizard-default-primary").smartWizard({
-                theme: "default",
-                showStepURLhash: false
-            });
-            $("#smartwizard-default-success").smartWizard({
-                theme: "default",
-                showStepURLhash: false
-            });
-            $("#smartwizard-default-danger").smartWizard({
-                theme: "default",
-                showStepURLhash: false
-            });
-            $("#smartwizard-default-warning").smartWizard({
-                theme: "default",
-                showStepURLhash: false
-            });
-            $("#smartwizard-arrows-primary").smartWizard({
-                theme: "arrows",
-                showStepURLhash: false
-            });
-            $("#smartwizard-arrows-success").smartWizard({
-                theme: "arrows",
-                showStepURLhash: false
-            });
-            $("#smartwizard-arrows-danger").smartWizard({
-                theme: "arrows",
-                showStepURLhash: false
-            });
-            $("#smartwizard-arrows-warning").smartWizard({
-                theme: "arrows",
-                showStepURLhash: false
-            });
-            // Validation
-            var $validationForm = $("#smartwizard-validation");
-            $validationForm.validate({
-                errorPlacement: function errorPlacement(error, element) {
-                    $(element).parents(".form-group").append(
-                        error.addClass("invalid-feedback small d-block")
-                    )
-                },
-                highlight: function (element) {
-                    $(element).addClass("is-invalid");
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass("is-invalid");
-                },
-                rules: {
-                    "wizard-confirm": {
-                        equalTo: "input[name=\"wizard-password\"]"
-                    }
-                }
-            });
-            $validationForm
-                .smartWizard({
-                    autoAdjustHeight: false,
-                    backButtonSupport: false,
-                    useURLhash: false,
-                    showStepURLhash: false,
-                    toolbarSettings: {
-                        toolbarExtraButtons: [$("<button class=\"btn btn-submit btn-primary\" type=\"button\">Finish</button>")]
-                    }
+        <script>
+            window.onload = () => {
+                let i = 1;
+                $("select[name*='asignacion_set']").each(function () {
+                    $(this).val(i);
+                    i++;
                 })
-                .on("leaveStep", function (e, anchorObject, stepNumber, stepDirection) {
-                    if (stepDirection === "forward") {
-                        return $validationForm.valid();
-                    }
-                    return true;
+                $("input[type='checkbox'][id*='asignacion_set']").each(function () {
+                    $(this).on('change', function () {
+                        $('#checkAll').prop('checked' ,false);
+                        if($(this).is(':checked')){
+                            {#console.log($(this).next())#}
+                            $(this).next().prop('checked', false);
+                        }else{
+                            {#console.log($(this).next())#}
+                            $(this).next().prop('checked', true);
+                        }
+                    })
+                })
+                $('#checkAll').prop('checked', true);
+                $("input[type='checkbox'][id*='alumno_name']").each(function () {
+                    {#console.log($(this))#}
+                    $(this).prop('checked', true);
+                })
+            }
+            $(function () {
+                $("#smartwizard-default-primary").smartWizard({
+                    theme: "default",
+                    showStepURLhash: false
                 });
-            $validationForm.find(".btn-submit").on("click", function () {
-                if (!$validationForm.valid()) {
-                    return;
-                }
-                alert("Great! The form is valid and ready to submit.");
-                return false;
+                $("#smartwizard-default-success").smartWizard({
+                    theme: "default",
+                    showStepURLhash: false
+                });
+                $("#smartwizard-default-danger").smartWizard({
+                    theme: "default",
+                    showStepURLhash: false
+                });
+                $("#smartwizard-default-warning").smartWizard({
+                    theme: "default",
+                    showStepURLhash: false
+                });
+                $("#smartwizard-arrows-primary").smartWizard({
+                    theme: "arrows",
+                    showStepURLhash: false
+                });
+                $("#smartwizard-arrows-success").smartWizard({
+                    theme: "arrows",
+                    showStepURLhash: false
+                });
+                $("#smartwizard-arrows-danger").smartWizard({
+                    theme: "arrows",
+                    showStepURLhash: false
+                });
+                $("#smartwizard-arrows-warning").smartWizard({
+                    theme: "arrows",
+                    showStepURLhash: false
+                });
+                $('#checkAll').on('change', function () {
+                    if ($(this).is(':checked')) {
+                        $("input[type='checkbox'][id*='alumno_name']").each(function () {
+                            {#console.log($(this))#}
+                            $(this).prop('checked', true);
+                            $(this).next().prop('checked', false);
+                        })
+                        console.log("Checkbox " + $(this).prop("id") + " (" + $(this).val() + ") => Seleccionado");
+                    } else {
+                        $("input[type='checkbox'][id*='alumno_name']").each(function () {
+                            $(this).prop('checked', false);
+                            $(this).next().prop('checked', true);
+                        })
+                        console.log("Checkbox " + $(this).prop("id") + " (" + $(this).val() + ") => Deseleccionado");
+                    }
+                });
             });
-        });
-    </script>
+
+        </script>
+    </div>
+
 {% endblock %}

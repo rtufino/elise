@@ -82,7 +82,7 @@ class Alumno(models.Model):
     carrera_postular = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.cedula
+        return self.cedula + " | " + self.nombres + " " + self.apellidos
 
 
 class Periodo(models.Model):
@@ -246,13 +246,13 @@ class Estudio(models.Model):
     encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.periodo.nombre + " " + self.encuesta.nombre
+        return self.periodo.nombre + " " + self.encuesta.nombre + " " + str(self.id)
 
 
 class Asignacion(models.Model):
     # id = models.AutoField(primary_key=True)
     alumno_name = models.ForeignKey(Alumno, on_delete=models.CASCADE)
-    tipo = models.CharField(max_length=30)
+    tipo = models.CharField(max_length=30, default='normal')
     estudio = models.ForeignKey(Estudio, on_delete=models.CASCADE)
 
     def __str__(self):

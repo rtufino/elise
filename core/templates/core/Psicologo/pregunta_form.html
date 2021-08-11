@@ -18,14 +18,33 @@
                             <label class="form-label">Selecciona un Campo Profesional</label>
                             {% render_field form.categoria class="form-control" %}
                         </div>
-                        {{ form.as_p }}
+                        <div class="form-group">
+                            <label class="form-label">Dale un enunciado a tu pregunta</label>
+                            {% render_field form.enunciado class="form-control" %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Selecciona un Tipo de pregunta</label>
+                            {% render_field form.tpregunta class="form-control" %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Selecciona un Campo Profesional</label>
+                            {% render_field form.encuesta %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Numero</label>
+                            {% render_field form.numero class="form-control" %}
+                            {% render_field form.estado class="d-none" %}
+                        </div>
+{#                        {{ form.as_p }}#}
                         {{ opcion.management_form }}
                         {% for i in opcion %}
                             {{ i }}
                         {% endfor %}
                         <a href="{% url 'encuesta' %}" class="btn btn-outline-danger"> Cancelar</a>
                         <input type="submit" value="Guardar" class="btn btn-primary">
-
+                    <script>
+                        $('select[id="id_encuesta"]').val(1);
+                    </script>
                     </div>
                 </div>
             </div>

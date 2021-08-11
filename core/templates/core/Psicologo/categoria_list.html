@@ -15,8 +15,8 @@
                     <h6 class="card-subtitle text-muted">Listado de Categorias</h6>
                 </div>
                 <div class="card-body">
-                    {% if categoria_list|length_is:0 %}
-                        <h1>No existen Categorias!</h1>
+                    {% if not categoria_list %}
+                        <h6>Aún no existen categorias <a href="{% url 'categoria_create' %}">Crea una dando clic aquí</a></h6>
                     {% else %}
                         <table id="datatables-basic" class="table table-striped" style="width:100%">
                             <thead>
