@@ -424,13 +424,13 @@ class EstudioCreateView(CreateView):
             # data["asignacion"] = AsignacionFormset(self.request.POST, instance=alumno)
             data["asignacion"] = AsignacionFormset(self.request.POST)
             # data["range"] = int(Alumno.objects.count())
-            data["alumnos"] = Alumno.objects.all()
+            # data["alumnos"] = Alumno.objects.all()
         else:
             # alumno = Alumno.objects.get(edad=23)
             # data["asignacion"] = AsignacionFormset(instance=alumno)
             data["asignacion"] = AsignacionFormset()
             # data["range"] = range(int(Alumno.objects.count()))
-            data["alumnos"] = Alumno.objects.all()
+            # data["alumnos"] = Alumno.objects.all()
         return data
 
     def form_valid(self, form):

@@ -1,9 +1,6 @@
-from django.urls import include, path
 from .view import estudiante, psicologo, general
 from django.urls import path, include
 from django.contrib.auth import views as auth_view
-
-from .api import encuesta_api_view, encuesta_detalle_api_view, preguntas_api_view
 
 # from .api import api_addQuiz,
 
@@ -11,6 +8,7 @@ urlpatterns = [
     path('estudiante/', include((
         [
             path('home_estudiante/', estudiante.go_estudiante, name='go_estudiante'),
+            path('quiz/<int:pk>/', estudiante.quiz_detail, name="quiz_detail"),
 
         ]))),
     path('psicologo/', include((
