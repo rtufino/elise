@@ -165,7 +165,6 @@ class Pregunta(models.Model):
         return self.enunciado
 
 
-
 class Opcion(models.Model):
     # id = models.AutoField(primary_key=True)
     pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
@@ -209,18 +208,6 @@ class Formula(models.Model):
         return self.carrera.nombre
 
 
-class Asignacion(models.Model):
-    # id = models.AutoField(primary_key=True)
-    formula = models.ForeignKey(Formula, on_delete=models.CASCADE)
-    evaluacion = models.ForeignKey(Evaluacion, on_delete=models.CASCADE)
-    alumno_name = models.ForeignKey(Alumno, on_delete=models.CASCADE)
-    encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE)
-    tipo = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.formula.nombre + " " + self.alumno_name.nombres + " " + self.alumno_name.apellidos + " " + self.encuesta.nombre
-
-
 class Termino(models.Model):
     # id = models.AutoField(primary_key=True)
     formula = models.ForeignKey(Formula, on_delete=models.CASCADE)
@@ -250,3 +237,23 @@ class Parametro(models.Model):
 
     def __str__(self):
         return self.clave
+
+
+class Estudio(models.Model):
+    periodo = models.ForeignKey(Periodo, on_delete=models.CASCADE)
+    fecha = models.DateField()
+    observacion = models.TextField()
+    encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.periodo.nombre + " " + self.encuesta.nombre
+
+
+class Asignacion(models.Model):
+    # id = models.AutoField(primary_key=True)
+    alumno_name = models.ForeignKey(Alumno, on_delete=models.CASCADE)
+    tipo = models.CharField(max_length=30)
+    estudio = models.ForeignKey(Estudio, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.estudio.observacion + " " + self.alumno_name.nombres + " " + self.alumno_name.apellidos

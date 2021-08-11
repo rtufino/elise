@@ -1,46 +1,102 @@
 {% extends 'core/psicologo/home.html' %}
+{% load widget_tweaks %}
 {% block content %}
-    <h1>Parents</h1>
     <form id="form-container" method="post">{% csrf_token %}
-        {{ form.as_p }}
-    <h2>rend</h2>
-        {{ rendimiento.management_form }}
-        {% for form in rendimiento %}
-            {{ form }}
-        {% endfor %}
-        <h2>children</h2>
-        {{ termino.management_form }}
-        {% for form in termino %}
-            <div class="inline-form col-md-12 card">
-
-                <div class="card-header">
-                    <h5 class="card-title">Actualiza el Termino</h5>
-                </div>
-                <div class="card-body">
-                    <label class="" for="{{ form.signo.id_for_label }}">Signo</label>
-                    {{ form.signo }}
-
-                    <label class="" for="{{ form.valor.id_for_label }}">Valor</label>
-                    {{ form.valor }}
-                    <label class="" for="{{ form.variable.id_for_label }}">Variable</label>
-                    {{ form.variable }}
-
-                    <div class="custom-control custom-checkbox mb-1 mr-sm-2">
-                        {{ form.DELETE }}
-                        <label class="custom-control-label" for="{{ form.DELETE.id_for_label }}">Delete</label>
+        <div class="row">
+            <div class="col-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Datos generales de la Formula</h5>
                     </div>
-
-                    {{ form.formula }}
-                    {{ form.id }}
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">¿A que carrera pertenece esta formula?</label>
+                            {% render_field form.carrera class="form-control" %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Punto de corte</label>
+                            {% render_field form.porcentaje class="form-control" %}
+                        </div>
+                        <label class="form-label">Criterios de reescalado</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="{{ form.maximo.id_for_label }}">Máximo</label>
+                                {% render_field form.maximo class="form-control" %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="{{ form.minimo.id_for_label }}">Mínimo</label>
+                                {% render_field form.minimo class="form-control" %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Asignale un nombre a esta formula</label>
+                            {% render_field form.nombre class="form-control" %}
+                        </div>
+                    </div>
                 </div>
             </div>
+            {{ rendimiento.management_form }}
+            <div class="col-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Rendimientos para la formula</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for form in rendimiento %}
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="{{ form.rendimiento_satisfactorio.id_for_label }}">Satisfactorio</label>
+                                    {% render_field form.rendimiento_satisfactorio class="form-control" %}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="{{ form.rendimiento_riesgoso.id_for_label }}">Riesgoso</label>
+                                    {% render_field form.rendimiento_riesgoso class="form-control" %}
+                                </div>
+                            </div>
+                            <label class="custom-control custom-checkbox">
+                                {% render_field form.afinidad class="custom-control-input" %}
+                                <span class="custom-control-label">¿Es a fin?</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ termino.management_form }}
+        {% for form in termino %}
+            <div class="col-md-12 inline-form">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Inline form</h5>
+                        <h6 class="card-subtitle text-muted">Single horizontal row.</h6>
+                    </div>
+                    <div class="card-body form-inline">
+                        {#                        <label class="sr-only" for="inlineFormInputName2">Name</label>#}
+                        {#                        <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2"#}
+                        {#                               placeholder="Jane Doe">#}
+                        <label class="mr-2" for="{{ form.signo.id_for_label }}">Signo</label>
+                        {% render_field form.signo class="form-control mb-2 mr-sm-2" %}
+                        <label class="mr-2" for="{{ form.valor.id_for_label }}">Valor</label>
+                        {% render_field form.valor class="form-control mb-2 mr-sm-2" %}
+                        <label class="mr-2" for="{{ form.variable.id_for_label }}">Selecciona un campo
+                            profesional</label>
+                        {% render_field form.variable class="form-control mb-2 mr-sm-2" %}
+                        <label class="custom-control custom-checkbox">
+                            {% render_field form.DELETE class="custom-control-input" %}
+                            <span class="custom-control-label">Eliminar este termino</span>
+                        </label>
 
+                        {{ form.formula }}
+                        {{ form.id }}
+
+                    </div>
+                </div>
+            </div>
         {% endfor %}
 
-
-        <button id="add-form" type="button">Add Another Bird</button>
-        {#        <button type="submit">Create Birds</button>#}
-        <input type="submit" value="Save">
+        <button id="add-form" type="button" class="btn btn-outline-primary">Agregar otro término</button>
+        <a href="{% url 'formula' %} " class="btn btn-outline-danger"> Cancelar</a>
+        <input type="submit" value="Guardar" class="btn btn-primary">
     </form>
     <script>
         let birdForm = document.querySelectorAll(".inline-form")
@@ -56,14 +112,12 @@
 
             let newForm = birdForm[0].cloneNode(true)
             let formRegex = RegExp(`termino_set-(\\d){1}-`, 'g')
-            console.log('this are the regex: ', formRegex)
-            console.log('this de form: ', newForm)
-
             formNum++
-            console.log('finally this is formnum: ', formNum);
-
             newForm.innerHTML = newForm.innerHTML.replace(formRegex, `termino_set-${formNum}-`)
             container.insertBefore(newForm, addButton)
+            console.log(`removiendo value de id_termino_set-${formNum}-id`)
+            console.log(`removiendo value de id_termino_set-${formNum}-signo`)
+            console.log(`removiendo value de id_termino_set-${formNum}-valor`)
             document.getElementById(`id_termino_set-${formNum}-id`).removeAttribute("value");
             document.getElementById(`id_termino_set-${formNum}-signo`).removeAttribute("value");
             document.getElementById(`id_termino_set-${formNum}-valor`).removeAttribute("value");

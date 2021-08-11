@@ -29,24 +29,9 @@
                             </tr>
                             </thead>
                             <tbody>
-{#                            <tr>#}
-{#                                {% for fol in formula_list %}#}
-{#                                    <td> tony {{ fol }}</td>#}
-{#                                {% endfor %}#}
-{#                            </tr>#}
 
                             {% for term in terms_list %}
                                 <tr>
-                                    {#                                    <td>{{ formula.carrera }}</td>#}
-                                    {#                                    <td>{{ formula.nombre }}</td>#}
-                                    {#                                    <td>{{ formula.porcentaje }}</td>#}
-                                    {#                                    <td>{{ formula.maximo }}</td>#}
-                                    {#                                    <td>{{ formula.minimo }}</td>#}
-                                    {#                                        {% for formula in term.formula %}#}
-                                    {#                                            {{ formula.carrera }}#}
-                                    {#                                        {% endfor %}#}
-
-
                                     <td>{{ term.formula.carrera }}</td>
                                     <td>{{ term.formula.porcentaje }}</td>
                                     <td>
@@ -55,13 +40,12 @@
                                         {% endfor %}
                                     </td>
 
-                                    {#                                    <td>{{ term.rend }}</td>#}
                                     <td>
                                         <a href="{% url 'formula_update' term.formula.id %}" class="btn btn-primary"
                                            style="text-decoration: none;"><i class="fas fa-pencil-alt"></i> Editar
                                         </a>
-                                        {#                                        <a href="{% url 'categoria_delete' %}" class="btn btn-danger"#}
-                                        {#                                           style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar </a>#}
+                                        <a href="{% url 'formula_delete' term.formula.id %}" class="btn btn-danger"
+                                           style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar </a>
                                     </td>
                                 </tr>
                             {% endfor %}

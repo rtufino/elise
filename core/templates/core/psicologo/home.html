@@ -37,6 +37,14 @@
                     <a href="{% url 'go_psicologo' %}" class="sidebar-link collapsed">
                         <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Dashboard</span>
                     </a>
+                    <a href="{% url 'estudio' %}" class="sidebar-link collapsed">
+                        <i class="align-middle" data-feather="layout"></i> <span
+                            class="align-middle">Estudios</span>
+                    </a>
+                    <a href="{% url 'formula' %}" class="sidebar-link collapsed">
+                        <i class="align-middle" data-feather="layout"></i> <span
+                            class="align-middle">Gestión de Fórmulas</span>
+                    </a>
                     <a href="{% url 'encuesta' %}" class="sidebar-link collapsed">
                         <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Getión de Encuestas</span>
                     </a>
@@ -51,6 +59,19 @@
                         <i class="align-middle" data-feather="layout"></i> <span
                             class="align-middle">Gestión de Fórmulas</span>
                     </a>
+
+                    <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-profile.html">Profile</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-settings.html">Settings</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-clients.html">Clients</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-projects.html">Projects <span
+                                class="sidebar-badge badge badge-primary">New</span></a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-invoice.html">Invoice</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-pricing.html">Pricing</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-tasks.html">Tasks <span
+                                class="sidebar-badge badge badge-primary">New</span></a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-blank.html">Blank Page</a></li>
+                    </ul>
                 </li>
             </ul>
             <div id="like_button_container"> abcv</div>
@@ -113,9 +134,8 @@
 
   </div>
 </div>
-
 <script src="{% static 'js/app.js' %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
 {% block scripts %}
 
 {% endblock %}
