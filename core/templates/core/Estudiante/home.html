@@ -44,24 +44,24 @@
         </nav>
         <div class="card">
             <h1>Nombre de la encuesta : {{encuesta.nombre}}</h1>
-            {% for pregunta in preguntas %}
-            <div class="col-lg-6 ">
-                <h6>{{pregunta.id}}.{{pregunta.enunciado}}</h6>
-                {% for opcion in opciones %}
-                {% for i in opcion %}
-                {% if i.pregunta.id == pregunta.id %}
-                <label class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" name="{{i.pregunta.id}}">
-                    <span class="custom-control-label"> {{i}}</span>
-                </label>
+            <div class="row">
+                {% for pregunta in preguntas %}
+                <div class="col-xs-6 col-sm-4">
+                    <h6>{{pregunta.id}}.{{pregunta.enunciado}}</h6>
+                    {% for opcion in opciones %}
+                    {% for i in opcion %}
+                    {% if i.pregunta.id == pregunta.id %}
+                    <label class="custom-control custom-radio">
+                        <input class="custom-control-input" type="radio" name="{{i.pregunta.id}}">
+                        <span class="custom-control-label"> {{i}}</span>
+                    </label>
 
-                {% endif %}
-                {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
                 {% endfor %}
             </div>
-
-            {% endfor %}
-
         </div>
 
 
