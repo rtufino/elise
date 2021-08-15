@@ -7,8 +7,6 @@
                 <ul>
                     <li><a href="#default-primary-step-1">First Step<br><small>Step description</small></a></li>
                     <li><a href="#default-primary-step-2">Second Step<br><small>Step description</small></a></li>
-                    {#                <li><a href="#default-primary-step-3">Third Step<br><small>Step description</small></a></li>#}
-                    {#                <li><a href="#default-primary-step-4">Fourth Step<br><small>Step description</small></a></li>#}
                 </ul>
 
                 <div>
@@ -33,10 +31,11 @@
                     <div id="default-primary-step-2" class="">
                         {{ asignacion.management_form }}
                         <table id="datatables-basic" class="table table-striped" style="width:100%">
+                        <caption>Listado de alumnos</caption>
                             <thead>
                             <tr>
-                                <th>Alumno</th>
-                                <th>Asignar Todos <input type="checkbox" id="checkAll"></th>
+                                <th scope="col">Alumno</th>
+                                <th scope="col">Asignar Todos <input type="checkbox" id="checkAll"></th>
                             </tr>
                             </thead>
                             <tbody>

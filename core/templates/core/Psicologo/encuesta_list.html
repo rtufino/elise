@@ -20,11 +20,12 @@
                         </h6>
                     {% else %}
                         <table id="datatables-basic" class="table table-striped" style="width:100%">
+                        <caption>Listado de encuestas</caption>
                             <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Vigencia</th>
-                                <th>Acciones</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Vigencia</th>
+                                <th scope="col">Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -35,12 +36,12 @@
 {#                                    <td>{{ encuesta.id }}</td>#}
                                     <td>
                                         <a href="{% url 'encuesta_detalle' encuesta.id %}" class="btn btn-primary"
-                                           style="text-decoration: none;"> <i class="fas fa-eye"></i> Ver preguntas</a>
+                                           style="text-decoration: none;"> <em class="fas fa-eye"></em> Ver preguntas</a>
                                         <a href="{% url 'encuesta_update' encuesta.id %}" class="btn btn-primary"
-                                           style="text-decoration: none;"><i class="fas fa-pencil-alt"></i> Editar
+                                           style="text-decoration: none;"><em class="fas fa-pencil-alt"></em> Editar
                                         </a>
                                         <a href="{% url 'encuesta_delete' encuesta.id %}" class="btn btn-danger"
-                                           style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar Encuesta</a>
+                                           style="text-decoration: none;"><em class="fas fa-trash"></em> Eliminar Encuesta</a>
                                     </td>
                                 </tr>
                             {% endfor %}

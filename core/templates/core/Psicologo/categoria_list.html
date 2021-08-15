@@ -19,12 +19,13 @@
                         <h6>Aún no existen categorias <a href="{% url 'categoria_create' %}">Crea una dando clic aquí</a></h6>
                     {% else %}
                         <table id="datatables-basic" class="table table-striped" style="width:100%">
+                        <caption>Listado de categorias</caption>
                             <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Siglas</th>
-                                <th>Calcular</th>
-                                <th>Acciones</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Siglas</th>
+                                <th scope="col">Calcular</th>
+                                <th scope="col">Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -42,10 +43,10 @@
                                     </td>
                                     <td>
                                         <a href="{% url 'categoria_update' categoria.id %}" class="btn btn-primary"
-                                           style="text-decoration: none;"><i class="fas fa-pencil-alt"></i> Editar
+                                           style="text-decoration: none;"><em class="fas fa-pencil-alt"></em>
                                         </a>
                                         <a href="{% url 'categoria_delete' categoria.id %}" class="btn btn-danger"
-                                           style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar </a>
+                                           style="text-decoration: none;"><em class="fas fa-trash"></em></a>
                                     </td>
                                 </tr>
                                 {% endif %}

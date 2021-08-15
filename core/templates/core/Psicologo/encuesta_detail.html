@@ -25,33 +25,33 @@
                             <ul class="sidebar-item">
                                 <a href="#{{ categoria|cut:' ' }}" data-toggle="collapse" class="sidebar-link collapsed"
                                    style="background-color: darkgray; color: white">
-                                    <i class="align-middle" data-feather="users"></i> <span
+                                    <em class="align-middle" data-feather="users"></em> <span
                                         class="align-middle">{{ categoria }}</span>
                                     <span class="sidebar-badge"><i class="fas fa-chevron-down"></i></span>
                                 </a>
                                 <ul id="{{ categoria|cut:' ' }}" class="sidebar-dropdown list-unstyled collapsed"
                                     data-parent="#sidebar">
                                     <table class="table table-striped">
+                                    <caption>listado de preguntas</caption>
                                         {% for pregunta in preguntas %}
                                             {% if pregunta.categoria == categoria %}
-
                                                 <tr>
                                                     <td>{{ pregunta.enunciado }}</td>
                                                     <td>
                                                         <a href="{% url 'pregunta_detalle' pregunta.id %}"
                                                            class="btn btn-primary"
-                                                           style="text-decoration: none;"><i
-                                                                class="fas fa-pencil-alt"></i> Ver opciones
+                                                           style="text-decoration: none;"><em
+                                                                class="fas fa-pencil-alt"></em> Ver opciones
                                                         </a>
                                                         <a href="{% url 'pregunta_update' pregunta.id %}"
                                                            class="btn btn-primary"
-                                                           style="text-decoration: none;"><i
-                                                                class="fas fa-pencil-alt"></i> Editar
+                                                           style="text-decoration: none;"><em
+                                                                class="fas fa-pencil-alt"></em> Editar
                                                         </a>
                                                         <a href="{% url 'pregunta_delete' pregunta.id %}"
                                                            class="btn btn-danger"
-                                                           style="text-decoration: none;"><i
-                                                                class="fas fa-trash"></i> Eliminar </a>
+                                                           style="text-decoration: none;"><em
+                                                                class="fas fa-trash"></em> Eliminar </a>
                                                     </td>
                                                 </tr>
                                             {% endif %}

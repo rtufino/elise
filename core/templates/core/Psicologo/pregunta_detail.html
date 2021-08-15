@@ -5,7 +5,6 @@
             <div class="mb-3">
                 <a href="{% url 'opcion_create' pregunta.id %}" class="btn btn-primary" style="text-decoration: none;"> Crear una
                     Opción</a>
-                <i class="fa fa-trash-o"></i>
             </div>
         </div>
         <div class="col-12 col-xl-12">
@@ -20,11 +19,12 @@
                         <h6>Aún no existen opciones <a href="{% url 'opcion_create' %}">Crea una dando clic aquí</a></h6>
                     {% else %}
                         <table id="datatables-basic" class="table table-striped" style="width:100%">
+                        <caption>Listado de opciones</caption>
                             <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Vigencia</th>
-                                <th>Acciones</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Vigencia</th>
+                                <th scope="col">Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -34,10 +34,10 @@
                                     <td>{{ opcion.numero }}</td>
                                     <td>
                                         <a href="{% url 'opcion_update' opcion.id %}" class="btn btn-primary"
-                                           style="text-decoration: none;"><i class="fas fa-pencil-alt"></i> Editar
+                                           style="text-decoration: none;"><em class="fas fa-pencil-alt"></em>
                                         </a>
                                         <a href="{% url 'opcion_delete' opcion.id %}" class="btn btn-danger"
-                                           style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar </a>
+                                           style="text-decoration: none;"><em class="fas fa-trash"></em></a>
                                     </td>
                                 </tr>
                             {% endfor %}

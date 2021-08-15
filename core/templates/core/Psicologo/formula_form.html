@@ -100,7 +100,7 @@
         <input type="submit" value="Guardar" class="btn btn-primary">
     </form>
     <script>
-        let birdForm = document.querySelectorAll(".inline-form")
+        let terminoForm = document.querySelectorAll(".inline-form")
         let container = document.querySelector("#form-container")
         let addButton = document.querySelector("#add-form")
         let totalForms = document.querySelector("#id_termino_set-TOTAL_FORMS")
@@ -110,14 +110,12 @@
 
         function addForm(e) {
             e.preventDefault()
-            let newForm = birdForm[0].cloneNode(true)
+            let newForm = terminoForm[0].cloneNode(true)
             let formRegex = RegExp(`termino_set-(\\d){1}-`, 'g')
 
             formNum++
             newForm.innerHTML = newForm.innerHTML.replace(formRegex, `termino_set-${formNum}-`)
             container.insertBefore(newForm, addButton)
-            {#document.getElementById(`id_termino_set-${formNum}-signo`).removeAttribute("value");#}
-            {#document.getElementById(`id_termino_set-${formNum}-valor`).removeAttribute("value");#}
 
             totalForms.setAttribute('value', `${formNum + 1}`)
         }

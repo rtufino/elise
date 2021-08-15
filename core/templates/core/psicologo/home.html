@@ -12,9 +12,7 @@
 
     <link rel="preconnect" href="//fonts.gstatic.com/" crossorigin="">
     {% load static %}
-    {#	<link href="css/classic.css" rel="stylesheet">#}
     <link href="{% static 'css/classic.css' %}" rel="stylesheet">
-    {#	<script src="\js\settings.js"></script>#}
     <script src="{% static 'js/settings.js' %}"></script>
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-120946860-6"></script>
 
@@ -25,7 +23,7 @@
     <nav id="sidebar" class="sidebar">
         <div class="sidebar-content ">
             <a class="sidebar-brand" href="#">
-                <i class="align-middle" data-feather="box"></i>
+                <em class="align-middle" data-feather="box"></em>
                 <span class="align-middle">ELISE</span>
             </a>
 
@@ -35,28 +33,28 @@
                 </li>
                 <li class="sidebar-item">
                     <a href="{% url 'go_psicologo' %}" class="sidebar-link collapsed">
-                        <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Dashboard</span>
+                        <em class="align-middle" data-feather="pie-chart"></em> <span class="align-middle">Dashboard</span>
                     </a>
                     <a href="{% url 'estudio' %}" class="sidebar-link collapsed">
-                        <i class="align-middle" data-feather="layout"></i> <span
+                        <em class="align-middle" data-feather="layout"></em> <span
                             class="align-middle">Estudios</span>
                     </a>
                     <a href="{% url 'formula' %}" class="sidebar-link collapsed">
-                        <i class="align-middle" data-feather="layout"></i> <span
+                        <em class="align-middle" data-feather="layout"></em> <span
                             class="align-middle">Gestión de Fórmulas</span>
                     </a>
                     <a href="{% url 'encuesta' %}" class="sidebar-link collapsed">
-                        <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Getión de Encuestas</span>
+                        <em class="align-middle" data-feather="layout"></em> <span class="align-middle">Getión de Encuestas</span>
                     </a>
                     <a href="{% url 'categoria' %}" class="sidebar-link collapsed">
-                        <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Gestión de Categorias</span>
+                        <em class="align-middle" data-feather="layout"></em> <span class="align-middle">Gestión de Categorias</span>
                     </a>
                     <a href="{% url 'categoria' %}" class="sidebar-link collapsed">
-                        <i class="align-middle" data-feather="layout"></i> <span
+                        <em class="align-middle" data-feather="layout"></em> <span
                             class="align-middle">Tipo de Preguntas</span>
                     </a>
                     <a href="{% url 'formula' %}" class="sidebar-link collapsed">
-                        <i class="align-middle" data-feather="layout"></i> <span
+                        <em class="align-middle" data-feather="layout"></em> <span
                             class="align-middle">Gestión de Fórmulas</span>
                     </a>
 
@@ -77,13 +75,12 @@
             <div id="like_button_container"> abcv</div>
             <div class="sidebar-bottom d-none d-lg-block">
                 <div class="media">
-                    {#<img class="rounded-circle mr-3" src="img\avatars\avatar.jpg" alt="Chris Wood" width="40" height="40">#}
                     <img class="rounded-circle mr-3" src="{% static 'img/avatars/avatar.jpg' %}" alt="Chris Wood"
                          width="40" height="40">
                     <div class="media-body">
                         <h5 class="mb-1">{{request.user}}</h5>
                         <div>
-                            <i class="fas fa-circle text-success"></i> Online
+                            <em class="fas fa-circle text-success"></em> Online
                         </div>
                     </div>
                 </div>
@@ -98,7 +95,7 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
-                            <i class="align-middle" data-feather="settings"></i>
+                            <em class="align-middle" data-feather="settings"></em>
                         </a>
 
                         <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
