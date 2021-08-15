@@ -21,6 +21,8 @@
 </head>
 
 <body>
+{% if user.is_authenticated %}
+
 <div class="wrapper">
     <nav id="sidebar" class="sidebar">
         <div class="sidebar-content ">
@@ -139,6 +141,8 @@
 {% block scripts %}
 
 {% endblock %}
+{% endif %}
+
 </body>
 
 </html>

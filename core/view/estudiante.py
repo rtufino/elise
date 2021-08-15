@@ -6,7 +6,6 @@ from django.views.generic.list import ListView
 from core.models import Encuesta, Pregunta, Categoria, Opcion, Formula, Termino, Rendimiento, Estudio, Asignacion, \
     Alumno
 ruta_estudiante = 'core/Estudiante'
-
 def go_estudiante(request):
     if request.user.is_authenticated and user_type.objects.get(user=request.user).es_estudiante:
         alumno=Alumno.objects.filter(usuario=request.user.id).first()
@@ -25,7 +24,7 @@ def go_estudiante(request):
         return redirect('login')
 
 
-
+@login_required
 def quiz_detail(request, pk):
     estudio=Estudio.objects.filter(id=pk).first()
     asignacion = Asignacion.objects.filter(estudio=pk).first()

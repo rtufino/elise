@@ -1,5 +1,7 @@
+
 <!doctype html>
 {% load widget_tweaks %}
+
 <html lang="en">
 
 <head>
@@ -20,6 +22,7 @@
 </head>
 
 <body>
+{% if user.is_authenticated %}
 <div class="wrapper">
     <div class="main">
         <nav class="navbar navbar-expand navbar-light bg-white">
@@ -89,6 +92,7 @@
 {% block scripts %}
 
 {% endblock %}
-</body>
+{% endif %}
 
+</body>
 </html>
