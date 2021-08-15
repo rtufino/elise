@@ -126,7 +126,7 @@ class AsignacionAdmin(admin.ModelAdmin):
 
 class EstudioAdmin(admin.ModelAdmin):
     model = Estudio
-    list_display = 'periodo', 'fecha'
+    list_display = 'periodo', 'fecha', 'id'
     search_fields = ['periodo']
 
 

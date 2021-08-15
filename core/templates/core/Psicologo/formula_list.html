@@ -12,20 +12,21 @@
         <div class="col-12 col-xl-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Categorias</h5>
-                    <h6 class="card-subtitle text-muted">Listado de Categorias</h6>
+                    <h5 class="card-title">Fórmulas</h5>
+                    <h6 class="card-subtitle text-muted">Listado de Fórmulas</h6>
                 </div>
                 <div class="card-body">
-                    {% if categoria_list|length_is:0 %}
-                        <h1>No existen Categorias!</h1>
+                    {% if not terms_list %}
+                        <h6>Aún no existen fórmulas <a href="{% url 'formula_create' %}">Crea una dando clic aquí</a></h6>
                     {% else %}
                         <table id="datatables-basic" class="table table-striped" style="width:100%">
+                        <caption>Listado de fórmulas</caption>
                             <thead>
                             <tr>
-                                <th>Carrera</th>
-                                <th>Punto de corte</th>
-                                <th>ICAV</th>
-                                <th>Acciones</th>
+                                <th scope="col">Carrera</th>
+                                <th scope="col">Punto de corte</th>
+                                <th scope="col">ICAV</th>
+                                <th scope="col">Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -42,10 +43,10 @@
 
                                     <td>
                                         <a href="{% url 'formula_update' term.formula.id %}" class="btn btn-primary"
-                                           style="text-decoration: none;"><i class="fas fa-pencil-alt"></i> Editar
+                                           style="text-decoration: none;"><em class="fas fa-pencil-alt"></em> Editar
                                         </a>
                                         <a href="{% url 'formula_delete' term.formula.id %}" class="btn btn-danger"
-                                           style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar </a>
+                                           style="text-decoration: none;"><em class="fas fa-trash"></em> Eliminar </a>
                                     </td>
                                 </tr>
                             {% endfor %}

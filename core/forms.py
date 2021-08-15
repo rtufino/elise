@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Encuesta, Pregunta, Tpregunta, Categoria, Opcion
+from .models import Encuesta, Pregunta, Tpregunta, Categoria, Opcion, Asignacion, Alumno
 
 
 class UserRegisterForm(UserCreationForm):
@@ -162,3 +162,18 @@ class OpcionUpdateForm(forms.ModelForm):
         labels = {
             'pregunta': ''
         }
+
+# class AsignacionForm(forms.ModelForm):
+#     class Meta:
+#         model = Asignacion
+#         fields = '__all__'
+#
+#         def __init__(self, *args, **kwargs):
+#             super(AsignacionForm, self).__init__(*args, **kwargs)
+#             alumno = str(Alumno.objects.all().first())
+#             self.fields['alumno_name'] = forms.CharField(empty_value=alumno)
+#             # self.fields['alumno_name'] = forms.IntegerField(label='How much to sent?',
+#             #                                                 required=True,
+#             #                                                 max_value=curmax,
+#             #                                                 min_value=0,
+#             #                                                 )

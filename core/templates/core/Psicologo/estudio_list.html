@@ -20,27 +20,29 @@
                         <h1>No existen estudios!</h1>
                     {% else %}
                         <table id="datatables-basic" class="table table-striped" style="width:100%">
+                        <caption>Listado de estudios</caption>
                             <thead>
                             <tr>
-                                <th>Carrera</th>
-                                <th>Punto de corte</th>
-                                <th>ICAV</th>
-                                <th>Acciones</th>
+                                <th scope="col">Descripción del estudio</th>
+                                <th scope="col">Periodo</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
 
                             {% for estudio in estudio_list %}
                                 <tr>
+                                    <td>{{ estudio.observacion }}</td>
                                     <td>{{ estudio.periodo }}</td>
                                     <td>{{ estudio.fecha }}</td>
-                                    <td>{{ estudio.observacion }}</td>
+
                                     <td>
-{#                                        <a href="{% url 'formula_update' term.formula.id %}" class="btn btn-primary"#}
-{#                                           style="text-decoration: none;"><i class="fas fa-pencil-alt"></i> Editar#}
-{#                                        </a>#}
-{#                                        <a href="{% url 'formula_delete' term.formula.id %}" class="btn btn-danger"#}
-{#                                           style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar </a>#}
+                                        {#                                        <a href="{% url 'formula_update' term.formula.id %}" class="btn btn-primary"#}
+                                        {#                                           style="text-decoration: none;"><i class="fas fa-pencil-alt"></i> Editar#}
+                                        {#                                        </a>#}
+                                        {#                                        <a href="{% url 'formula_delete' term.formula.id %}" class="btn btn-danger"#}
+                                        {#                                           style="text-decoration: none;"><i class="fas fa-trash"></i> Eliminar </a>#}
                                     </td>
                                 </tr>
                             {% endfor %}

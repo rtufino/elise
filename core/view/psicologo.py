@@ -106,6 +106,8 @@ class PreguntaCreateView(CreateView):
         return data
 
     def form_valid(self, form):
+        encuesta_instance = Encuesta.objects.filter(pk=self.kwargs.get('pk')).first()
+        form.instance.encuesta = encuesta_instance
         context = self.get_context_data()
         opcion = context["opcion"]
         self.object = form.save()
@@ -132,6 +134,8 @@ class PreguntaUpdateView(UpdateView):
         return data
 
     def form_valid(self, form):
+        encuesta_instance = Encuesta.objects.filter(pk=self.kwargs.get('pk')).first()
+        form.instance.encuesta = encuesta_instance
         context = self.get_context_data()
         opcion = context["opcion"]
         self.object = form.save()
@@ -398,14 +402,8 @@ class EstudioListView(ListView):
     template_name = ruta_psicologo + '/estudio_list.html'
 
 
-# class EstudioCreateView(CreateView):
-#     model = Estudio
-#     fields = '__all__'
-#     template_name = ruta_psicologo + '/estudio_form.html'
-#     success_url = reverse_lazy('estudio')
-
 AsignacionFormset = inlineformset_factory(
-    Estudio, Asignacion, fields=('__all__'), extra=int(Alumno.objects.count()), fk_name='estudio'
+    Estudio, Asignacion, fields=('__all__'), extra=int(Alumno.objects.count())
 )
 
 
@@ -426,13 +424,13 @@ class EstudioCreateView(CreateView):
             # data["asignacion"] = AsignacionFormset(self.request.POST, instance=alumno)
             data["asignacion"] = AsignacionFormset(self.request.POST)
             # data["range"] = int(Alumno.objects.count())
-            data["alumnos"] = Alumno.objects.all()
+            # data["alumnos"] = Alumno.objects.all()
         else:
             # alumno = Alumno.objects.get(edad=23)
             # data["asignacion"] = AsignacionFormset(instance=alumno)
             data["asignacion"] = AsignacionFormset()
             # data["range"] = range(int(Alumno.objects.count()))
-            data["alumnos"] = Alumno.objects.all()
+            # data["alumnos"] = Alumno.objects.all()
         return data
 
     def form_valid(self, form):
