@@ -12,7 +12,7 @@ from core.forms import EncuestaForm, EncuestaDeleteForm, EncuestaUpdateForm, Pre
     CategoriaForm, \
     CategoriaUpdateForm, CategoriaDeleteForm, OpcionForm, OpcionUpdateForm
 
-from django.forms.models import inlineformset_factory, formset_factory
+from django.forms.models import inlineformset_factory
 
 ruta_psicologo = 'core/Psicologo'
 
@@ -402,45 +402,45 @@ class EstudioListView(ListView):
     template_name = ruta_psicologo + '/estudio_list.html'
 
 
-AsignacionFormset = inlineformset_factory(
-    Estudio, Asignacion, fields=('__all__'), extra=int(Alumno.objects.count())
-)
-
-
-# this will be for model formset
-# form_kwargs={'alumno_name': Alumno.objects.all()}
-
-class EstudioCreateView(CreateView):
-    model = Estudio
-    fields = '__all__'
-    template_name = ruta_psicologo + '/estudio_form.html'
-
-    def get_context_data(self, **kwargs):
-        # we need to overwrite get_context_data
-        # to make sure that our formset is rendered
-        data = super().get_context_data(**kwargs)
-        if self.request.POST:
-            # alumno = Alumno.objects.get(edad=23)
-            # data["asignacion"] = AsignacionFormset(self.request.POST, instance=alumno)
-            data["asignacion"] = AsignacionFormset(self.request.POST)
-            # data["range"] = int(Alumno.objects.count())
-            # data["alumnos"] = Alumno.objects.all()
-        else:
-            # alumno = Alumno.objects.get(edad=23)
-            # data["asignacion"] = AsignacionFormset(instance=alumno)
-            data["asignacion"] = AsignacionFormset()
-            # data["range"] = range(int(Alumno.objects.count()))
-            # data["alumnos"] = Alumno.objects.all()
-        return data
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        asignacion = context["asignacion"]
-        self.object = form.save()
-        if asignacion.is_valid():
-            asignacion.instance = self.object
-            asignacion.save()
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('estudio')
+# AsignacionFormset = inlineformset_factory(
+#     Estudio, Asignacion, fields=('__all__'), extra=int(Alumno.objects.count())
+# )
+#
+#
+# # this will be for model formset
+# # form_kwargs={'alumno_name': Alumno.objects.all()}
+#
+# class EstudioCreateView(CreateView):
+#     model = Estudio
+#     fields = '__all__'
+#     template_name = ruta_psicologo + '/estudio_form.html'
+#
+#     def get_context_data(self, **kwargs):
+#         # we need to overwrite get_context_data
+#         # to make sure that our formset is rendered
+#         data = super().get_context_data(**kwargs)
+#         if self.request.POST:
+#             # alumno = Alumno.objects.get(edad=23)
+#             # data["asignacion"] = AsignacionFormset(self.request.POST, instance=alumno)
+#             data["asignacion"] = AsignacionFormset(self.request.POST)
+#             # data["range"] = int(Alumno.objects.count())
+#             # data["alumnos"] = Alumno.objects.all()
+#         else:
+#             # alumno = Alumno.objects.get(edad=23)
+#             # data["asignacion"] = AsignacionFormset(instance=alumno)
+#             data["asignacion"] = AsignacionFormset()
+#             # data["range"] = range(int(Alumno.objects.count()))
+#             # data["alumnos"] = Alumno.objects.all()
+#         return data
+#
+#     def form_valid(self, form):
+#         context = self.get_context_data()
+#         asignacion = context["asignacion"]
+#         self.object = form.save()
+#         if asignacion.is_valid():
+#             asignacion.instance = self.object
+#             asignacion.save()
+#         return super().form_valid(form)
+#
+#     def get_success_url(self):
+#         return reverse_lazy('estudio')
