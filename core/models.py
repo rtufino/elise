@@ -69,6 +69,13 @@ class Psicologo(models.Model):
     def __str__(self):
         return self.cedula
 
+class Carrera(models.Model):
+    # id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+
 
 class Alumno(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -79,10 +86,10 @@ class Alumno(models.Model):
     ciudad = models.CharField(max_length=200)
     colegio = models.CharField(max_length=200)
     edad = models.IntegerField(default=0)
-    carrera_postular = models.CharField(max_length=200)
+    carrera_postular = models.ForeignKey(Carrera, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.cedula + " | " + self.nombres + " " + self.apellidos
+        return self.cedula + ' ' + self.nombres
 
 
 class Periodo(models.Model):
@@ -99,14 +106,6 @@ class Nivel(models.Model):
     def __str__(self):
         num = str(self.numero)
         return num
-
-
-class Carrera(models.Model):
-    # id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.nombre
 
 
 class Registro(models.Model):
@@ -142,7 +141,7 @@ class Categoria(models.Model):
     estado = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.siglas
+        return self.nombre
 
 
 class Tpregunta(models.Model):

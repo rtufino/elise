@@ -126,14 +126,26 @@ class AsignacionAdmin(admin.ModelAdmin):
 
 class EstudioAdmin(admin.ModelAdmin):
     model = Estudio
-    list_display = 'periodo', 'fecha', 'id'
+    list_display = 'observacion', 'encuesta', 'periodo', 'fecha', 'id'
     search_fields = ['periodo']
 
 
-admin.site.register(Alumno)
+class CarreraAdmin(admin.ModelAdmin):
+    model = Carrera
+    list_display = 'id', 'nombre'
+    search_fields = ['nombre']
+
+
+class AlumnoAdmin(admin.ModelAdmin):
+    model = Alumno
+    list_display = 'cedula', 'usuario', 'nombres', 'apellidos', 'carrera_postular'
+    search_fields = ['cedula']
+
+
+admin.site.register(Alumno, AlumnoAdmin)
 admin.site.register(Periodo, PeriodoAdmin)
 admin.site.register(Nivel)
-admin.site.register(Carrera)
+admin.site.register(Carrera, CarreraAdmin)
 admin.site.register(Registro, RegistroAdmin)
 
 admin.site.register(Encuesta, EncuestaAdmin)

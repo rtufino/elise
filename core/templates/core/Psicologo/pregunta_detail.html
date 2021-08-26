@@ -3,7 +3,8 @@
     <div class="row" id="questionApp">
         <div class="card-body text-center">
             <div class="mb-3">
-                <a href="{% url 'opcion_create' pregunta.id %}" class="btn btn-primary" style="text-decoration: none;"> Crear una
+                <a href="{% url 'opcion_create' pregunta.id %}" class="btn btn-primary" style="text-decoration: none;">
+                    Crear una
                     Opción</a>
             </div>
         </div>
@@ -16,14 +17,16 @@
                 </div>
                 <div class="card-body">
                     {% if not opciones %}
-                        <h6>Aún no existen opciones <a href="{% url 'opcion_create' %}">Crea una dando clic aquí</a></h6>
+                        <h6>Aún no existen opciones <a href="{% url 'opcion_create' pregunta.id %}">Crea una dando clic
+                            aquí</a></h6>
                     {% else %}
                         <table id="datatables-basic" class="table table-striped" style="width:100%">
-                        <caption>Listado de opciones</caption>
+                            <caption>Listado de opciones</caption>
                             <thead>
                             <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Vigencia</th>
+                                <th scope="col">Opción</th>
+                                <th scope="col">Ponderado</th>
+                                <th scope="col">Número</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                             </thead>
@@ -31,6 +34,7 @@
                             {% for opcion in opciones %}
                                 <tr>
                                     <td>{{ opcion.etiqueta }}</td>
+                                    <td>{{ opcion.ponderado }}</td>
                                     <td>{{ opcion.numero }}</td>
                                     <td>
                                         <a href="{% url 'opcion_update' opcion.id %}" class="btn btn-primary"

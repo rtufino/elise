@@ -1,0 +1,22 @@
+{% extends 'core/psicologo/home.html' %}
+{% block content %}
+    <div class="row">
+        <div class="card-body text-center">
+            <div class="mb-3">
+            </div>
+        </div>
+        <div class="col-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <form action="" method="post">{% csrf_token %}
+                        <h5 class="card-title">¿Esta seguro de eliminar "{{ object }}"?</h5>
+                        <a href="{% url 'estudio' %}" class="btn btn-outline-secondary">No, Cancelar</a>
+                        <input type="submit" value="Si, Eliminar" class="btn btn-danger">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
