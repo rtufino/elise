@@ -413,9 +413,12 @@ class EstudioCreateView(CreateView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         if self.request.POST:
-            data["carreras"] = Carrera.objects.annotate(number_of_students=Count('alumno'))
+            # Book.objects.filter(name__startswith="Django").annotate(num_authors=Count('authors'))
+            data["carreras"] = Carrera.objects.filter(alumno__estado=1).annotate(number_of_students=Count('alumno'))
+            # data["carreras"] = Carrera.objects.annotate(number_of_students=Count('alumno'))
         else:
-            data["carreras"] = Carrera.objects.annotate(number_of_students=Count('alumno'))
+            data["carreras"] = Carrera.objects.filter(alumno__estado=1).annotate(number_of_students=Count('alumno'))
+            # data["carreras"] = Carrera.objects.annotate(number_of_students=Count('alumno'))
         return data
 
     def post(self, request, *args, **kwargs):
@@ -427,13 +430,14 @@ class EstudioCreateView(CreateView):
                 alumnos_postulantes = Alumno.objects.filter(carrera_postular__in=carreras_a_estudiar)
                 asignacion_list = list()
                 for postulante in alumnos_postulantes:
-                    asignacion_list.append(
-                        Asignacion(
-                            alumno_name=postulante,
-                            tipo="asignacion automatica",
-                            estudio=estudio
+                    if postulante.estado == 1:
+                        asignacion_list.append(
+                            Asignacion(
+                                alumno_name=postulante,
+                                tipo="asignacion automatica",
+                                estudio=estudio
+                            )
                         )
-                    )
                 Asignacion.objects.bulk_create(asignacion_list)
 
                 return self.form_valid(form)

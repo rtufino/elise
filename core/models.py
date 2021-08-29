@@ -86,6 +86,7 @@ class Alumno(models.Model):
     ciudad = models.CharField(max_length=200)
     colegio = models.CharField(max_length=200)
     edad = models.IntegerField(default=0)
+    estado = models.IntegerField(default=1)
     carrera_postular = models.ForeignKey(Carrera, on_delete=models.CASCADE)
 
     def __str__(self):
