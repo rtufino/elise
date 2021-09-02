@@ -37,16 +37,16 @@
                                     <td>{{ term.formula.porcentaje }}</td>
                                     <td>
                                         {% for termino in term.termino %}
-                                            {{ termino.signo }}{{ termino.valor }}{{ termino.variable.siglas }}
+                                            {{ termino.signo }}{{ termino.valor }} {{ termino.variable.siglas }}
                                         {% endfor %}
                                     </td>
 
                                     <td>
                                         <a href="{% url 'formula_update' term.formula.id %}" class="btn btn-primary"
-                                           style="text-decoration: none;"><em class="fas fa-pencil-alt"></em> Editar
+                                           style="text-decoration: none;"><em class="fas fa-pencil-alt"></em>
                                         </a>
                                         <a href="{% url 'formula_delete' term.formula.id %}" class="btn btn-danger"
-                                           style="text-decoration: none;"><em class="fas fa-trash"></em> Eliminar </a>
+                                           style="text-decoration: none;"><em class="fas fa-trash"></em>  </a>
                                     </td>
                                 </tr>
                             {% endfor %}

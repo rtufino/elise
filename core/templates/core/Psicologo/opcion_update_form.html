@@ -1,21 +1,17 @@
 {% extends 'core/psicologo/home.html' %}
 {% block content %}
-    <div class="row" id="questionApp">
-        <div class="card-body text-center">
-            <div class="mb-3">
-            </div>
-        </div>
-        <div class="col-12 col-xl-12">
+    <div class="row justify-content-center" id="questionApp">
+        <div class="col-12 col-xl-6">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title"> Esta opción pertenece a la pregunta:  "{{ object.pregunta }}"</h5>
+                    <h5 class="card-title"> Esta opción pertenece a la pregunta: "{{ object.pregunta }}"</h5>
                     <h6 class="card-subtitle text-muted">Edita los parametros de la opción</h6>
                 </div>
                 <div class="card-body">
                     <form method="post">{% csrf_token %}
                         {{ form.as_p }}
-                        <a href="{% url 'pregunta_detalle' object.pregunta.id %}" class="btn btn-outline-danger"> Cancelar</a>
-{#                        <a href="/psicologo/pregunta/{{ object.pregunta.id }}/" class="btn btn-outline-danger"> Cancelar</a>#}
+                        <a href="{% url 'pregunta_detalle' object.pregunta.id %}" class="btn btn-outline-danger">
+                            Cancelar</a>
                         <input type="submit" value="Actualizar" class="btn btn-primary">
                     </form>
                 </div>
@@ -30,6 +26,10 @@
                                 progressBar: true,
                                 timeOut: '3500'
                             });
+                            setTimeout(function () {
+                                localStorage.setItem('update', 'true')
+                                history.go(-2)
+                            }, 3000);
                         }
                     </script>
                 {% endif %}

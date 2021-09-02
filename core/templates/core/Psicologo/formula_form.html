@@ -36,14 +36,14 @@
                 </div>
             </div>
             <div class="col-12 col-xl-6">
-                <div class="card">
+                <div class="card py-md-4">
                     <div class="card-header">
                         <h5 class="card-title">Rendimientos para la formula</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body py-md-4">
                         {{ rendimiento.management_form }}
                         {% for form in rendimiento %}
-                            <div class="form-row">
+                            <div class="form-row py-md-3">
                                 <div class="form-group col-md-6">
                                     <label for="{{ form.rendimiento_satisfactorio.id_for_label }}">Satisfactorio</label>
                                     {% render_field form.rendimiento_satisfactorio class="form-control" %}
@@ -64,7 +64,7 @@
         </div>
         {{ termino.management_form }}
         {% for form in termino %}
-            <div class="col-md-12 inline-form">
+            <div class="col-md-12 inline-form px-0">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">Término</h5>

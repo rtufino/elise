@@ -10,7 +10,7 @@
         </div>
         <div class="col-12 col-xl-12">
             <div class="card">
-                <h3 class="text-center">{{ pregunta.enunciado }}</h3>
+                <h3 class="text-center py-4">Pregunta: {{ pregunta.enunciado }}</h3>
                 <div class="card-header">
                     <h5 class="card-title">Listado de opciones </h5>
                     <h6 class="card-subtitle text-muted"></h6>
@@ -49,7 +49,15 @@
                             </tbody>
                         </table>
                     {% endif %}
-
+                    <script>
+                        window.onload = () => {
+                            let update = localStorage.getItem('update');
+                            if (update == 'true') {
+                                localStorage.setItem('update', 'false')
+                                history.go(0)
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </div>

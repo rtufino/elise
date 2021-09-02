@@ -39,44 +39,44 @@
                                 class="align-middle">Dashboard</span>
                         </a>
                         <a href="{% url 'estudio' %}" class="sidebar-link collapsed">
-                            <em class="align-middle" data-feather="layout"></em> <span
+                            <em class="align-middle" data-feather="database"></em> <span
                                 class="align-middle">Estudios</span>
                         </a>
                         <a href="{% url 'formula' %}" class="sidebar-link collapsed">
-                            <em class="align-middle" data-feather="layout"></em> <span
+                            <em class="align-middle" data-feather="plus-square"></em> <span
                                 class="align-middle">Gestión de Fórmulas</span>
                         </a>
-                        <a href="{% url 'encuesta' %}" class="sidebar-link collapsed">
-                            <em class="align-middle" data-feather="layout"></em> <span class="align-middle">Getión de Encuestas</span>
+                    <li class="sidebar-item">
+                        <a href="#dashboards" data-toggle="collapse" class="sidebar-link">
+                            <i class="align-middle" data-feather="file-text"></i> <span
+                                class="align-middle">Gestión de Encuestas</span>
                         </a>
-                        <a href="{% url 'categoria' %}" class="sidebar-link collapsed">
-                            <em class="align-middle" data-feather="layout"></em> <span class="align-middle">Gestión de Categorias</span>
-                        </a>
-                        <a href="{% url 'categoria' %}" class="sidebar-link collapsed">
-                            <em class="align-middle" data-feather="layout"></em> <span
-                                class="align-middle">Tipo de Preguntas</span>
-                        </a>
-                        {#                        <a href="{% url 'formula' %}" class="sidebar-link collapsed">#}
-                        {#                            <em class="align-middle" data-feather="layout"></em> <span#}
-                        {#                                class="align-middle">Gestión de Fórmulas</span>#}
-                        {#                        </a>#}
-
-                        <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
-                            <li class="sidebar-item"><a class="sidebar-link" href="pages-profile.html">Profile</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="pages-settings.html">Settings</a>
+                        <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+                            <li class="sidebar-item"><a href="{% url 'encuesta' %}" class="sidebar-link collapsed">
+                                <span class="align-middle">Encuestas</span>
+                            </a>
                             </li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="pages-clients.html">Clients</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="pages-projects.html">Projects <span
-                                    class="sidebar-badge badge badge-primary">New</span></a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="pages-invoice.html">Invoice</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="pages-pricing.html">Pricing</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="pages-tasks.html">Tasks <span
-                                    class="sidebar-badge badge badge-primary">New</span></a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="pages-blank.html">Blank Page</a></li>
+                            <li class="sidebar-item"><a href="{% url 'categoria' %}" class="sidebar-link collapsed">
+                                <span class="align-middle"> Categorias</span>
+                            </a>
+                            </li>
                         </ul>
                     </li>
+                    <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-profile.html">Profile</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-settings.html">Settings</a>
+                        </li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-clients.html">Clients</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-projects.html">Projects <span
+                                class="sidebar-badge badge badge-primary">New</span></a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-invoice.html">Invoice</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-pricing.html">Pricing</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-tasks.html">Tasks <span
+                                class="sidebar-badge badge badge-primary">New</span></a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="pages-blank.html">Blank Page</a></li>
+                    </ul>
+                    </li>
                 </ul>
-                <div id="like_button_container"> abcv</div>
                 <div class="sidebar-bottom d-none d-lg-block">
                     <div class="media">
                         <img class="rounded-circle mr-3" src="{% static 'img/avatars/avatar.jpg' %}" alt="Chris Wood"
@@ -122,7 +122,7 @@
                         {% endblock %}
                     </div>
                 </main>
-                <footer class="footer">
+                <footer class="footer" style="position: inherit;bottom: 0;width: 100%;">
                     <div class="container-fluid">
                         <div class="row text-muted">
                             <div class="col-6 text-right">

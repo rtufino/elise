@@ -2,46 +2,46 @@
 {% load widget_tweaks %}
 {% block content %}
     <form method="post">{% csrf_token %}
-        <div class="row">
-            <div class="card-body text-center">
-                <div class="mb-3">
-                    <h1>Ingresa los datos de la pregunta</h1>
-                </div>
-            </div>
-            <div class="col-12 col-xl-12">
+        <div class="row justify-content-center">
+{#            <div class="card-body text-center">#}
+{#                <div class="mb-3">#}
+{#                    <h1>Ingresa los datos de la pregunta</h1>#}
+{#                </div>#}
+{#            </div>#}
+            <div class="col-12 col-xl-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title"></h5>
+                        <h5 class="card-title">Ingresa los datos de la pregunta</h5>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label class="form-label">Selecciona un Campo Profesional</label>
-                            {% render_field form.categoria class="form-control" %}
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Dale un enunciado a tu pregunta</label>
-                            {% render_field form.enunciado class="form-control" %}
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Selecciona un Tipo de pregunta</label>
-                            {% render_field form.tpregunta class="form-control" %}
-                        </div>
-                            {% render_field form.encuesta %}
-                        <div class="form-group">
-                            <label class="form-label">Numero</label>
+                            <label class="form-label">Nùmero de pregunta:</label>
                             {% render_field form.numero class="form-control" %}
                             {% render_field form.estado class="d-none" %}
                         </div>
-{#                        {{ form.as_p }}#}
+                        <div class="form-group">
+                            <label class="form-label">Selecciona un Campo Profesional:</label>
+                            {% render_field form.categoria class="form-control" %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Dale un enunciado a tu pregunta:</label>
+                            {% render_field form.enunciado class="form-control" rows="3" %}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Selecciona un Tipo de pregunta:</label>
+                            {% render_field form.tpregunta class="form-control" %}
+                        </div>
+                        {% render_field form.encuesta %}
+                        {#                        {{ form.as_p }}#}
                         {{ opcion.management_form }}
                         {% for i in opcion %}
                             {{ i }}
                         {% endfor %}
                         <a href="{% url 'encuesta' %}" class="btn btn-outline-danger"> Cancelar</a>
                         <input type="submit" value="Guardar" class="btn btn-primary">
-                    <script>
-                        $('select[id="id_encuesta"]').val(1);
-                    </script>
+                        <script>
+                            $('select[id="id_encuesta"]').val(1);
+                        </script>
                     </div>
                 </div>
             </div>
