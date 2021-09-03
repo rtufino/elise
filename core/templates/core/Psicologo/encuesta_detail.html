@@ -11,7 +11,7 @@
         </div>
         <div class="col-12 col-xl-12">
             <div class="card">
-                <h3 class="text-center my-4">{{ encuesta.nombre }}</h3>
+                <h3 class="text-center px-4">{{ encuesta.nombre }}</h3>
                 <div class="card-header">
                     <h5 class="card-title">Listado de preguntas </h5>
                     <h6 class="card-subtitle text-muted">Selecciona una categoria...</h6>
@@ -36,22 +36,22 @@
                                         {% for pregunta in preguntas %}
                                             {% if pregunta.categoria == categoria %}
                                                 <tr>
-                                                    <td>{{ pregunta.enunciado }}</td>
-                                                    <td>
+                                                    <td>{{ pregunta.numero }}. {{ pregunta.enunciado }}</td>
+                                                    <td style="float: right">
                                                         <a href="{% url 'pregunta_detalle' pregunta.id %}"
                                                            class="btn btn-primary"
                                                            style="text-decoration: none;"><em
-                                                                class="fas fa-pencil-alt"></em> Ver opciones
+                                                                class="fas fa-eye"></em>
                                                         </a>
                                                         <a href="{% url 'pregunta_update' pregunta.id %}"
                                                            class="btn btn-primary"
                                                            style="text-decoration: none;"><em
-                                                                class="fas fa-pencil-alt"></em> Editar
+                                                                class="fas fa-pencil-alt"></em>
                                                         </a>
                                                         <a href="{% url 'pregunta_delete' pregunta.id %}"
                                                            class="btn btn-danger"
                                                            style="text-decoration: none;"><em
-                                                                class="fas fa-trash"></em> Eliminar </a>
+                                                                class="fas fa-trash"></em>  </a>
                                                     </td>
                                                 </tr>
                                             {% endif %}
@@ -62,6 +62,15 @@
                             </ul>
                     {% endfor %}
                 </div>
+            <script>
+                window.onload = () => {
+                    let update = localStorage.getItem('update');
+                    if (update == 'true'){
+                        localStorage.setItem('update','false')
+                        history.go(0)
+                    }
+                }
+            </script>
             </div>
         </div>
     </div>

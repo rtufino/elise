@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 {% block content %}
     <form method="post">{% csrf_token %}
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-12 col-xl-6">
                 <div class="card">
                     <div class="card-header">
@@ -11,12 +11,13 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label class="form-label">Encuesta:</label>
-                            {% render_field form.encuesta class="form-control"  %}
+                            <label class="form-label d-none">Encuesta:</label>
+                            {% render_field form.encuesta class="form-control d-none" %}
                         </div>
                         <div class="form-group">
                             <label class="form-label">Enunciado de la pregunta:</label>
-                            {% render_field form.enunciado class="form-control" %}
+                            {% render_field form.enunciado class="form-control" rows="3" %}
+{#                            {% render_field form.observacion class="form-control" rows="3" %}#}
                         </div>
                         <div class="form-group">
                             <label class="form-label">Selecciona un Campo Profesional:</label>
@@ -31,50 +32,33 @@
                             {% render_field form.numero class="form-control" %}
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Estado:</label>
+                            <label class="form-label d-none">Estado:</label>
                             {% render_field form.estado class="form-control" %}
                         </div>
                     </div>
                 </div>
             </div>
-            {{ opcion.management_form }}
-            {% for form in opcion %}
-                <div class="col-md-12 col-xl-6">
-                    <div class="inline-form">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title">Opción</h5>
-                                <h6 class="card-subtitle text-muted"></h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label class="{{ form.etiqueta.id_for_label }}">Etiqueta:</label>
-                                    {% render_field form.etiqueta class="form-control" %}
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="{{ form.numero.id_for_label }}">Número</label>
-                                        {% render_field form.numero class="form-control" %}
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="{{ form.ponderado.id_for_label }}">Ponderado</label>
-                                        {% render_field form.ponderado class="form-control" %}
-                                    </div>
-                                </div>
-                                <label class="custom-control custom-checkbox">
-                                    {% render_field form.DELETE class="custom-control-input" %}
-                                    <span class="custom-control-label">Eliminar esta opción</span>
-                                </label>
-                                {{ form.pregunta }}
-                                {{ form.id }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
         </div>
         <a href="{% url 'encuesta_detalle' object.encuesta.id %}" class="btn btn-outline-danger">
             Cancelar</a>
         <input type="submit" value="Editar" class="btn btn-primary">
+        {% if 'ok' in request.GET %}
+            <script>
+                window.onload = () => {
+                    let message = 'Pregunta exitosamente actualizada!';
+                    let title = "Operación Exitosa";
+                    let type = 'success';
+                    toastr[type](message, title, {
+                        positionClass: 'toast-top-center',
+                        progressBar: true,
+                        timeOut: '3500'
+                    });
+                    setTimeout(function () {
+                        localStorage.setItem('update', 'true')
+                        history.go(-2);
+                    }, 3000);
+                }
+            </script>
+        {% endif %}
     </form>
 {% endblock %}

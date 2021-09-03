@@ -64,16 +64,13 @@
         </div>
         {{ termino.management_form }}
         {% for form in termino %}
-            <div class="col-md-12 inline-form">
+            <div class="col-md-12 inline-form px-0">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Inline form</h5>
-                        <h6 class="card-subtitle text-muted">Single horizontal row.</h6>
+                        <h5 class="card-title">Término</h5>
+                        <h6 class="card-subtitle text-muted">Configra un término para la formula</h6>
                     </div>
                     <div class="card-body form-inline">
-                        {#                        <label class="sr-only" for="inlineFormInputName2">Name</label>#}
-                        {#                        <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2"#}
-                        {#                               placeholder="Jane Doe">#}
                         <label class="mr-2" for="{{ form.signo.id_for_label }}">Signo</label>
                         {% render_field form.signo class="form-control mb-2 mr-sm-2" %}
                         <label class="mr-2" for="{{ form.valor.id_for_label }}">Valor</label>
@@ -115,9 +112,6 @@
             formNum++
             newForm.innerHTML = newForm.innerHTML.replace(formRegex, `termino_set-${formNum}-`)
             container.insertBefore(newForm, addButton)
-            console.log(`removiendo value de id_termino_set-${formNum}-id`)
-            console.log(`removiendo value de id_termino_set-${formNum}-signo`)
-            console.log(`removiendo value de id_termino_set-${formNum}-valor`)
             document.getElementById(`id_termino_set-${formNum}-id`).removeAttribute("value");
             document.getElementById(`id_termino_set-${formNum}-signo`).removeAttribute("value");
             document.getElementById(`id_termino_set-${formNum}-valor`).removeAttribute("value");

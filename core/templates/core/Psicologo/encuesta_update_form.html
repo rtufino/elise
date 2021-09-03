@@ -35,4 +35,15 @@
             </div>
         </div>
     </div>
+    <script>
+        $(function() {
+			$("input[name=\"f_vigencia\"]").daterangepicker({
+				singleDatePicker: true,
+				showDropdowns: true,
+                locale: {
+					format: "YYYY-MM-DD"
+				}
+			});
+		});
+    </script>
 {% endblock %}

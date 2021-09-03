@@ -59,7 +59,7 @@
                     <h6>{{ forloop.counter}}.{{pregunta.enunciado}}</h6>
                     <span name="ids" style="Display:none;">{{pregunta.id}}</span>
                     <input id="{{pregunta.id}}_res" name="valores" type="hidden"/>
-                    <input type="hidden" id="{{pregunta.id}}_" name="categorias" value="{{pregunta.categoria}}"/>
+                    <input type="hidden" id="{{pregunta.id}}_" name="categorias" value="{{pregunta.categoria.siglas}}"/>
                     <input type="hidden" id="{{pregunta.id}}_opcion" name="recopciones"/>
                     <input type="hidden" id="{{pregunta.id}}_respuesta" name="respuestas"/>
                     {% for opcion in opciones %}
@@ -77,14 +77,17 @@
                 </div>
                 {% endif %}
                 {% if pregunta.tpregunta|stringformat:"s" == 'abierta' %}
+                    <div class="col-md-10 col-sm-6">
+                    <h6>{{ forloop.counter}}.{{pregunta.enunciado}}</h6>
+                    </div>
                     <input type="hidden" id="{{pregunta.id}}_text" name="valores" value="0"/>
-                    <input type="hidden" id="{{pregunta.id}}_ctext" name="categorias" value="{{pregunta.categoria}}"/>
+                    <input type="hidden" id="{{pregunta.id}}_ctext" name="categorias" value="{{pregunta.categoria.siglas}}"/>
                     <input type="hidden" id="{{pregunta.id}}_retext" name="respuestas"/>
                 {% for opcion in opciones %}
                 {% for j in opcion %}
                 {% if j.pregunta.id == pregunta.id %}
                 <div class="col-md-6 col-sm-6">
-                    <label>{{pregunta.id}}.{{pregunta.enunciado}}</label>
+<!--                    <label>{{pregunta.id}}.{{pregunta.enunciado}}</label>-->
                     <textarea class="form-control" id="respuestas" rows="3"
                               name="{{j.pregunta.id}}" value="{{j.ponderado}}" required></textarea>
                     <input type="hidden" id="{{pregunta.id}}_optext" value="{{j.id}}" name="recopciones"/>
@@ -96,7 +99,7 @@
                 {% endif %}
                 {% endfor %}
             </div>
-            <button type="submit" class="btn btn-primary" onclick=success()>Enviar</button>
+            <button type="submit" class="btn btn-primary" onclick="location.href ='http://example.com/alternate_url.html'" >Enviar</button>
         </form>
         <main class="content">
             <div class="container-fluid p-0">
@@ -119,6 +122,10 @@
 <script src="{% static 'js/app.js' %}"></script>
 
 <script type="text/Javascript">
+
+    function success(){
+          location.href = "resultados.html";
+    }
     let preguntas_ids = [];
     $("span[name='ids']").each(function () {
     console.log($(this).text());

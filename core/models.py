@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
+from simple_history.models import HistoricalRecords
+from safedelete.models import SafeDeleteModel, SOFT_DELETE_CASCADE
 
 
 class UserManager(BaseUserManager):
@@ -25,7 +27,7 @@ class UserManager(BaseUserManager):
     def create_user(self, email=None, password=None, **extra_fields):
         return self._create_user(email, password, False, False, **extra_fields)
 
-    def create_superuser(self, email, password,**extra_fields):
+    def create_superuser(self, email, password, **extra_fields):
         user = self._create_user(email, password, True, True, **extra_fields)
         user.save(using=self._db)
         return user
@@ -60,6 +62,14 @@ class Psicologo(models.Model):
         return self.cedula
 
 
+class Carrera(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+
+
 class Alumno(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE,unique=True)
     cedula = models.CharField(unique=True, max_length=10)
@@ -69,13 +79,15 @@ class Alumno(models.Model):
     ciudad = models.CharField(max_length=200)
     colegio = models.CharField(max_length=200)
     edad = models.IntegerField(default=0)
-    carrera_postular = models.CharField(max_length=200)
+    estado = models.IntegerField(default=1)
+    carrera_postular = models.ForeignKey(Carrera, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.cedula + " | " + self.nombres + " " + self.apellidos
+        return self.cedula + ' ' + self.nombres
 
 
-class Periodo(models.Model):
+class Periodo(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     nombre = models.CharField(max_length=100, verbose_name='Periodo')
     estado = models.IntegerField(default=0)
 
@@ -83,20 +95,13 @@ class Periodo(models.Model):
         return self.nombre
 
 
-class Nivel(models.Model):
+class Nivel(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     numero = models.IntegerField(default=0)
 
     def __str__(self):
         num = str(self.numero)
         return num
-
-
-class Carrera(models.Model):
-    # id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.nombre
 
 
 class Registro(models.Model):
@@ -112,8 +117,8 @@ class Registro(models.Model):
         return nota
 
 
-class Encuesta(models.Model):
-    # id = models.AutoField(primary_key=True)
+class Encuesta(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     nombre = models.CharField(max_length=50)
     estado = models.IntegerField(default=1)
     f_vigencia = models.DateField(verbose_name='fecha vigencia')
@@ -124,39 +129,41 @@ class Encuesta(models.Model):
         return self.nombre
 
 
-class Categoria(models.Model):
-    # id = models.AutoField(primary_key=True)
+class Categoria(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     calcular = models.BooleanField()
     nombre = models.CharField(max_length=50)
     siglas = models.CharField(max_length=5)
     estado = models.IntegerField(default=1)
+    history = HistoricalRecords()
 
     def __str__(self):
-        return self.siglas
+        return self.nombre
 
 
-class Tpregunta(models.Model):
-    # id = models.AutoField(primary_key=True)
+class Tpregunta(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     nombre = models.CharField(max_length=50)
 
     def __str__(self):
         return self.nombre
 
 
-class Pregunta(models.Model):
+class Pregunta(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     tpregunta = models.ForeignKey(Tpregunta, on_delete=models.CASCADE)
     encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE)
     numero = models.IntegerField()
-    enunciado = models.CharField(max_length=255)
+    enunciado = models.TextField()
     estado = models.IntegerField(default=1)
 
     def __str__(self):
         return self.enunciado
 
 
-class Opcion(models.Model):
-    # id = models.AutoField(primary_key=True)
+class Opcion(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
     numero = models.IntegerField()
     ponderado = models.FloatField()
@@ -186,8 +193,8 @@ class Evaluacion(models.Model):
         return self.periodo.nombre
 
 
-class Formula(models.Model):
-    # id = models.AutoField(primary_key=True)
+class Formula(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
     porcentaje = models.FloatField()
     maximo = models.FloatField()
@@ -198,8 +205,8 @@ class Formula(models.Model):
         return self.carrera.nombre
 
 
-class Termino(models.Model):
-    # id = models.AutoField(primary_key=True)
+class Termino(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     formula = models.ForeignKey(Formula, on_delete=models.CASCADE)
     signo = models.CharField(max_length=5)
     valor = models.FloatField()
@@ -209,8 +216,8 @@ class Termino(models.Model):
         return str(self.valor)
 
 
-class Rendimiento(models.Model):
-    # id = models.AutoField(primary_key=True)
+class Rendimiento(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     formula = models.ForeignKey(Formula, on_delete=models.CASCADE)
     rendimiento_satisfactorio = models.FloatField()
     rendimiento_riesgoso = models.FloatField()
@@ -229,7 +236,8 @@ class Parametro(models.Model):
         return self.clave
 
 
-class Estudio(models.Model):
+class Estudio(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     periodo = models.ForeignKey(Periodo, on_delete=models.CASCADE)
     fecha = models.DateField()
     observacion = models.TextField()
@@ -239,8 +247,8 @@ class Estudio(models.Model):
         return self.periodo.nombre + " " + self.encuesta.nombre + " " + str(self.id)
 
 
-class Asignacion(models.Model):
-    # id = models.AutoField(primary_key=True)
+class Asignacion(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     alumno_name = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=30, default='normal')
     estudio = models.ForeignKey(Estudio, on_delete=models.CASCADE)

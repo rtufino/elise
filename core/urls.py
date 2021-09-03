@@ -44,10 +44,10 @@ urlpatterns = [
 
             # CRUD PARA ESTUDIOS
             path('estudio/', psicologo.EstudioListView.as_view(), name="estudio"),
-            # path('estudio/create/', psicologo.EstudioCreateView.as_view(), name="estudio_create"),
+            path('estudio/create/', psicologo.EstudioCreateView.as_view(), name="estudio_create"),
+            path('estudio/delete/<int:pk>/', psicologo.EstudioDeleteView.as_view(), name="estudio_delete"),
             # path('categoria/create/', psicologo.CategoriaCreateView.as_view(), name="categoria_create"),
             # path('categoria/update/<int:pk>/', psicologo.CategoriaUpdateView.as_view(), name="categoria_update"),
-            # path('categoria/delete/<int:pk>/', psicologo.CategoriaDeleteView.as_view(), name="categoria_delete"),
             # API
 
             # path('api/addQuiz', api_addQuiz, name='api_addQuiz'),
