@@ -1,13 +1,12 @@
 from django.contrib import admin
 from .models import Alumno, Periodo, Nivel, Carrera, Registro
 from .models import Encuesta, Categoria, Opcion, Tpregunta, Relacion, Pregunta
-from .models import Formula, Evaluacion, Termino, Rendimiento, Parametro, Asignacion, User, user_type, Psicologo, \
+from .models import Formula, Evaluacion, Termino, Rendimiento, Parametro,Respuesta, Asignacion, User, Psicologo, \
     Estudio
 from import_export import fields, resources
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-
 
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
@@ -113,6 +112,11 @@ class PreguntaAdmin(admin.ModelAdmin):
     list_display = 'enunciado', 'tpregunta', 'encuesta', 'categoria'
     search_fields = ['categoria', 'encuesta', 'enunciado']
 
+class RespuestaAdmin(admin.ModelAdmin):
+    model = Respuesta
+    list_display = 'categoria','asignacion','opcion','respuesta','ponderado',
+    search_fields = ['asignacion']
+
 
 class InvestigacionAdmin(admin.ModelAdmin):
     readonly_fields = ('alumno')
@@ -128,6 +132,10 @@ class EstudioAdmin(admin.ModelAdmin):
     model = Estudio
     list_display = 'periodo', 'fecha', 'id'
     search_fields = ['periodo']
+
+class PsicologoAdmin(admin.ModelAdmin):
+    model = Psicologo
+    list_display = 'periodo', 'fecha', 'id'
 
 
 admin.site.register(Alumno)
@@ -151,5 +159,5 @@ admin.site.register(Termino)
 admin.site.register(Rendimiento)
 admin.site.register(Parametro)
 admin.site.register(Psicologo)
+admin.site.register(Respuesta,RespuestaAdmin)
 admin.site.register(User, UserAdmin)
-admin.site.register(user_type)

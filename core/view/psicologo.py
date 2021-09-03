@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from core.models import user_type
 from django.urls import reverse_lazy
 from core.models import Encuesta, Pregunta, Categoria, Opcion, Formula, Termino, Rendimiento, Estudio, Asignacion, \
     Alumno
@@ -18,13 +17,13 @@ ruta_psicologo = 'core/Psicologo'
 
 
 def go_psicologo(request):
-    if request.user.is_authenticated and user_type.objects.get(user=request.user).es_psicologo:
+    if request.user.is_authenticated and request.user.is_staff and request.user.is_active:
         cantidad_encuestas = Encuesta.objects.count()
         context = {
             'c_encuestas': cantidad_encuestas
         }
         return render(request, ruta_psicologo + '/dashboard.html', context=context)
-    elif request.user.is_authenticated and user_type.objects.get(user=request.user).es_estudiante:
+    elif request.user.is_authenticated and request.user.is_active and not request.user.is_staff:
         return redirect('go_estudiante')
     else:
         return redirect('login')
@@ -401,46 +400,46 @@ class EstudioListView(ListView):
     model = Estudio
     template_name = ruta_psicologo + '/estudio_list.html'
 
-
-AsignacionFormset = inlineformset_factory(
-    Estudio, Asignacion, fields=('__all__'), extra=int(Alumno.objects.count())
-)
-
-
-# this will be for model formset
-# form_kwargs={'alumno_name': Alumno.objects.all()}
-
-class EstudioCreateView(CreateView):
-    model = Estudio
-    fields = '__all__'
-    template_name = ruta_psicologo + '/estudio_form.html'
-
-    def get_context_data(self, **kwargs):
-        # we need to overwrite get_context_data
-        # to make sure that our formset is rendered
-        data = super().get_context_data(**kwargs)
-        if self.request.POST:
-            # alumno = Alumno.objects.get(edad=23)
-            # data["asignacion"] = AsignacionFormset(self.request.POST, instance=alumno)
-            data["asignacion"] = AsignacionFormset(self.request.POST)
-            # data["range"] = int(Alumno.objects.count())
-            # data["alumnos"] = Alumno.objects.all()
-        else:
-            # alumno = Alumno.objects.get(edad=23)
-            # data["asignacion"] = AsignacionFormset(instance=alumno)
-            data["asignacion"] = AsignacionFormset()
-            # data["range"] = range(int(Alumno.objects.count()))
-            # data["alumnos"] = Alumno.objects.all()
-        return data
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        asignacion = context["asignacion"]
-        self.object = form.save()
-        if asignacion.is_valid():
-            asignacion.instance = self.object
-            asignacion.save()
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('estudio')
+#
+# AsignacionFormset = inlineformset_factory(
+#     Estudio, Asignacion, fields=('__all__'), extra=int(Alumno.objects.count())
+# )
+#
+#
+# # this will be for model formset
+# # form_kwargs={'alumno_name': Alumno.objects.all()}
+#
+# class EstudioCreateView(CreateView):
+#     model = Estudio
+#     fields = '__all__'
+#     template_name = ruta_psicologo + '/estudio_form.html'
+#
+#     def get_context_data(self, **kwargs):
+#         # we need to overwrite get_context_data
+#         # to make sure that our formset is rendered
+#         data = super().get_context_data(**kwargs)
+#         if self.request.POST:
+#             # alumno = Alumno.objects.get(edad=23)
+#             # data["asignacion"] = AsignacionFormset(self.request.POST, instance=alumno)
+#             data["asignacion"] = AsignacionFormset(self.request.POST)
+#             # data["range"] = int(Alumno.objects.count())
+#             # data["alumnos"] = Alumno.objects.all()
+#         else:
+#             # alumno = Alumno.objects.get(edad=23)
+#             # data["asignacion"] = AsignacionFormset(instance=alumno)
+#             data["asignacion"] = AsignacionFormset()
+#             # data["range"] = range(int(Alumno.objects.count()))
+#             # data["alumnos"] = Alumno.objects.all()
+#         return data
+#
+#     def form_valid(self, form):
+#         context = self.get_context_data()
+#         asignacion = context["asignacion"]
+#         self.object = form.save()
+#         if asignacion.is_valid():
+#             asignacion.instance = self.object
+#             asignacion.save()
+#         return super().form_valid(form)
+#
+#     def get_success_url(self):
+#         return reverse_lazy('estudio')
