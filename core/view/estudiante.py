@@ -13,9 +13,8 @@ from core.models import Encuesta, Pregunta, Categoria, Opcion, Formula, Termino,
 ruta_estudiante = 'core/Estudiante'
 
 
-def answers(request):
-    answers_forms=AnswerRegisterForm()
-    return render(request, 'core/Estudiante/home.html',{'form':answers_forms})
+def resultados(request):
+    return render(request, 'core/Estudiante/resultados.html')
 
 def go_estudiante(request):
     if request.user.is_authenticated and request.user.is_active and not request.user.is_staff:
@@ -50,13 +49,12 @@ def go_estudiante(request):
                 )
                 listresp.append(respuestas1)
             Respuesta.objects.bulk_create(listresp)
+            return redirect('go_resultados')
         return render(request, 'core/Estudiante/home.html',context={'asignacion': asignacion,'alumno':alumno,'encuesta':encuesta,'preguntas':preguntas,'opciones':opciones})
     elif request.user.is_authenticated and request.user.is_staff and request.user.is_active :
         return redirect('go_psicologo')
     else:
         return redirect('login')
-
-
 
 @login_required
 def quiz_detail(request, pk):
