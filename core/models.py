@@ -71,7 +71,7 @@ class Carrera(SafeDeleteModel):
 
 
 class Alumno(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE,unique=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     cedula = models.CharField(unique=True, max_length=10)
     nombres = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
@@ -256,9 +256,10 @@ class Asignacion(SafeDeleteModel):
     def __str__(self):
         return self.estudio.observacion + " " + self.alumno_name.nombres + " " + self.alumno_name.apellidos
 
+
 class Respuesta(models.Model):
-    categoria= models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     asignacion = models.ForeignKey(Asignacion, on_delete=models.CASCADE)
     opcion = models.ForeignKey(Opcion, on_delete=models.CASCADE)
-    ponderado=models.CharField(max_length=50,default=0)
-    respuesta = models.CharField(max_length=250,default='')
+    ponderado = models.CharField(max_length=50, default=0)
+    respuesta = models.CharField(max_length=250, default='')
