@@ -18,9 +18,7 @@ def answers(request):
     return render(request, 'core/Estudiante/home.html',{'form':answers_forms})
 
 def go_estudiante(request):
-    if request.user.is_authenticated and request.user.is_active and not request.user.is_staff :
-        respuestas=Respuesta()
-
+    if request.user.is_authenticated and request.user.is_active and not request.user.is_staff:
         alumno=Alumno.objects.filter(usuario=request.user.id).first()
         asignacion = Asignacion.objects.filter(alumno_name=alumno.id).first()
         estudio=Estudio.objects.filter(id=asignacion.estudio.id).first()

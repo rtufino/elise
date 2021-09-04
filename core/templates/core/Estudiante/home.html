@@ -99,7 +99,7 @@
                 {% endif %}
                 {% endfor %}
             </div>
-            <button type="submit" class="btn btn-primary" onclick="location.href ='http://example.com/alternate_url.html'" >Enviar</button>
+            <button type="submit" class="btn btn-primary" onclick="pageRedirect()" >Enviar</button>
         </form>
         <main class="content">
             <div class="container-fluid p-0">
@@ -122,9 +122,9 @@
 <script src="{% static 'js/app.js' %}"></script>
 
 <script type="text/Javascript">
-
-    function success(){
-          location.href = "resultados.html";
+    function pageRedirect(e) {
+      e.preventDefault()
+      window.location.href = "https://www.tutorialrepublic.com/";
     }
     let preguntas_ids = [];
     $("span[name='ids']").each(function () {
