@@ -31,7 +31,6 @@ def go_estudiante(request):
             ponderados = request.POST.getlist('valores')
             respuestas = request.POST.getlist('respuestas')
             opcioncategoria =request.POST.getlist('categorias')
-            asignaciones =Asignacion.objects.get(alumno_name=request.POST.get('asignaciones'))
             recopciones=request.POST.getlist('recopciones')
             print(opcioncategoria)
             print(recopciones)
@@ -42,7 +41,7 @@ def go_estudiante(request):
                 print(categoria)
                 respuestas1 = Respuesta(
                     categoria=categoria,
-                    asignacion=asignaciones,
+                    asignacion=asignacion,
                     opcion=opcion,
                     ponderado=ponderados[i],
                     respuesta=respuestas[i]

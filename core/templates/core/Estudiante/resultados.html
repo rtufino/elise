@@ -1,10 +1,80 @@
 <!DOCTYPE html>
+{% load widget_tweaks %}
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Bootstrap 4 Admin &amp; Dashboard Template">
+    <meta name="author" content="Bootlab">
+
+    <title>AppStack - Admin &amp; Dashboard Template</title>
+    {% load static %}
+    <link href="css/classic.css" rel="stylesheet">
+    <link href="{% static 'css/classic.css' %}" rel="stylesheet">
+    <script src="\js\settings.js"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-120946860-6"></script>
+
 </head>
 <body>
-  <h5>RESULTADOS</h5>
+{% if user.is_active and not user.is_staff %}
+<section
+        class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+>
+    <div class="col-md-9 d-none d-lg-block">
+        <h1>RESULTADOS</h1>
+    </div>
+    <div class="col-md-3">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
+                </a>
+
+                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
+                    <img src="{% static 'img\avatars\avatar.jpg' %}"
+                         class="avatar img-fluid rounded-circle mr-1"
+                         alt="Chris Wood"> <span class="text-dark">{{request.user}} </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- Right -->
+</section>
+  <h5>add res</h5>
 </body>
+<footer class="text-center text-lg-start bg-light text-muted">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2021 Copyright:
+        <a class="text-reset fw-bold" href="https://www.ups.edu.ec/">UNIVERSIDAD POLITECNICA SALESIANA</a>
+    </div>
+</footer>
+
+{% block scripts %}
+<script src="{% static 'js/app.js' %}"></script>
+<script type="text/Javascript">
+
+</script>
+{% endblock %}
+{% else %}
+<div class="container d-flex flex-column">
+    <div class="row h-100">
+        <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+            <div class="d-table-cell align-middle">
+                <div class="text-center">
+                    <h1 class="display-1 font-weight-bold">404</h1>
+                    <p class="h1">Page not found.</p>
+                    <p class="h2 font-weight-normal mt-3 mb-4">The page you are looking for might have been
+                        removed.</p>
+                    <a href="{% url 'go_estudiante' %}" class="btn btn-primary btn-lg">Return to website</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 </html>

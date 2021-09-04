@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Open+Sans:wght@800&display=swap" rel="stylesheet">
   </head>
+  {% if not user.is_active and not user.is_staff %}
   <body id="bg" style="background-image: url({% static 'core/images/bg.png' %});">
   {% load static %}
       <div>
@@ -16,4 +17,19 @@
         {% endblock content %}
       </div>
   </body>
+  {% else %}
+  <div class="container d-flex flex-column">
+    <div class="row h-100">
+        <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+            <div class="d-table-cell align-middle">
+                <div class="text-center">
+                    <h1 class="display-1 font-weight-bold">Cuenta activa</h1>
+                    <p class="h1">Ya iniciaste sesión</p>
+                    <a href="{% url 'go_estudiante' %}" class="btn btn-primary btn-lg">Regresar Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  {% endif %}
 </html>
