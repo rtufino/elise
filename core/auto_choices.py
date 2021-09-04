@@ -48,46 +48,11 @@ tipo_interes = [
 
 def addChoices(pregunta_instance):
     if str(pregunta_instance.tpregunta).strip() == 'linkert':
-        # linkert(pregunta_instance)
         auto_create_choices(tipo_linkert, pregunta_instance)
     if str(pregunta_instance.tpregunta).strip() == 'Si No':
-        # si_no(pregunta_instance)
         auto_create_choices(tipo_si_no, pregunta_instance)
     if str(pregunta_instance.tpregunta).strip() == 'interes':
         auto_create_choices(tipo_interes, pregunta_instance)
-
-
-#
-# def linkert(pregunta_instance):
-#     i = 1
-#     opcion_list = list()
-#     for opcion in tipo_linkert:
-#         opcion_list.append(
-#             Opcion(
-#                 pregunta=pregunta_instance,
-#                 numero=i,
-#                 ponderado=opcion["ponderado"],
-#                 etiqueta=opcion["etiqueta"]
-#             )
-#         )
-#         i += 1
-#     Opcion.objects.bulk_create(opcion_list)
-#
-#
-# def si_no(pregunta_instance):
-#     i = 1
-#     opcion_list = list()
-#     for opcion in tipo_si_no:
-#         opcion_list.append(
-#             Opcion(
-#                 pregunta=pregunta_instance,
-#                 numero=i,
-#                 ponderado=opcion["ponderado"],
-#                 etiqueta=opcion["etiqueta"]
-#             )
-#         )
-#         i += 1
-#     Opcion.objects.bulk_create(opcion_list)
 
 def auto_create_choices(tipo_pregunta, pregunta_instance):
     i = 1
