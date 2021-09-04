@@ -44,8 +44,12 @@ tipo_interes = [
         'ponderado': '0'
     }
 ]
-
-
+tipo_abierta =[
+    {
+        'etiqueta': 'abierta',
+        'ponderado': 1
+    }
+]
 def addChoices(pregunta_instance):
     if str(pregunta_instance.tpregunta).strip() == 'linkert':
         auto_create_choices(tipo_linkert, pregunta_instance)
@@ -53,6 +57,8 @@ def addChoices(pregunta_instance):
         auto_create_choices(tipo_si_no, pregunta_instance)
     if str(pregunta_instance.tpregunta).strip() == 'interes':
         auto_create_choices(tipo_interes, pregunta_instance)
+    if str(pregunta_instance.tpregunta).strip() == 'abierta':
+        auto_create_choices(tipo_abierta, pregunta_instance)
 
 def auto_create_choices(tipo_pregunta, pregunta_instance):
     i = 1

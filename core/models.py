@@ -36,6 +36,8 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
     name = models.CharField(max_length=254, null=True, blank=True)
+    es_estudiante = models.BooleanField(default=False)
+    es_psicologo = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -52,20 +54,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class user_type(models.Model):
-    es_estudiante = models.BooleanField(default=False)
-    es_psicologo = models.BooleanField(default=False)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        if self.es_estudiante == True:
-            return User.get_email(self.user) + " - es_estudiante"
-        else:
-            return User.get_email(self.user) + " - es_psicologo"
-
-
 class Psicologo(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     cedula = models.CharField(max_length=10)
 
     def __str__(self):
@@ -81,7 +71,7 @@ class Carrera(SafeDeleteModel):
 
 
 class Alumno(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE,unique=True)
     cedula = models.CharField(unique=True, max_length=10)
     nombres = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
@@ -265,3 +255,10 @@ class Asignacion(SafeDeleteModel):
 
     def __str__(self):
         return self.estudio.observacion + " " + self.alumno_name.nombres + " " + self.alumno_name.apellidos
+
+class Respuesta(models.Model):
+    categoria= models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    asignacion = models.ForeignKey(Asignacion, on_delete=models.CASCADE)
+    opcion = models.ForeignKey(Opcion, on_delete=models.CASCADE)
+    ponderado=models.CharField(max_length=50,default=0)
+    respuesta = models.CharField(max_length=250,default='')

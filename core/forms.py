@@ -4,13 +4,18 @@ from django import forms
 from .models import Encuesta, Pregunta, Tpregunta, Categoria, Opcion, Asignacion, Alumno
 
 
+class AnswerRegisterForm(forms.Form):
+    CHOICES = [('M', 'Male'), ('F', 'Female')]
+    Gender = forms.CharField(label='Gender', widget=forms.RadioSelect(choices=CHOICES))
+    name = forms.CharField(label='name')
+
+
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
-
 
 # Encuestas
 class EncuestaForm(forms.ModelForm):
@@ -126,7 +131,6 @@ class CategoriaDeleteForm(forms.ModelForm):
         labels = {
             'nombre': '', 'siglas': '', 'calcular': ''
         }
-
 
 ## Opciones
 class OpcionForm(forms.ModelForm):

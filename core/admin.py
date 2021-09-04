@@ -1,8 +1,8 @@
 from django.contrib import admin
 from .models import Alumno, Periodo, Nivel, Carrera, Registro
 from .models import Encuesta, Categoria, Opcion, Tpregunta, Relacion, Pregunta
-from .models import Formula, Evaluacion, Termino, Rendimiento, Parametro, Asignacion, User, user_type, Psicologo, \
-    Estudio
+from .models import Formula, Evaluacion, Termino, Rendimiento, Parametro, Asignacion, User, Psicologo, \
+    Estudio,Respuesta
 from import_export import fields, resources
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
@@ -180,6 +180,11 @@ class NivelAdmin(SafeDeleteAdmin):
     list_display = (highlight_deleted, 'numero') + SafeDeleteAdmin.list_display
     search_fields = ('numero', SafeDeleteAdmin.search_fields)
 
+class RespuestaAdmin(admin.ModelAdmin):
+    model = Respuesta
+    list_display = 'categoria', 'asignacion', 'opcion','ponderado','respuesta'
+    search_fields = ['asignacion']
+
 
 admin.site.register(Alumno, AlumnoAdmin)
 admin.site.register(Periodo, PeriodoAdmin)
@@ -203,4 +208,4 @@ admin.site.register(Rendimiento, RendimientoAdmin)
 admin.site.register(Parametro)
 admin.site.register(Psicologo)
 admin.site.register(User, UserAdmin)
-admin.site.register(user_type)
+admin.site.register(Respuesta, RespuestaAdmin)

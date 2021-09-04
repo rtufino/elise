@@ -19,15 +19,15 @@
 </head>
 
 <body>
+{% if user.is_active and user.is_staff %}
 
-{% if user.is_authenticated %}
-    <div class="wrapper">
-        <nav id="sidebar" class="sidebar">
-            <div class="sidebar-content ">
-                <a class="sidebar-brand" href="#">
-                    <em class="align-middle" data-feather="box"></em>
-                    <span class="align-middle">ELISE</span>
-                </a>
+<div class="wrapper">
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-content ">
+            <a class="sidebar-brand" href="#">
+                <em class="align-middle" data-feather="box"></em>
+                <span class="align-middle">ELISE</span>
+            </a>
 
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
@@ -142,7 +142,7 @@
 
     {% block scripts %}
 
-    {% endblock %}
+{% endblock %}
 {% else %}
     <div class="container d-flex flex-column">
         <div class="row h-100">
@@ -153,7 +153,11 @@
                         <p class="h1">Page not found.</p>
                         <p class="h2 font-weight-normal mt-3 mb-4">The page you are looking for might have been
                             removed.</p>
-                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Return to website</a>
+<!--<<<<<<< HEAD-->
+<!--                        <a href="{% url 'go_psicologo' %}" class="btn btn-primary btn-lg">Return to website</a>-->
+<!--=======-->
+<!--                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Return to website</a>-->
+<!--&gt;>>>>>> cb785389efd06b9f3c4c227a876c578e14ec6de9-->
                     </div>
                 </div>
             </div>

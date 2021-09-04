@@ -5,7 +5,6 @@ from django.views.generic.list import ListView
 from django.db.models import Count
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from core.models import user_type
 from django.urls import reverse_lazy
 from core.models import Encuesta, Pregunta, Categoria, Opcion, Formula, Termino, Rendimiento, Estudio, Asignacion, \
     Alumno, Carrera
@@ -20,13 +19,13 @@ ruta_psicologo = 'core/Psicologo'
 
 
 def go_psicologo(request):
-    if request.user.is_authenticated and user_type.objects.get(user=request.user).es_psicologo:
+    if request.user.is_authenticated and request.user.is_staff and request.user.is_active:
         cantidad_encuestas = Encuesta.objects.count()
         context = {
             'c_encuestas': cantidad_encuestas
         }
         return render(request, ruta_psicologo + '/dashboard.html', context=context)
-    elif request.user.is_authenticated and user_type.objects.get(user=request.user).es_estudiante:
+    elif request.user.is_authenticated and request.user.is_active and not request.user.is_staff:
         return redirect('go_estudiante')
     else:
         return redirect('login')
