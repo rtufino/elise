@@ -1,15 +1,6 @@
 from builtins import print
-
 from django.contrib.auth.decorators import login_required
-from django.http.request import validate_host
 from django.shortcuts import render,redirect
-from setuptools.command.alias import alias
-
-from core.models import Alumno
-from django.views.generic.list import ListView
-from ..decorators import estudiante_required
-from core.forms import AnswerRegisterForm
-
 from core.models import Encuesta, Pregunta, Categoria, Opcion, Formula, Termino, Rendimiento, Estudio, Asignacion, \
     Alumno,Respuesta
 ruta_estudiante = 'core/Estudiante'
@@ -17,9 +8,6 @@ ruta_estudiante = 'core/Estudiante'
 
 def resultados(request):
     return render(request, 'core/Estudiante/resultados.html')
-
-# def validar(request):
-#     return render(request, 'core/Estudiante/resultados.html')
 
 def go_estudiante(request):
     if request.user.is_authenticated and request.user.is_active and not request.user.is_staff:
@@ -67,9 +55,4 @@ def go_estudiante(request):
     else:
         return redirect('login')
 
-@login_required
-def quiz_detail(request, pk):
-    estudio=Estudio.objects.filter(id=pk).first()
-    asignacion = Asignacion.objects.filter(estudio=pk).first()
-    return render(request, ruta_estudiante + '/home.html',
-                  context={'estudio': estudio,'asignacion': asignacion})
+

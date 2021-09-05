@@ -9,8 +9,6 @@ urlpatterns = [
         [
             path('home_estudiante/', estudiante.go_estudiante, name='go_estudiante'),
             path('resultados/', estudiante.resultados, name='go_resultados'),
-            path('quiz/<int:pk>/', estudiante.quiz_detail, name="quiz_detail"),
-
         ]))),
     path('psicologo/', include((
         [
