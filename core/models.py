@@ -80,6 +80,7 @@ class Alumno(models.Model):
     colegio = models.CharField(max_length=200)
     edad = models.IntegerField(default=0)
     estado = models.IntegerField(default=1)
+    encuesta = models.IntegerField(default=0)
     carrera_postular = models.ForeignKey(Carrera, on_delete=models.CASCADE)
 
     def __str__(self):
