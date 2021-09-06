@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Alumno, Periodo, Nivel, Carrera, Registro
 from .models import Encuesta, Categoria, Opcion, Tpregunta, Relacion, Pregunta
 from .models import Formula, Evaluacion, Termino, Rendimiento, Parametro, Asignacion, User, Psicologo, \
-    Estudio,Respuesta
+    Estudio, Respuesta, Resultado
 from import_export import fields, resources
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
@@ -158,7 +158,7 @@ class FormulaAdmin(SafeDeleteAdmin):
 
 class TerminoAdmin(SafeDeleteAdmin):
     model = Termino
-    list_display = (highlight_deleted, 'formula', 'variable', 'signo', 'valor') + SafeDeleteAdmin.list_display
+    list_display = (highlight_deleted, 'formula', 'variable', 'valor') + SafeDeleteAdmin.list_display
     search_fields = ('formula', 'variable') + SafeDeleteAdmin.search_fields
 
 
@@ -180,10 +180,17 @@ class NivelAdmin(SafeDeleteAdmin):
     list_display = (highlight_deleted, 'numero') + SafeDeleteAdmin.list_display
     search_fields = ('numero', SafeDeleteAdmin.search_fields)
 
+
 class RespuestaAdmin(admin.ModelAdmin):
     model = Respuesta
-    list_display = 'categoria', 'asignacion', 'opcion','ponderado','respuesta'
+    list_display = 'categoria', 'asignacion', 'opcion', 'ponderado', 'respuesta'
     search_fields = ['asignacion']
+
+
+class ResultadoAdmin(SafeDeleteAdmin):
+    model = Resultado
+    list_display = (highlight_deleted, 'carrera', 'afinidad', 'porcentaje', 'asignacion') + SafeDeleteAdmin.list_display
+    search_fields = ('carrera', 'afinidad', 'asignacion') + SafeDeleteAdmin.search_fields
 
 
 admin.site.register(Alumno, AlumnoAdmin)
@@ -209,3 +216,4 @@ admin.site.register(Parametro)
 admin.site.register(Psicologo)
 admin.site.register(User, UserAdmin)
 admin.site.register(Respuesta, RespuestaAdmin)
+admin.site.register(Resultado, ResultadoAdmin)

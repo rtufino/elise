@@ -209,9 +209,9 @@ class Formula(SafeDeleteModel):
 class Termino(SafeDeleteModel):
     _safedelete_policy = SOFT_DELETE_CASCADE
     formula = models.ForeignKey(Formula, on_delete=models.CASCADE)
-    signo = models.CharField(max_length=5)
+    # signo = models.CharField(max_length=5)
     valor = models.FloatField()
-    variable = models.ForeignKey(Categoria, on_delete=models.CASCADE, default=0)
+    variable = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.valor)
@@ -264,3 +264,11 @@ class Respuesta(models.Model):
     opcion = models.ForeignKey(Opcion, on_delete=models.CASCADE)
     ponderado = models.CharField(max_length=50, default=0)
     respuesta = models.CharField(max_length=250, default='')
+
+
+class Resultado(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE
+    carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
+    afinidad = models.BooleanField()
+    porcentaje = models.FloatField()
+    asignacion = models.ForeignKey(Asignacion, on_delete=models.CASCADE)
