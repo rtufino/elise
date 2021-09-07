@@ -245,7 +245,7 @@ class Estudio(SafeDeleteModel):
     encuesta = models.ForeignKey(Encuesta, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.periodo.nombre + " " + self.encuesta.nombre + " " + str(self.id)
+        return self.observacion
 
 
 class Asignacion(SafeDeleteModel):
@@ -253,6 +253,7 @@ class Asignacion(SafeDeleteModel):
     alumno_name = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=30, default='normal')
     estudio = models.ForeignKey(Estudio, on_delete=models.CASCADE)
+    completada = models.BooleanField(default=False)
 
     def __str__(self):
         return self.estudio.observacion + " " + self.alumno_name.nombres + " " + self.alumno_name.apellidos
@@ -272,3 +273,4 @@ class Resultado(SafeDeleteModel):
     afinidad = models.BooleanField()
     porcentaje = models.FloatField()
     asignacion = models.ForeignKey(Asignacion, on_delete=models.CASCADE)
+    puntaje = models.FloatField(default=0)

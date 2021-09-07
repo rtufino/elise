@@ -46,7 +46,7 @@ class Command(BaseCommand):
         correo = estudiante[9]
         data = User.objects.filter(email=correo)
         if len(data) > 0:
-            return data[0].estudiante
+            return data[0]
         # Crear el usuario
         usuario = User(
             email=correo,
@@ -54,13 +54,13 @@ class Command(BaseCommand):
             is_staff=False,
             is_superuser=False,
         )
-        usuario.set_password(estudiante[1])
+        usuario.set_password(str(estudiante[1]))
         # Guardar en BDD
         usuario.save()
         carrera = Carrera.objects.filter(nombre=estudiante[0]).first()
         alumno = Alumno(
             usuario=usuario,
-            cedula=estudiante[1],
+            cedula=str(estudiante[1]),
             nombres=estudiante[2],
             apellidos=estudiante[3],
             genero=estudiante[4],

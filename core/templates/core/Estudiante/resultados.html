@@ -20,100 +20,99 @@
 </head>
 <body>
 {% if user.is_active and not user.is_staff %}
-<nav class="navbar navbar-expand navbar-light bg-white">
+    <nav class="navbar navbar-expand navbar-light bg-white">
 
-    <div class="navbar-collapse collapse">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
-                    <i class="align-middle" data-feather="settings"></i>
-                </a>
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
+                        <i class="align-middle" data-feather="settings"></i>
+                    </a>
 
-
-                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
-                    <img src="{% static 'img\avatars\avatar.jpg' %}"
-                         class="avatar img-fluid rounded-circle mr-1"
-                         alt="Chris Wood"> <span class="text-dark">{{request.user}} </span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
+                    <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
+                        <em class="far fa-user fa-2x"></em> <span class="text-dark">{{ request.user }} </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row py-3">
+            <div class="col-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Datos Personales</h5>
+                    </div>
+                    <table class="table table-sm my-2">
+                        <tbody>
+                        <tr>
+                            <th>Nombres Completos</th>
+                            <td>{{ alumno.nombres }} {{ alumno.apellidos }}</td>
+                        </tr>
+                        <tr>
+                            <th>Cédula</th>
+                            <td>{{ alumno.cedula }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email Institucional</th>
+                            <td>{{ alumno.usuario }}</td>
+                        </tr>
+                        <tr>
+                            <th>Carrera a la que postulas</th>
+                            <td>{{ alumno.carrera_postular }}</td>
+                        </tr>
+                        <tr>
+                            <th>Edad</th>
+                            <td>{{ alumno.edad }}</td>
+                        </tr>
+                        <tr>
+                            <th>Sexo</th>
+                            <td>{{ alumno.genero }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </li>
+            </div>
+            <div class="col-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Resultados por Carrera</h5>
+                    </div>
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th>Carrera</th>
+                            <th class="text-right">Afinidad</th>
+                            <th class="text-right">% de rendimiento satisfactorio</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for porcentaje in porcentajes %}
+                            <tr>
+                                <td class="carrer">{{ porcentaje.carrera }}</td>
+                                <td class="text-right">{{ porcentaje.afinidad }}</td>
+                                <td class="text-right percent">{{ porcentaje.porcentaje }} %</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Profesiograma</h5>
+            </div>
+            <canvas id="myChart" class="col-md-6"></canvas>
+        </div>
+
+
+        </li>
         </ul>
     </div>
-</nav>
-<div class="container">
-    <h1 class="text-center mt-2">Resultados Finales</h1>
-    <div class="row py-3">
-        <div class="col-12 col-xl-6">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Datos Personales</h5>
-                </div>
-                <table class="table table-sm my-2">
-                    <tbody>
-                    <tr>
-                        <th>Nombres Completos</th>
-                        <td>{{ alumno.nombres }} {{ alumno.apellidos }}</td>
-                    </tr>
-                    <tr>
-                        <th>Cédula</th>
-                        <td>{{ alumno.cedula }}</td>
-                    </tr>
-                    <tr>
-                        <th>Email Institucional</th>
-                        <td>{{ alumno.usuario }}</td>
-                    </tr>
-                    <tr>
-                        <th>Carrera a la que postulas</th>
-                        <td>{{ alumno.carrera_postular }}</td>
-                    </tr>
-                    <tr>
-                        <th>Edad</th>
-                        <td>{{ alumno.edad }}</td>
-                    </tr>
-                    <tr>
-                        <th>Sexo</th>
-                        <td>{{ alumno.genero }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-12 col-xl-6">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Resultados por Carrera</h5>
-                </div>
-                <table class="table table-striped table-sm">
-                    <thead>
-                    <tr>
-                        <th>Carrera</th>
-                        <th class="text-right">Afinidad</th>
-                        <th class="text-right">% de rendimiento satisfactorio</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for porcentaje in porcentajes %}
-                    <tr>
-                        <td class="carrer">{{ porcentaje.carrera }}</td>
-                        <td class="text-right">{{ porcentaje.afinidad }}</td>
-                        <td class="text-right percent">{{ porcentaje.porcentaje }} %</td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title">Profesiograma</h5>
-        </div>
-        <canvas id="myChart" class="col-md-6"></canvas>
-    </div>
-
-</div>
 
 </body>
 <footer class="text-center text-lg-start bg-light text-muted">
@@ -123,13 +122,24 @@
     </div>
 </footer>
 
-{% block scripts %}
-<script src="{% static 'js/app.js' %}"></script>
-<script>
+    {% block scripts %}
+        <script src="{% static 'js/app.js' %}"></script>
+        <script>
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#4D';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            let colors = []
             let carrers = []
             let percents = []
             $('.carrer').each(function () {
-                carrers.push($(this).text())
+                carrers.push($(this).text());
+                colors.push(getRandomColor())
             })
             $('.percent').each(function () {
                 percents.push(parseFloat($(this).text()))
@@ -142,22 +152,8 @@
                     datasets: [{
                         label: 'Porcentaje de rendimiento satisfactorio alcanzado por carrera',
                         data: percents,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
+                        backgroundColor: colors,
+                        borderColor: colors,
                         borderWidth: 1
                     }]
                 },
@@ -169,9 +165,8 @@
                     }
                 }
             });
-
-</script>
-{% endblock %}
+        </script>
+    {% endblock %}
 {% else %}
 <div class="container d-flex flex-column">
     <div class="row h-100">

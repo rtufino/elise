@@ -1,39 +1,159 @@
 {% extends 'core/psicologo/home.html' %}
 {% block content %}
     <div class="container-fluid p-0">
-        <div class="row">
-            <div class="col-lg-6 col-xl-3 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header">
-                        <span class="badge badge-primary float-right">Total</span>
-                        <h5 class="card-title mb-0">Encuestas Creadas</h5>
-                    </div>
-                    <div class="card-body my-2">
-                        <div class="row d-flex align-items-center mb-4">
-                            <div class="col-8">
-                                <h2 class="d-flex align-items-center mb-0 font-weight-light">
-                                    {{ c_encuestas }}
-                                </h2>
-                            </div>
-                            <div class="col-4 text-right">
-                                <span class="text-muted">57%</span>
-                            </div>
+    <h5>Selecciona un estudio:</h5>
+    <form method="post" id="e_form">{% csrf_token %}
+        <h3 class="mb-2 col-12">
+            <select id="select_e" name="estudio_select" class="form-control mb-3">
+                <option selected="">Para ver los gráficos selecciona una opción</option>
+                {% for estudio in estudios %}
+                    <option value="{{ estudio.id }}">{{ estudio }}</option>
+                {% endfor %}
+            </select>
+        </h3>
+    </form>
+    <div class="row">
+        <div class="col-12 col-sm-6 col-xl d-flex">
+            <div class="card flex-fill">
+                <div class="card-body py-4">
+                    <div class="media">
+                        <div class="d-inline-block mt-2 mr-3">
+                            <i class="fas fa-vials fa-2x"></i>
                         </div>
+                        <div class="media-body">
+                            <h3 class="mb-2">{{ este_estudio }}</h3>
+                            <div class="mb-0">Estudio</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        <div class="progress progress-sm shadow-sm mb-1">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 57%"></div>
+        </div>
+        <div class="col-12 col-sm-6 col-xl d-flex">
+            <div class="card flex-fill">
+                <div class="card-body py-4">
+                    <div class="media">
+                        <div class="d-inline-block mt-2 mr-3">
+                            <i class="fas fa-tasks fa-2x"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="mb-2">{{ asignaciones }}</h3>
+                            <div class="mb-0">Postulantes asignados al estudio</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-12 col-sm-6 col-xl d-flex">
+            <div class="card flex-fill">
+                <div class="card-body py-4">
+                    <div class="media">
+                        <div class="d-inline-block mt-2 mr-3">
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="mb-2">{{ asig_completas }}</h3>
+                            <div class="mb-0">Postulantes que han completado la encuesta</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="row">
-
-        </div>
-
-        <div class="row">
+        <div class="row col-12 mx-0 px-0">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Gráficos</h5>
+                    </div>
+                    <h6 class="card-title px-3" style="align-self: center;">Puntuación por Campo Profesional</h6>
+                    <canvas id="myChart" class="col-12 col-md-6" style="align-self: center;"></canvas>
+                    <h6 class="card-title px-3" style="align-self: center;">Carreras Participantes en el Estudio</h6>
+                    <canvas id="myPieChart" class="col-12 col-md-6" style="align-self: center;"></canvas>
+                </div>
+            </div>
         </div>
 
     </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        $('#select_e').on('change', function () {
+            $('#e_form').submit()
+        })
+    </script>
+    <script>
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#4D';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            console.log(color)
+            return color;
+        }
+
+        let lista = {{ consulta|safe }};
+        let categorias = []
+        let conteo = []
+        let colors = []
+        const getCategorias = () => {
+            lista.forEach(e => {
+                categorias.push(e.categoria__nombre);
+                conteo.push(e.totalp)
+                colors.push(getRandomColor())
+            })
+
+        }
+        getCategorias();
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: categorias,
+                datasets: [{
+                    label: 'Puntuación por Campo Profesional',
+                    data: conteo,
+                    backgroundColor: colors,
+                    borderColor: colors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        let carreras = []
+        let conteo_carreras = []
+        let list_carreras = {{ carreras_participantes|safe }};
+        const getCarreras = () => {
+            list_carreras.forEach(e => {
+                carreras.push(e.alumno_name__carrera_postular__nombre)
+                conteo_carreras.push(e.number)
+            })
+        }
+        getCarreras();
+        var ctx = document.getElementById('myPieChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: carreras,
+                datasets: [{
+                    label: 'Carreras Participantes',
+                    data: conteo_carreras,
+                    backgroundColor: colors,
+                    borderColor: colors,
+                    borderWidth: 1
+                }]
+            },
+            options: {}
+        });
+    </script>
 {% endblock %}
