@@ -29,6 +29,7 @@ def resultados(request):
         formulas = Formula.objects.all()
         formulas_list = list()
         puntaje = 0
+        icav_p = 0
         porcentaje = 0
 
         for formula in formulas:
@@ -39,10 +40,11 @@ def resultados(request):
                     print('se compara ', termino.variable.siglas, ' con ', respuesta.categoria)
                     if termino.variable == respuesta.categoria:
                         print('entra!')
-                        puntaje += termino.valor * float(respuesta.ponderado)
+                        puntaje += float(respuesta.ponderado)
+                        icav_p += termino.valor * float(respuesta.ponderado)
                         break
 
-            icav = (puntaje - formula.minimo / formula.maximo - formula.minimo) * 100
+            icav = (icav_p - formula.minimo / formula.maximo - formula.minimo) * 100
             afinidad = False
             if icav > formula.porcentaje:
                 for rendimiento in rendimientos:
@@ -68,7 +70,8 @@ def resultados(request):
                     asignacion=asignacion,
                     carrera=formula.carrera,
                     porcentaje=porcentaje,
-                    afinidad=afinidad
+                    afinidad=afinidad,
+                    puntaje=puntaje
                 )
             )
         Resultado.objects.bulk_create(formulas_list)
@@ -93,18 +96,14 @@ def go_estudiante(request):
             for pregunta in preguntas:
                 opciones.append(list(Opcion.objects.filter(pregunta=pregunta.id)))
             if request.method == "POST":
-                print("this is post")
                 ponderados = request.POST.getlist('valores')
                 respuestas = request.POST.getlist('respuestas')
                 opcioncategoria = request.POST.getlist('categorias')
                 recopciones = request.POST.getlist('recopciones')
-                print(opcioncategoria)
-                print(recopciones)
                 listresp = []
                 for i in range(0, len(ponderados)):
                     categoria = Categoria.objects.get(siglas=opcioncategoria[i])
                     opcion = Opcion.objects.get(id=recopciones[i])
-                    print(categoria)
                     respuestas1 = Respuesta(
                         categoria=categoria,
                         asignacion=asignacion,
@@ -116,6 +115,8 @@ def go_estudiante(request):
                 Respuesta.objects.bulk_create(listresp)
                 alumno.encuesta = '1'
                 alumno.save()
+                asignacion.completada = True
+                asignacion.save()
                 return redirect('go_resultados')
             return render(request, 'core/Estudiante/home.html',
                           context={'asignacion': asignacion, 'alumno': alumno, 'encuesta': encuesta,

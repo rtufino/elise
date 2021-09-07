@@ -17,6 +17,7 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+
 # Encuestas
 class EncuestaForm(forms.ModelForm):
     class Meta:
@@ -78,8 +79,8 @@ class PreguntaForm(forms.ModelForm):
             'encuesta': ''
         }
 
-class PreguntaUpdateForm(forms.ModelForm):
 
+class PreguntaUpdateForm(forms.ModelForm):
     class Meta:
         model = Pregunta
         fields = ['enunciado', 'numero', 'tpregunta', 'encuesta', 'categoria']
@@ -94,6 +95,7 @@ class PreguntaUpdateForm(forms.ModelForm):
             'encuesta': ''
         }
 
+
 ## Categorias
 
 class CategoriaForm(forms.ModelForm):
@@ -104,6 +106,10 @@ class CategoriaForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'siglas': forms.TextInput(attrs={'class': 'form-control'}),
             'calcular': forms.CheckboxInput(attrs={'class': 'form-control'}),
+            'estado': forms.TextInput(attrs={'class': 'd-none'})
+        }
+        labels = {
+            'estado': ''
         }
 
 
@@ -115,6 +121,10 @@ class CategoriaUpdateForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'siglas': forms.TextInput(attrs={'class': 'form-control'}),
             'calcular': forms.CheckboxInput(attrs={'class': 'form-control'}),
+            'estado': forms.TextInput(attrs={'class': 'd-none'})
+        }
+        labels = {
+            'estado': ''
         }
 
 
@@ -131,6 +141,7 @@ class CategoriaDeleteForm(forms.ModelForm):
         labels = {
             'nombre': '', 'siglas': '', 'calcular': ''
         }
+
 
 ## Opciones
 class OpcionForm(forms.ModelForm):
@@ -152,8 +163,8 @@ class OpcionForm(forms.ModelForm):
             'pregunta': ''
         }
 
-class OpcionUpdateForm(forms.ModelForm):
 
+class OpcionUpdateForm(forms.ModelForm):
     class Meta:
         model = Opcion
         fields = '__all__'

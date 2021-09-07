@@ -56,5 +56,4 @@ urlpatterns = [
         ]))),
     path('', general.login_general, name='login'),
     path('logout/', auth_view.LogoutView.as_view(template_name='core/logout.html'), name="logout"),
-
 ]

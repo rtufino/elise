@@ -33,9 +33,7 @@
                     </a>
 
                     <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
-                        <img src="{% static 'img\avatars\avatar.jpg' %}"
-                             class="avatar img-fluid rounded-circle mr-1"
-                             alt="Chris Wood"> <span class="text-dark">{{ request.user }} </span>
+                        <em class="far fa-user fa-2x"></em> <span class="text-dark">{{ request.user }} </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
@@ -128,10 +126,21 @@
     {% block scripts %}
         <script src="{% static 'js/app.js' %}"></script>
         <script>
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#4D';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            let colors = []
             let carrers = []
             let percents = []
             $('.carrer').each(function () {
-                carrers.push($(this).text())
+                carrers.push($(this).text());
+                colors.push(getRandomColor())
             })
             $('.percent').each(function () {
                 percents.push(parseFloat($(this).text()))
@@ -144,22 +153,8 @@
                     datasets: [{
                         label: 'Porcentaje de rendimiento satisfactorio alcanzado por carrera',
                         data: percents,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
+                        backgroundColor: colors,
+                        borderColor: colors,
                         borderWidth: 1
                     }]
                 },
