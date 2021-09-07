@@ -31,51 +31,65 @@
                 </div>
             </div>
         </div>
-        {#Estilos para alinear el footer abajo    #}
-        {#        bottom: 0;#}
-        {#    position: absolute;#}
-        {#    width: 83%;#}
+
         <div class="row">
             <div class="col-12">
                 <div class="card px-3">
-                    <table id="datatables-basic" class="table table-striped" style="width:100%">
-                        <caption>Listado de estudios</caption>
-                        <thead>
-                        <tr>
-                            <th scope="col">Carrera</th>
-                            <th scope="col">Numero de postulantes</th>
-                            <th scope="col">Aplicar estudio</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for carrera in carreras %}
+                    <div class="card-header">
+                        <h5 class="card-title"> Selecciona una carrera:</h5>
+                        <h6 class="card-subtitle text-muted">El estudio se aplicará a los postulantes de las carreras
+                            que selecciones</h6>
+                    </div>
+                    {% if carreras %}
+                        <table id="datatables-basic" class="table table-striped" style="width:100%">
+                            <caption>Listado de estudios</caption>
+                            <thead>
                             <tr>
-                                <td>{{ carrera }}</td>
-                                <td>{{ carrera.number_of_students }}</td>
-                                <td>
-                                    <input type="checkbox" name="estudio_name" value="{{ carrera.id }}"
-                                           id="{{ carrera.id }}">
-                                </td>
+                                <th scope="col">Carrera</th>
+                                <th scope="col">Numero de postulantes</th>
+                                <th scope="col">Aplicar estudio</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            {% for carrera in carreras %}
+                                <tr>
+                                    <td>{{ carrera }}</td>
+                                    <td>{{ carrera.number_of_students }}</td>
+                                    <td>
+                                        <input type="checkbox" name="estudio_name" value="{{ carrera.id }}"
+                                               id="{{ carrera.id }}">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <div class="alert-message">
+                                No existen alumnos, pidele al administrador que agregue alumnos y usuarios
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
         <a href="{% url 'estudio' %} " class="btn btn-outline-danger"> Cancelar</a>
-        <input type="submit" value="Guardar" class="btn btn-primary">
-        <script>
-            window.onload = () => {
-                $("input[name=\"fecha\"]").daterangepicker({
-                    singleDatePicker: true,
-                    showDropdowns: true,
-                    locale: {
-                        format: "YYYY-MM-DD"
-                    }
-                });
-            }
-        </script>
+        {% if carreras %}
+            <input type="submit" value="Guardar" class="btn btn-primary">
+        {% endif %}
     </form>
 
+{% endblock %}
+{% block scripts %}
+    <script>
+        window.onload = () => {
+            $("input[name=\"fecha\"]").daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                locale: {
+                    format: "YYYY-MM-DD"
+                }
+            });
+        }
+    </script>
 {% endblock %}

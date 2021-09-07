@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body">
                     {% if not estudio_list %}
-                        <h1>No existen estudios!</h1>
+                        <h6>Aún no existen estudios <a href="{% url 'estudio_create' %}">Crea uno dando clic aquí</a></h6>
                     {% else %}
                         <table id="datatables-basic" class="table table-striped" style="width:100%">
                             <caption>Listado de estudios</caption>

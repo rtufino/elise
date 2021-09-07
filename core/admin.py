@@ -8,7 +8,6 @@ from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from simple_history.admin import SimpleHistoryAdmin
 from safedelete.admin import SafeDeleteAdmin, highlight_deleted
 
 

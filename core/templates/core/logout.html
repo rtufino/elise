@@ -2,6 +2,9 @@
 {% block content %}
     <div class="container">
         <h5>Sessión cerrada </h5>
+        <script>
+            window.location.href = "/"
+        </script>
         <h5><a href="{% url 'login' %}">Ingresa denuevo</a></h5>
     </div>
 {% endblock %}

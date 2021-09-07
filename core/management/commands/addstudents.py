@@ -2,7 +2,7 @@ import csv
 
 from django.core.management.base import BaseCommand, CommandError
 
-from core.models import Alumno, User, Carrera
+from core.models import Alumno, User, Carrera, Periodo
 
 
 # from registro.models import Periodo, Carrera, Usuario, Estudiante, Materia, Distributivo, Alumno
@@ -29,7 +29,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         periodo = options['periodo']
         archivo = options['archivo']
-
+        print('aca esta el periodo', periodo)
+        periodo = Periodo(
+            nombre=periodo
+        )
+        periodo.save()
         registros = []
         with open(archivo, encoding="utf8") as csvfile:
             read_csv = csv.reader(csvfile, delimiter=',')

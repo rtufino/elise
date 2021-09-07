@@ -78,13 +78,11 @@
                         <li class="nav-item dropdown">
                             <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
                                data-toggle="dropdown">
-                                <i class="align-middle" data-feather="settings"></i>
+                                <em class="far fa-user"></em>
                             </a>
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                data-toggle="dropdown">
-                                <img src="{% static 'img\avatars\avatar.jpg' %}"
-                                     class="avatar img-fluid rounded-circle mr-1"
-                                     alt="Chris Wood"> <span class="text-dark">{{request.user}} </span>
+                                <em class="far fa-user fa-2x mr-2"></em><span class="text-dark">{{request.user}} </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
@@ -126,12 +124,6 @@
                         <p class="h1">Page not found.</p>
                         <p class="h2 font-weight-normal mt-3 mb-4">The page you are looking for might have been
                             removed.</p>
-                        <!--<<<<<<< HEAD-->
-                        <!--                        <a href="{% url 'go_psicologo' %}" class="btn btn-primary btn-lg">Return to website</a>-->
-                        <!--=======-->
-                        <!--                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Return to website</a>-->
-                        <!--&gt;>>>>>> cb785389efd06b9f3c4c227a876c578e14ec6de9-->
-
                     </div>
                 </div>
             </div>

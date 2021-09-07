@@ -1,15 +1,11 @@
 {% extends 'core/psicologo/home.html' %}
 {% block content %}
-    <div class="row" id="questionApp">
-        <div class="card-body text-center">
-            <div class="mb-3">
-            </div>
-        </div>
-        <div class="col-12 col-xl-12">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-6">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title"></h5>
-                    <h6 class="card-subtitle text-muted">Ingresa los datos</h6>
+                    <h5 class="card-title"> Crea una Opción nueva</h5>
+                    <h6 class="card-subtitle text-muted">Crea los parametros de la opción</h6>
                 </div>
                 <div class="card-body">
                     <form method="post">{% csrf_token %}

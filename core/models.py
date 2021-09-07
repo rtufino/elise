@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
-from simple_history.models import HistoricalRecords
 from safedelete.models import SafeDeleteModel, SOFT_DELETE_CASCADE, SOFT_DELETE
 
 
@@ -100,6 +99,10 @@ class Nivel(SafeDeleteModel):
     _safedelete_policy = SOFT_DELETE_CASCADE
     numero = models.IntegerField(default=0)
 
+    class Meta:
+        verbose_name = 'Nivel'
+        verbose_name_plural = 'Niveles'
+
     def __str__(self):
         num = str(self.numero)
         return num
@@ -136,7 +139,6 @@ class Categoria(SafeDeleteModel):
     nombre = models.CharField(max_length=50)
     siglas = models.CharField(max_length=5)
     estado = models.IntegerField(default=1)
-    history = HistoricalRecords()
 
     def __str__(self):
         return self.nombre
@@ -145,6 +147,10 @@ class Categoria(SafeDeleteModel):
 class Tpregunta(SafeDeleteModel):
     _safedelete_policy = SOFT_DELETE_CASCADE
     nombre = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = 'Tipo de Pregunta'
+        verbose_name_plural = 'Tipos de Pregunta'
 
     def __str__(self):
         return self.nombre
@@ -170,6 +176,10 @@ class Opcion(SafeDeleteModel):
     ponderado = models.FloatField()
     etiqueta = models.CharField(max_length=30)
 
+    class Meta:
+        verbose_name = 'Opción'
+        verbose_name_plural = 'Opciones'
+
     def __str__(self):
         return self.etiqueta
 
@@ -189,6 +199,10 @@ class Evaluacion(models.Model):
     f_inicio = models.TimeField()
     f_fin = models.TimeField()
     tiempo = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = 'Evaluación'
+        verbose_name_plural = 'Evaluaciones'
 
     def __str__(self):
         return self.periodo.nombre

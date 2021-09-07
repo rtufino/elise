@@ -57,6 +57,8 @@
                                 {% render_field form.afinidad class="custom-control-input" %}
                                 <span class="custom-control-label">¿Es a fin?</span>
                             </label>
+                            {{ form.formula }}
+                            {{ form.id }}
                         {% endfor %}
                     </div>
                 </div>
@@ -71,8 +73,8 @@
                         <h6 class="card-subtitle text-muted">Configra un término para la formula</h6>
                     </div>
                     <div class="card-body form-inline">
-{#                        <label class="mr-2" for="{{ form.signo.id_for_label }}">Signo</label>#}
-{#                        {% render_field form.signo class="form-control mb-2 mr-sm-2" %}#}
+                        {#                        <label class="mr-2" for="{{ form.signo.id_for_label }}">Signo</label>#}
+                        {#                        {% render_field form.signo class="form-control mb-2 mr-sm-2" %}#}
                         <label class="mr-2" for="{{ form.valor.id_for_label }}">Valor</label>
                         {% render_field form.valor class="form-control mb-2 mr-sm-2" %}
                         <label class="mr-2" for="{{ form.variable.id_for_label }}">Selecciona un campo

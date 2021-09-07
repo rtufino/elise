@@ -1,11 +1,7 @@
 {% extends 'core/psicologo/home.html' %}
 {% block content %}
-    <div class="row" id="questionApp">
-        <div class="card-body text-center">
-            <div class="mb-3">
-            </div>
-        </div>
-        <div class="col-12 col-xl-12">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-6">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title"></h5>
@@ -29,6 +25,10 @@
                                 progressBar: true,
                                 timeOut: '3500'
                             });
+                            setTimeout(function () {
+                                localStorage.setItem('update', 'true')
+                                history.go(-2);
+                            }, 3000);
                         }
                     </script>
                 {% endif %}
@@ -36,14 +36,14 @@
         </div>
     </div>
     <script>
-        $(function() {
-			$("input[name=\"f_vigencia\"]").daterangepicker({
-				singleDatePicker: true,
-				showDropdowns: true,
+        $(function () {
+            $("input[name=\"f_vigencia\"]").daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
                 locale: {
-					format: "YYYY-MM-DD"
-				}
-			});
-		});
+                    format: "YYYY-MM-DD"
+                }
+            });
+        });
     </script>
 {% endblock %}
