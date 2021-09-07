@@ -19,7 +19,6 @@
 
 <body>
 {% if user.is_active and user.is_staff %}
-
     <div class="wrapper">
         <nav id="sidebar" class="sidebar">
             <div class="sidebar-content ">
@@ -27,7 +26,6 @@
                     <em class="align-middle" data-feather="box"></em>
                     <span class="align-middle">ELISE</span>
                 </a>
-
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">
                         Main
@@ -67,18 +65,6 @@
                     </a>
                     </li>
                 </ul>
-                <div class="sidebar-bottom d-none d-lg-block ">
-                    <div class="media">
-                        <em class="far fa-user fa-2x mx-2"></em>
-                        <div class="media-body">
-                            <h5 class="mb-1">{{ request.user }}</h5>
-                            <div>
-                                <em class="fas fa-circle text-success"></em> Online
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </nav>
         <div class="wrapper">
@@ -94,7 +80,8 @@
 
                                 <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                    data-toggle="dropdown">
-                                    <em class="far fa-user fa-2x"></em> <span class="text-dark">{{ request.user }} </span>
+                                    <em class="far fa-user fa-2x"></em> <span
+                                        class="text-dark">{{ request.user }} </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
@@ -109,10 +96,10 @@
                         {% endblock %}
                     </div>
                 </main>
-
             </div>
-
         </div>
+
+
     </div>
     </body>
     <footer class="text-center text-lg-start bg-light text-muted">
@@ -123,10 +110,12 @@
     </footer>
     <script src="{% static 'js/app.js' %}"></script>
 
+
     {% block scripts %}
 
     {% endblock %}
 {% else %}
+
     <div class="container d-flex flex-column">
         <div class="row h-100">
             <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
@@ -141,6 +130,7 @@
                         <!--=======-->
                         <!--                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Return to website</a>-->
                         <!--&gt;>>>>>> cb785389efd06b9f3c4c227a876c578e14ec6de9-->
+
                     </div>
                 </div>
             </div>

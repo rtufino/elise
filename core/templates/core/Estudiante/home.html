@@ -22,17 +22,16 @@
 
 <body>
 {% if user.is_active and not user.is_staff %}
-<section
-        class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
->
-    <div class="col-md-9 d-none d-lg-block">
-        <h1>Nombre de la encuesta : {{encuesta.nombre}}</h1>
-    </div>
-    <div class="col-md-3">
+<nav class="navbar navbar-expand navbar-light bg-white">
+
+    <div class="navbar-collapse collapse">
         <ul class="navbar-nav ml-auto">
+
             <li class="nav-item dropdown">
                 <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
+                    <i class="align-middle" data-feather="settings"></i>
                 </a>
+
 
                 <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
 {#                    <img src="{% static 'img\avatars\avatar.jpg' %}"#}
@@ -46,72 +45,94 @@
             </li>
         </ul>
     </div>
-    <!-- Right -->
-</section>
-<section class="bg-white">
-    <div class="px-4 mt-1">
-        <form id="formulario"  method="POST">
-            {% csrf_token %}
-            <input  type="hidden" id="asignacion" name="asignaciones" value="{{asignacion.id}}"/>
-            <div class="row">
-                {% for pregunta in preguntas %}
-                {% if not pregunta.tpregunta|stringformat:"s" == 'abierta' %}
-                <div class="col-md-6 col-sm-6">
-                    <h6>{{ forloop.counter}}.{{pregunta.enunciado}}</h6>
-                    <span name="ids" style="Display:none;">{{pregunta.id}}</span>
-                    <input id="{{pregunta.id}}_res" name="valores" type="hidden"/>
-                    <input type="hidden" id="{{pregunta.id}}_" name="categorias" value="{{pregunta.categoria.siglas}}"/>
-                    <input type="hidden" id="{{pregunta.id}}_opcion" name="recopciones"/>
-                    <input type="hidden" id="{{pregunta.id}}_respuesta" name="respuestas"/>
-                    {% for opcion in opciones %}
-                    {% for i in opcion %}
-                    {% if i.pregunta.id == pregunta.id %}
-                    <label class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" value="{{i.ponderado}}"
-                               name="{{i.pregunta.id}}" id="{{i.id}}" required>
-                        <span class="custom-control-label">{{i}}</span>
-                    </label>
-                    {% endif %}
-                    {% endfor %}
-                    {% endfor %}
+</nav>
+<main class="content">
+    <div class="container-fluid p-0">
 
-                </div>
-                {% endif %}
-                {% if pregunta.tpregunta|stringformat:"s" == 'abierta' %}
-                    <div class="col-md-10 col-sm-6">
-                    <h6>{{ forloop.counter}}.{{pregunta.enunciado}}</h6>
+        <div class="card">
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="card bg-light py-2 py-md-3 border">
+                            <div class="card-body">
+                                <h1>{{encuesta.nombre}}</h1>
+                            </div>
+                        </div>
                     </div>
-                    <input type="hidden" id="{{pregunta.id}}_text" name="valores" value="0"/>
-                    <input type="hidden" id="{{pregunta.id}}_ctext" name="categorias" value="{{pregunta.categoria.siglas}}"/>
-                    <input type="hidden" id="{{pregunta.id}}_retext" name="respuestas"/>
-                {% for opcion in opciones %}
-                {% for j in opcion %}
-                {% if j.pregunta.id == pregunta.id %}
-                <div class="col-md-6 col-sm-6">
-<!--                    <label>{{pregunta.id}}.{{pregunta.enunciado}}</label>-->
-                    <textarea class="form-control" id="respuestas" rows="3"
-                              name="{{j.pregunta.id}}" value="{{j.ponderado}}" required></textarea>
-                    <input type="hidden" id="{{pregunta.id}}_optext" value="{{j.id}}" name="recopciones"/>
                 </div>
-                {% endif %}
-                {% endfor %}
-                {% endfor %}
+                <div class="card">
 
-                {% endif %}
-                {% endfor %}
+                    <div class="card-body">
+                        <div class="px-4 mt-1">
+                            <form id="formulario" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" id="asignacion" name="asignaciones" value="{{asignacion.id}}"/>
+                                <div class="row">
+                                    {% for pregunta in preguntas %}
+                                    {% if not pregunta.tpregunta|stringformat:"s" == 'abierta' %}
+                                    <div class="col-md-6 col-sm-6">
+                                        <h6>{{ forloop.counter}}.{{pregunta.enunciado}}</h6>
+                                        <span name="ids" style="Display:none;">{{pregunta.id}}</span>
+                                        <input id="{{pregunta.id}}_res" name="valores" type="hidden"/>
+                                        <input type="hidden" id="{{pregunta.id}}_" name="categorias"
+                                               value="{{pregunta.categoria.siglas}}"/>
+                                        <input type="hidden" id="{{pregunta.id}}_opcion" name="recopciones"/>
+                                        <input type="hidden" id="{{pregunta.id}}_respuesta" name="respuestas"/>
+                                        {% for opcion in opciones %}
+                                        {% for i in opcion %}
+                                        {% if i.pregunta.id == pregunta.id %}
+                                        <label class="custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" value="{{i.ponderado}}"
+                                                   name="{{i.pregunta.id}}" id="{{i.id}}" required>
+                                            <span class="custom-control-label">{{i}}</span>
+                                        </label>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endfor %}
+
+                                    </div>
+                                    {% endif %}
+                                    {% if pregunta.tpregunta|stringformat:"s" == 'abierta' %}
+                                    <div class="col-md-10 col-sm-6">
+                                        <h6>{{ forloop.counter}}.{{pregunta.enunciado}}</h6>
+                                    </div>
+                                    <input type="hidden" id="{{pregunta.id}}_text" name="valores" value="0"/>
+                                    <input type="hidden" id="{{pregunta.id}}_ctext" name="categorias"
+                                           value="{{pregunta.categoria.siglas}}"/>
+                                    <input type="hidden" id="{{pregunta.id}}_retext" name="respuestas"/>
+                                    {% for opcion in opciones %}
+                                    {% for j in opcion %}
+                                    {% if j.pregunta.id == pregunta.id %}
+                                    <div class="col-md-6 col-sm-6">
+                                        <!--                    <label>{{pregunta.id}}.{{pregunta.enunciado}}</label>-->
+                                        <textarea class="form-control" id="respuestas" rows="3"
+                                                  name="{{j.pregunta.id}}" value="{{j.ponderado}}" required></textarea>
+                                        <input type="hidden" id="{{pregunta.id}}_optext" value="{{j.id}}"
+                                               name="recopciones"/>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endfor %}
+
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <button type="submit" id="submityes" class="btn btn-primary mt-2">Enviar</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+
             </div>
-            <button type="submit" id="submityes" class="btn btn-primary" >Enviar</button>
-        </form>
-        <main class="content">
-            <div class="container-fluid p-0">
-                {% block content %}
-                {% endblock %}
-            </div>
-        </main>
+            <!-- /.row -->
+        </div>
+    </div>
 
     </div>
-</section>
-
+</main>
 </body>
 <footer class="text-center text-lg-start bg-light text-muted">
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
@@ -164,6 +185,8 @@
 
         })
     });
+
+
 
 
 

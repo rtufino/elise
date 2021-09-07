@@ -20,16 +20,13 @@
 </head>
 <body>
 {% if user.is_active and not user.is_staff %}
-    <section
-            class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
-    >
-        <div class="col-md-9 d-none d-lg-block">
-            <h1>RESULTADOS</h1>
-        </div>
-        <div class="col-md-3">
+    <nav class="navbar navbar-expand navbar-light bg-white">
+
+        <div class="navbar-collapse collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
+                        <i class="align-middle" data-feather="settings"></i>
                     </a>
 
                     <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
@@ -41,8 +38,7 @@
                 </li>
             </ul>
         </div>
-        <!-- Right -->
-    </section>
+    </nav>
     <div class="container">
         <div class="row py-3">
             <div class="col-12 col-xl-6">
@@ -113,15 +109,18 @@
             <canvas id="myChart" class="col-md-6"></canvas>
         </div>
 
+
+        </li>
+        </ul>
     </div>
 
-    </body>
-    <footer class="text-center text-lg-start bg-light text-muted">
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-            © 2021 Copyright:
-            <a class="text-reset fw-bold" href="https://www.ups.edu.ec/">UNIVERSIDAD POLITECNICA SALESIANA</a>
-        </div>
-    </footer>
+</body>
+<footer class="text-center text-lg-start bg-light text-muted">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2021 Copyright:
+        <a class="text-reset fw-bold" href="https://www.ups.edu.ec/">UNIVERSIDAD POLITECNICA SALESIANA</a>
+    </div>
+</footer>
 
     {% block scripts %}
         <script src="{% static 'js/app.js' %}"></script>
@@ -169,20 +168,20 @@
         </script>
     {% endblock %}
 {% else %}
-    <div class="container d-flex flex-column">
-        <div class="row h-100">
-            <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
-                <div class="d-table-cell align-middle">
-                    <div class="text-center">
-                        <h1 class="display-1 font-weight-bold">404</h1>
-                        <p class="h1">Page not found.</p>
-                        <p class="h2 font-weight-normal mt-3 mb-4">The page you are looking for might have been
-                            removed.</p>
-                        <a href="{% url 'go_estudiante' %}" class="btn btn-primary btn-lg">Return to website</a>
-                    </div>
+<div class="container d-flex flex-column">
+    <div class="row h-100">
+        <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+            <div class="d-table-cell align-middle">
+                <div class="text-center">
+                    <h1 class="display-1 font-weight-bold">404</h1>
+                    <p class="h1">Page not found.</p>
+                    <p class="h2 font-weight-normal mt-3 mb-4">The page you are looking for might have been
+                        removed.</p>
+                    <a href="{% url 'go_estudiante' %}" class="btn btn-primary btn-lg">Return to website</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endif %}
 </html>

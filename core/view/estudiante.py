@@ -89,35 +89,41 @@ def go_estudiante(request):
             return redirect('go_resultados')
         else:
             asignacion = Asignacion.objects.filter(alumno_name=alumno.id).first()
-            estudio = Estudio.objects.filter(id=asignacion.estudio.id).first()
-            encuesta = Encuesta.objects.filter(id=estudio.encuesta.id).first()
-            preguntas = Pregunta.objects.filter(encuesta=encuesta.id)
-            opciones = []
-            for pregunta in preguntas:
-                opciones.append(list(Opcion.objects.filter(pregunta=pregunta.id)))
-            if request.method == "POST":
-                ponderados = request.POST.getlist('valores')
-                respuestas = request.POST.getlist('respuestas')
-                opcioncategoria = request.POST.getlist('categorias')
-                recopciones = request.POST.getlist('recopciones')
-                listresp = []
-                for i in range(0, len(ponderados)):
-                    categoria = Categoria.objects.get(siglas=opcioncategoria[i])
-                    opcion = Opcion.objects.get(id=recopciones[i])
-                    respuestas1 = Respuesta(
-                        categoria=categoria,
-                        asignacion=asignacion,
-                        opcion=opcion,
-                        ponderado=ponderados[i],
-                        respuesta=respuestas[i]
-                    )
-                    listresp.append(respuestas1)
-                Respuesta.objects.bulk_create(listresp)
-                alumno.encuesta = '1'
-                alumno.save()
-                asignacion.completada = True
-                asignacion.save()
-                return redirect('go_resultados')
+            if asignacion:
+                estudio = Estudio.objects.filter(id=asignacion.estudio.id).first()
+                encuesta = Encuesta.objects.filter(id=estudio.encuesta.id).first()
+                preguntas = Pregunta.objects.filter(encuesta=encuesta.id)
+                opciones = []
+                for pregunta in preguntas:
+                    opciones.append(list(Opcion.objects.filter(pregunta=pregunta.id)))
+                if request.method == "POST":
+                    print("this is post")
+                    ponderados = request.POST.getlist('valores')
+                    respuestas = request.POST.getlist('respuestas')
+                    opcioncategoria = request.POST.getlist('categorias')
+                    recopciones = request.POST.getlist('recopciones')
+                    print(opcioncategoria)
+                    print(recopciones)
+                    listresp = []
+                    for i in range(0, len(ponderados)):
+                        categoria = Categoria.objects.get(siglas=opcioncategoria[i])
+                        opcion = Opcion.objects.get(id=recopciones[i])
+                        print(categoria)
+                        respuestas1 = Respuesta(
+                            categoria=categoria,
+                            asignacion=asignacion,
+                            opcion=opcion,
+                            ponderado=ponderados[i],
+                            respuesta=respuestas[i]
+                        )
+                        listresp.append(respuestas1)
+                    Respuesta.objects.bulk_create(listresp)
+                    alumno.encuesta = '1'
+                    alumno.save()
+                    return redirect('go_resultados')
+            else:
+                return render(request, 'core/Estudiante/validar_estudio.html')
+
             return render(request, 'core/Estudiante/home.html',
                           context={'asignacion': asignacion, 'alumno': alumno, 'encuesta': encuesta,
                                    'preguntas': preguntas, 'opciones': opciones})
