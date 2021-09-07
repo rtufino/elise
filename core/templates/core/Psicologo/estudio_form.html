@@ -20,7 +20,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="form-label">Ingresa una fecha:</label>
-                                {% render_field form.fecha class="form-control" name="datesingle" %}
+                                {% render_field form.fecha class="form-control" %}
                             </div>
                         </div>
                         <div class="form-group">
@@ -65,16 +65,17 @@
         </div>
         <a href="{% url 'estudio' %} " class="btn btn-outline-danger"> Cancelar</a>
         <input type="submit" value="Guardar" class="btn btn-primary">
+        <script>
+            window.onload = () => {
+                $("input[name=\"fecha\"]").daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    locale: {
+                        format: "YYYY-MM-DD"
+                    }
+                });
+            }
+        </script>
     </form>
-    <script>
-        $(function () {
-            $("input[name=\"fecha\"]").daterangepicker({
-                singleDatePicker: true,
-                showDropdowns: true,
-                locale: {
-                    format: "YYYY-MM-DD"
-                }
-            });
-        });
-    </script>
+
 {% endblock %}

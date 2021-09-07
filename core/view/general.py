@@ -17,3 +17,5 @@ def login_general(request):
             messages.warning(request, 'Usuario o Contraseña Incorrecta')
             return redirect('login')
     return render(request, 'core/login.html')
+
+
