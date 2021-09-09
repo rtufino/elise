@@ -69,7 +69,8 @@ class Carrera(SafeDeleteModel):
         return self.nombre
 
 
-class Alumno(models.Model):
+class Alumno(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     cedula = models.CharField(unique=True, max_length=10)
     nombres = models.CharField(max_length=100)
@@ -83,7 +84,7 @@ class Alumno(models.Model):
     carrera_postular = models.ForeignKey(Carrera, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.cedula + ' ' + self.nombres
+        return self.cedula
 
 
 class Periodo(SafeDeleteModel):
@@ -109,7 +110,7 @@ class Nivel(SafeDeleteModel):
 
 
 class Registro(models.Model):
-    # id = models.AutoField(primary_key=True)
+    # _safedelete_policy = SOFT_DELETE_CASCADE
     periodo = models.ForeignKey(Periodo, on_delete=models.CASCADE)
     nivel = models.ForeignKey(Nivel, on_delete=models.CASCADE)
     alumno = models.ForeignKey(Alumno, to_field='cedula', on_delete=models.CASCADE)
@@ -270,10 +271,11 @@ class Asignacion(SafeDeleteModel):
     completada = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.estudio.observacion + " " + self.alumno_name.nombres + " " + self.alumno_name.apellidos
+        return self.estudio.observacion
 
 
-class Respuesta(models.Model):
+class Respuesta(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE_CASCADE
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     asignacion = models.ForeignKey(Asignacion, on_delete=models.CASCADE)
     opcion = models.ForeignKey(Opcion, on_delete=models.CASCADE)
