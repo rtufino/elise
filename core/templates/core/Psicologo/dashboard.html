@@ -103,10 +103,13 @@
         let categorias = []
         let conteo = []
         let colors = []
+        let completos = {{ asig_completas|safe }}
+
         const getCategorias = () => {
             lista.forEach(e => {
                 categorias.push(e.categoria__nombre);
-                conteo.push(e.totalp)
+                n_percent = (e.totalp/completos) * 100 / 5
+                conteo.push(n_percent)
                 colors.push(getRandomColor())
             })
 
