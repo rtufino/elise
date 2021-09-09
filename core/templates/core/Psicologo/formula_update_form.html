@@ -35,15 +35,15 @@
                     </div>
                 </div>
             </div>
-            {{ rendimiento.management_form }}
             <div class="col-12 col-xl-6">
-                <div class="card">
+                <div class="card py-md-4">
                     <div class="card-header">
                         <h5 class="card-title">Rendimientos para la formula</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body py-md-4">
+                        {{ rendimiento.management_form }}
                         {% for form in rendimiento %}
-                            <div class="form-row">
+                            <div class="form-row py-md-3">
                                 <div class="form-group col-md-6">
                                     <label for="{{ form.rendimiento_satisfactorio.id_for_label }}">Satisfactorio</label>
                                     {% render_field form.rendimiento_satisfactorio class="form-control" %}
@@ -70,7 +70,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">Término</h5>
-                        <h6 class="card-subtitle text-muted">Configra un término para la formula</h6>
+                        <h6 class="card-subtitle text-muted">Configura un término para la formula</h6>
                     </div>
                     <div class="card-body form-inline">
                         {#                        <label class="mr-2" for="{{ form.signo.id_for_label }}">Signo</label>#}
@@ -84,39 +84,41 @@
                             {% render_field form.DELETE class="custom-control-input" %}
                             <span class="custom-control-label">Eliminar este termino</span>
                         </label>
-
                         {{ form.formula }}
                         {{ form.id }}
-
                     </div>
                 </div>
             </div>
         {% endfor %}
-
         <button id="add-form" type="button" class="btn btn-outline-primary">Agregar otro término</button>
         <a href="{% url 'formula' %} " class="btn btn-outline-danger"> Cancelar</a>
         <input type="submit" value="Guardar" class="btn btn-primary">
     </form>
+{% endblock %}
+{% block scripts %}
     <script>
-        let birdForm = document.querySelectorAll(".inline-form")
+        let terminoForm = document.querySelectorAll(".inline-form")
         let container = document.querySelector("#form-container")
         let addButton = document.querySelector("#add-form")
         let totalForms = document.querySelector("#id_termino_set-TOTAL_FORMS")
 
-        let formNum = birdForm.length - 1
+        let formNum = terminoForm.length - 1
         addButton.addEventListener('click', addForm)
 
         function addForm(e) {
             e.preventDefault()
 
-            let newForm = birdForm[0].cloneNode(true)
+            let newForm = terminoForm[0].cloneNode(true)
             let formRegex = RegExp(`termino_set-(\\d){1}-`, 'g')
             formNum++
             newForm.innerHTML = newForm.innerHTML.replace(formRegex, `termino_set-${formNum}-`)
             container.insertBefore(newForm, addButton)
-            document.getElementById(`id_termino_set-${formNum}-id`).removeAttribute("value");
-            document.getElementById(`id_termino_set-${formNum}-signo`).removeAttribute("value");
-            document.getElementById(`id_termino_set-${formNum}-valor`).removeAttribute("value");
+            $(`#id_termino_set-${formNum}-id`).val('');
+            $(`#id_termino_set-${formNum}-signo`).val('');
+            $(`#id_termino_set-${formNum}-valor`).val('');
+            {#document.getElementById(`id_termino_set-${formNum}-id`).value="";#}
+            {#document.getElementById(`id_termino_set-${formNum}-signo`).removeAttribute("value");#}
+            {#document.getElementById(`id_termino_set-${formNum}-valor`).removeAttribute("value");#}
             totalForms.setAttribute('value', `${formNum + 1}`)
         }
     </script>

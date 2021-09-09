@@ -1,14 +1,18 @@
 {% extends 'core/psicologo/home.html' %}
 {% block content %}
-    <div class="container-fluid p-0">
+    <div class="container-fluid">
     <h5>Selecciona un estudio:</h5>
     <form method="post" id="e_form">{% csrf_token %}
         <h3 class="mb-2 col-12">
             <select id="select_e" name="estudio_select" class="form-control mb-3">
-                <option selected="">Para ver los gráficos selecciona una opción</option>
-                {% for estudio in estudios %}
-                    <option value="{{ estudio.id }}">{{ estudio }}</option>
-                {% endfor %}
+                <option selected="" value="">Para ver los gráficos selecciona una opción</option>
+                {% if estudios %}
+                    {% for estudio in estudios %}
+                        <option value="{{ estudio.id }}">{{ estudio }}</option>
+                    {% endfor %}
+                {% else %}
+                    <option value="">Aún no se han creado estudios</option>
+                {% endif %}
             </select>
         </h3>
     </form>
@@ -79,7 +83,10 @@
 {% block scripts %}
     <script>
         $('#select_e').on('change', function () {
-            $('#e_form').submit()
+            let seleccion = $("#select_e option:selected").val();
+            if (seleccion) {
+                $('#e_form').submit()
+            }
         })
     </script>
     <script>
@@ -92,7 +99,6 @@
             console.log(color)
             return color;
         }
-
         let lista = {{ consulta|safe }};
         let categorias = []
         let conteo = []

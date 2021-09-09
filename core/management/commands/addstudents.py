@@ -29,7 +29,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         periodo = options['periodo']
         archivo = options['archivo']
-        print('aca esta el periodo', periodo)
         periodo = Periodo(
             nombre=periodo
         )

@@ -14,7 +14,6 @@ def resultados(request):
     resultado = Resultado.objects.filter(asignacion=asignacion)
     porcentajes_por_carrera = list()
     if resultado:
-        print('ya tiene resultado')
         for result in resultado:
             porcentajes_por_carrera.append(
                 {
@@ -24,22 +23,18 @@ def resultados(request):
                 }
             )
     else:
-        print('calculando')
         respuestas = Respuesta.objects.filter(asignacion=asignacion)
         formulas = Formula.objects.all()
         formulas_list = list()
         puntaje = 0
         icav_p = 0
         porcentaje = 0
-
         for formula in formulas:
             terminos = Termino.objects.filter(formula=formula)
             rendimientos = Rendimiento.objects.filter(formula=formula)
             for termino in terminos:
                 for respuesta in respuestas:
-                    print('se compara ', termino.variable.siglas, ' con ', respuesta.categoria)
                     if termino.variable == respuesta.categoria:
-                        print('entra!')
                         puntaje += float(respuesta.ponderado)
                         icav_p += termino.valor * float(respuesta.ponderado)
                         break
@@ -75,7 +70,8 @@ def resultados(request):
                 )
             )
         Resultado.objects.bulk_create(formulas_list)
-
+        asignacion.completada = True
+        asignacion.save()
     return render(request, 'core/Estudiante/resultados.html',
                   context={'porcentajes': porcentajes_por_carrera, 'alumno': alumno})
 

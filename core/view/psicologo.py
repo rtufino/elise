@@ -29,10 +29,15 @@ def go_psicologo(request):
             asignaciones = Asignacion.objects.filter(estudio=estudio)
             conteo_asignaciones = asignaciones.count()
             asignaciones_completadas = asignaciones.filter(completada=True).count()
-            categorias_x_estudio = Respuesta.objects.all().values('categoria__nombre').annotate(
-                totalp=Sum(F('ponderado'), output_field=models.FloatField()))
-            carreras_x_estudio = Asignacion.objects.all().values('alumno_name__carrera_postular__nombre').annotate(
-                number=Count('alumno_name'))
+            if asignaciones_completadas != 0:
+                categorias_x_estudio = Respuesta.objects.all().values('categoria__nombre').annotate(
+                    totalp=Sum(F('ponderado'), output_field=models.FloatField()))
+
+                carreras_x_estudio = Asignacion.objects.all().values('alumno_name__carrera_postular__nombre').annotate(
+                    number=Count('alumno_name'))
+            else:
+                categorias_x_estudio = []
+                carreras_x_estudio = []
             context = {
                 'estudios': estudios,
                 'asignaciones': conteo_asignaciones,
@@ -42,7 +47,6 @@ def go_psicologo(request):
                 'este_estudio': estudio
             }
         else:
-            cantidad_encuestas = Encuesta.objects.count()
             context = {
                 'estudios': estudios
             }
@@ -84,8 +88,6 @@ class EncuestaDeleteView(DeleteView):
     # def get_success_url(self):
     #     print(self.object.encuesta)
     #     return reverse_lazy('encuesta', args=[self.object.encuesta.id])
-
-
 
 
 def encuesta_detail(request, pk):
