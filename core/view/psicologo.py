@@ -29,26 +29,73 @@ def go_psicologo(request):
             asignaciones = Asignacion.objects.filter(estudio=estudio)
             conteo_asignaciones = asignaciones.count()
             asignaciones_completadas = asignaciones.filter(completada=True).count()
+            # lel = Respuesta.objects.all().aggregate(Sum('amount'))['amount__sum'] or 0.00
             if asignaciones_completadas != 0:
-                categorias_x_estudio = Respuesta.objects.all().values('categoria__nombre').annotate(
-                    totalp=Sum(F('ponderado'), output_field=models.FloatField()))
+                respuestas = Respuesta.objects.all()
+                cat = []
+                punt = []
+                asg = []
+                cant = []
+                for respuesta in respuestas:
+                    if respuesta.categoria.nombre not in cat:
+                        cat.append(respuesta.categoria.nombre)
+                        punt.append(respuesta.ponderado)
+                    else:
+                        indice = cat.index(respuesta.categoria.nombre)
+                        ponderado_anterior = punt[indice] + respuesta.ponderado
+                        punt[indice] = ponderado_anterior
+                for asignacion in asignaciones:
+                    if asignacion.alumno_name.carrera_postular.nombre not in asg:
+                        asg.append(asignacion.alumno_name.carrera_postular.nombre)
+                        cant.append(1)
+                    else:
+                        indice = asg.index(asignacion.alumno_name.carrera_postular.nombre)
+                        cant_anterior = cant[indice] + 1
+                        cant[indice] = cant_anterior
 
-                carreras_x_estudio = Asignacion.objects.all().values('alumno_name__carrera_postular__nombre').annotate(
-                    number=Count('alumno_name'))
+                # categorias_x_estudio = list(Respuesta.objects.all().values('categoria__nombre').annotate(
+                #     totalp=Sum(('ponderado'), output_field=models.FloatField())))
+                #
+                # carreras_x_estudio = list(
+                #     Asignacion.objects.all().values('alumno_name__carrera_postular__nombre').annotate(
+                #         number=Count('alumno_name')))
+                categoriasXestudio = []
+                carrerasXestudio = []
+                for o in range(0, len(cat)):
+                    categoriasXestudio.append(
+                        {
+                            'categoria': cat[o],
+                            'total': punt[o]
+                        }
+                    )
+                for i in range(0, len(asg)):
+                    carrerasXestudio.append(
+                        {
+                            'carrera': asg[i],
+                            'postulantes': cant[i]
+                        }
+                    )
+                # print('new carrrers', carrerasXestudio)
+                # print('new categroies: ', categoriasXestudio)
             else:
-                categorias_x_estudio = []
-                carreras_x_estudio = []
+                categoriasXestudio = []
+                carrerasXestudio = []
             context = {
                 'estudios': estudios,
                 'asignaciones': conteo_asignaciones,
                 'asig_completas': asignaciones_completadas,
-                'consulta': list(categorias_x_estudio),
-                'carreras_participantes': list(carreras_x_estudio),
+                'consulta': categoriasXestudio,
+                'carreras_participantes': carrerasXestudio,
                 'este_estudio': estudio
             }
         else:
             context = {
-                'estudios': estudios
+                'estudios': estudios,
+                'asignaciones': '--',
+                'asig_completas': '--',
+                'consulta': '--',
+                'carreras_participantes': '--',
+                'este_estudio': 'ninguna selección'
             }
         return render(request, ruta_psicologo + '/dashboard.html', context=context)
     elif request.user.is_authenticated and request.user.is_active and not request.user.is_staff:
@@ -171,19 +218,6 @@ class CategoriaDeleteView(DeleteView):
     # def get_success_url(self):
     #     print(self.object.encuesta)
     #     return reverse_lazy('cate', args=[self.object.encuesta.id])
-
-
-# class CategoriaDeleteView(UpdateView):
-#     model = Categoria
-#     form_class = CategoriaDeleteForm
-#     # fields = None
-#     template_name = ruta_psicologo + '/categoria_delete_form.html'
-#
-#     def form_valid(self, form):
-#         form.instance.estado = 0
-#         return super().form_valid(form)
-#
-#     success_url = reverse_lazy('categoria')
 
 
 class OpcionCreateView(CreateView):

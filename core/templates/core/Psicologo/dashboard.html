@@ -72,7 +72,7 @@
                     </div>
                     <h6 class="card-title px-3" style="align-self: center;">Puntuación por Campo Profesional</h6>
                     <canvas id="myChart" class="col-12 col-md-6" style="align-self: center;"></canvas>
-                    <h6 class="card-title px-3" style="align-self: center;">Carreras Participantes en el Estudio</h6>
+                    <h6 class="card-title px-3" style="align-self: center;">Cantidad de postulantes por carrera en el estudio </h6>
                     <canvas id="myPieChart" class="col-12 col-md-6" style="align-self: center;"></canvas>
                 </div>
             </div>
@@ -92,11 +92,10 @@
     <script>
         function getRandomColor() {
             var letters = '0123456789ABCDEF';
-            var color = '#4D';
+            var color = '#';
             for (var i = 0; i < 6; i++) {
                 color += letters[Math.floor(Math.random() * 16)];
             }
-            console.log(color)
             return color;
         }
         let lista = {{ consulta|safe }};
@@ -107,8 +106,8 @@
 
         const getCategorias = () => {
             lista.forEach(e => {
-                categorias.push(e.categoria__nombre);
-                n_percent = (e.totalp/completos) * 100 / 5
+                categorias.push(e.categoria);
+                n_percent = (e.total/completos) * 100 / 5
                 conteo.push(n_percent)
                 colors.push(getRandomColor())
             })
@@ -142,10 +141,12 @@
         let carreras = []
         let conteo_carreras = []
         let list_carreras = {{ carreras_participantes|safe }};
+        let colors2 = []
         const getCarreras = () => {
             list_carreras.forEach(e => {
-                carreras.push(e.alumno_name__carrera_postular__nombre)
-                conteo_carreras.push(e.number)
+                carreras.push(e.carrera)
+                conteo_carreras.push(e.postulantes)
+                colors2.push(getRandomColor())
             })
         }
         getCarreras();
@@ -155,10 +156,10 @@
             data: {
                 labels: carreras,
                 datasets: [{
-                    label: 'Carreras Participantes',
+                    label: 'Postulantes por Carrera',
                     data: conteo_carreras,
-                    backgroundColor: colors,
-                    borderColor: colors,
+                    backgroundColor: colors2,
+                    borderColor: colors2,
                     borderWidth: 1
                 }]
             },

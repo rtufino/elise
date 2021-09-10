@@ -191,7 +191,7 @@ class RespuestaAdmin(SafeDeleteAdmin):
 
 class ResultadoAdmin(SafeDeleteAdmin):
     model = Resultado
-    list_display = (highlight_deleted, 'carrera', 'afinidad', 'porcentaje', 'asignacion',
+    list_display = (highlight_deleted, 'carrera', 'afinidad', 'porcentaje_s', 'porcentaje_r', 'asignacion',
                     'puntaje') + SafeDeleteAdmin.list_display
     search_fields = ('carrera__nombre', 'afinidad', 'asignacion__alumno_name__cedula') + SafeDeleteAdmin.search_fields
 

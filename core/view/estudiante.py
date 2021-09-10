@@ -15,21 +15,28 @@ def resultados(request):
     porcentajes_por_carrera = list()
     if resultado:
         for result in resultado:
+            print('result: ', result)
             porcentajes_por_carrera.append(
                 {
                     'carrera': result.carrera,
                     'afinidad': result.afinidad,
-                    'porcentaje': result.porcentaje
+                    'rend_sat': result.porcentaje_s,
+                    'rend_ries': result.porcentaje_r,
+                    'puntaje': result.puntaje,
+                    'icav': result.icav
                 }
             )
     else:
         respuestas = Respuesta.objects.filter(asignacion=asignacion)
         formulas = Formula.objects.all()
+        print('formulas ', formulas)
         formulas_list = list()
         puntaje = 0
         icav_p = 0
-        porcentaje = 0
+        rend_sat = 0
+        rend_ries = 0
         for formula in formulas:
+            print('now we are in the formule: ', formula)
             terminos = Termino.objects.filter(formula=formula)
             rendimientos = Rendimiento.objects.filter(formula=formula)
             for termino in terminos:
@@ -38,40 +45,52 @@ def resultados(request):
                         puntaje += float(respuesta.ponderado)
                         icav_p += termino.valor * float(respuesta.ponderado)
                         break
-
-            icav = (icav_p - formula.minimo / formula.maximo - formula.minimo) * 100
+            icav = ((icav_p - formula.minimo) / (formula.maximo - formula.minimo)) * 100
             afinidad = False
             if icav > formula.porcentaje:
                 for rendimiento in rendimientos:
                     if rendimiento.afinidad:
-                        porcentaje = rendimiento.rendimiento_satisfactorio
-                        afinidad = True
-                        break
+                        rend_sat = rendimiento.rendimiento_satisfactorio
+                        rend_ries = rendimiento.rendimiento_riesgoso
+                    afinidad = True
+                    break
             else:
+                print('es no afin')
                 for rendimiento in rendimientos:
                     if not rendimiento.afinidad:
-                        porcentaje = rendimiento.rendimiento_riesgoso
+                        rend_sat = rendimiento.rendimiento_satisfactorio
+                        rend_ries = rendimiento.rendimiento_riesgoso
                         afinidad = False
                         break
             porcentajes_por_carrera.append(
                 {
                     'carrera': formula.carrera,
                     'afinidad': afinidad,
-                    'porcentaje': porcentaje
+                    'rend_sat': rend_sat,
+                    'rend_ries': rend_ries,
+                    'puntaje': puntaje,
+                    'icav': icav
                 }
             )
             formulas_list.append(
                 Resultado(
                     asignacion=asignacion,
                     carrera=formula.carrera,
-                    porcentaje=porcentaje,
+                    porcentaje_s=rend_sat,
+                    porcentaje_r=rend_ries,
                     afinidad=afinidad,
-                    puntaje=puntaje
+                    puntaje=puntaje,
+                    icav=icav
                 )
             )
+            puntaje = 0
+            icav_p = 0
+            rend_sat = 0
+            rend_ries = 0
         Resultado.objects.bulk_create(formulas_list)
         asignacion.completada = True
         asignacion.save()
+
     return render(request, 'core/Estudiante/resultados.html',
                   context={'porcentajes': porcentajes_por_carrera, 'alumno': alumno})
 

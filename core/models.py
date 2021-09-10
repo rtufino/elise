@@ -287,6 +287,8 @@ class Resultado(SafeDeleteModel):
     _safedelete_policy = SOFT_DELETE
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
     afinidad = models.BooleanField()
-    porcentaje = models.FloatField()
+    porcentaje_s = models.FloatField()
+    porcentaje_r = models.FloatField()
     asignacion = models.ForeignKey(Asignacion, on_delete=models.CASCADE)
-    puntaje = models.FloatField(default=0)
+    puntaje = models.FloatField()
+    icav = models.FloatField()
