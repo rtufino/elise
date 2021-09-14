@@ -23,11 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6y+s&(lw08s58i!p122yd%&&y((jr-)g*il)3*5$c0o!dol+t%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
-ALLOWED_HOSTS = ['3.139.149.30']
+# ALLOWED_HOSTS = ['3.139.149.30']
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 
 GRAPH_MODELS = {
     'all_applications': True,
@@ -83,23 +83,23 @@ WSGI_APPLICATION = 'ELISE.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 #
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'elise',
-        'USER': 'django_user',
-        'PASSWORD': 'QV8cLm5N05',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'elise',
+#         'USER': 'django_user',
+#         'PASSWORD': 'QV8cLm5N05',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

@@ -126,7 +126,7 @@ class InvestigacionAdmin(admin.ModelAdmin):
 class AsignacionAdmin(SafeDeleteAdmin):
     model = Asignacion
     search_fields = ('tipo', 'alumno_name__cedula') + SafeDeleteAdmin.search_fields
-    list_display = (highlight_deleted, 'alumno_name', 'tipo', 'estudio') + SafeDeleteAdmin.list_display
+    list_display = (highlight_deleted, 'alumno_name', 'tipo', 'estudio', 'completada') + SafeDeleteAdmin.list_display
     # search_fields = ('estudio', 'alumno_name') + SafeDeleteAdmin.search_fields
 
 

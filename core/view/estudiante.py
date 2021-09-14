@@ -15,7 +15,7 @@ def resultados(request):
     porcentajes_por_carrera = list()
     if resultado:
         for result in resultado:
-            print('result: ', result)
+            # print('result: ', result)
             porcentajes_por_carrera.append(
                 {
                     'carrera': result.carrera,
@@ -29,14 +29,14 @@ def resultados(request):
     else:
         respuestas = Respuesta.objects.filter(asignacion=asignacion)
         formulas = Formula.objects.all()
-        print('formulas ', formulas)
+        # print('formulas ', formulas)
         formulas_list = list()
         puntaje = 0
         icav_p = 0
         rend_sat = 0
         rend_ries = 0
         for formula in formulas:
-            print('now we are in the formule: ', formula)
+            # print('now we are in the formule: ', formula)
             terminos = Termino.objects.filter(formula=formula)
             rendimientos = Rendimiento.objects.filter(formula=formula)
             for termino in terminos:
@@ -90,7 +90,6 @@ def resultados(request):
         Resultado.objects.bulk_create(formulas_list)
         asignacion.completada = True
         asignacion.save()
-
     return render(request, 'core/Estudiante/resultados.html',
                   context={'porcentajes': porcentajes_por_carrera, 'alumno': alumno})
 
@@ -112,13 +111,13 @@ def go_estudiante(request):
                 for pregunta in preguntas:
                     opciones.append(list(Opcion.objects.filter(pregunta=pregunta.id)))
                 if request.method == "POST":
-                    print("this is post")
+                    # print("this is post")
                     ponderados = request.POST.getlist('valores')
                     respuestas = request.POST.getlist('respuestas')
                     opcioncategoria = request.POST.getlist('categorias')
                     recopciones = request.POST.getlist('recopciones')
-                    print(opcioncategoria)
-                    print(recopciones)
+                    # print(opcioncategoria)
+                    # print(recopciones)
                     listresp = []
                     for i in range(0, len(ponderados)):
                         categoria = Categoria.objects.get(siglas=opcioncategoria[i])
