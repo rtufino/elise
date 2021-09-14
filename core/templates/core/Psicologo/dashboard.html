@@ -122,7 +122,7 @@
                 f_conteo+=g
             })
             conteo.forEach(e => {
-                n_percent = (e*100)/f_conteo;
+                n_percent = ((e*100)/f_conteo)/10;
                 {#n_percent = (((e / categorias.length) / 100) / completos) * 100#}
                 conteo_p.push(n_percent)
             })
