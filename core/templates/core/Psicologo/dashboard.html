@@ -108,7 +108,7 @@
             lista.forEach(e => {
                 categorias.push(e.categoria);
                 {#console.log(e.totalp +' / '+ completos + ' * ' + 100);#}
-                n_percent = (parseFloat(e.totalp)/categorias.length)/100
+                n_percent = ((parseFloat(e.totalp)/categorias.length)/100)/completos
                 conteo.push(n_percent)
                 colors.push(getRandomColor())
                 prueba1.push(e.totalp)
