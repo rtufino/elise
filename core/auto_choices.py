@@ -2,23 +2,23 @@ from .models import Opcion
 
 tipo_linkert = [
     {
-        "etiqueta": "Totalmente deacuerdo",
+        "etiqueta": "Totalmente de Acuerdo",
         "ponderado": 5,
     },
     {
-        "etiqueta": "Deacuerdo",
+        "etiqueta": "De Acuerdo",
         "ponderado": 4,
     },
     {
-        "etiqueta": "Ni deacuerdo, ni desacuerdo",
+        "etiqueta": "Ni de Acuerdo, Ni en Desacuerdo",
         "ponderado": 3,
     },
     {
-        "etiqueta": "Desacuerdo",
+        "etiqueta": "En Desacuerdo",
         "ponderado": 2,
     },
     {
-        "etiqueta": "Totalmente desacuerdo",
+        "etiqueta": "Totalmente en Desacuerdo",
         "ponderado": 1,
     }
 ]
