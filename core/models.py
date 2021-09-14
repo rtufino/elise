@@ -175,7 +175,7 @@ class Opcion(SafeDeleteModel):
     pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
     numero = models.IntegerField()
     ponderado = models.FloatField()
-    etiqueta = models.CharField(max_length=30)
+    etiqueta = models.CharField(max_length=100)
 
     class Meta:
         verbose_name = 'Opción'
