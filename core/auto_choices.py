@@ -44,7 +44,7 @@ tipo_interes = [
         'ponderado': '0'
     }
 ]
-tipo_abierta =[
+tipo_abierta = [
     {
         'etiqueta': 'abierta',
         'ponderado': 1
