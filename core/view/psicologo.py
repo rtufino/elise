@@ -28,10 +28,12 @@ def go_psicologo(request):
             estudio = Estudio.objects.filter(id=estudio_id).first()
             asignaciones = Asignacion.objects.filter(estudio=estudio)
             conteo_asignaciones = asignaciones.count()
-            asignaciones_completadas = asignaciones.filter(completada=True).count()
+            asig_complete = asignaciones.filter(completada=True)
+            asignaciones_completadas = asig_complete.count()
             # lel = Respuesta.objects.all().aggregate(Sum('amount'))['amount__sum'] or 0.00
+            # respuestas = Respuesta.objects.all()
             if asignaciones_completadas != 0:
-                respuestas = Respuesta.objects.all()
+                respuestas = Respuesta.objects.filter(asignacion__in=asig_complete)
                 cat = []
                 punt = []
                 asg = []
