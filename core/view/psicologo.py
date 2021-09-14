@@ -65,7 +65,7 @@ def go_psicologo(request):
                     categoriasXestudio.append(
                         {
                             'categoria': cat[o],
-                            'total': punt[o]
+                            'totalp': punt[o]
                         }
                     )
                 for i in range(0, len(asg)):

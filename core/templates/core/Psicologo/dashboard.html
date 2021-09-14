@@ -102,15 +102,15 @@
         let categorias = []
         let conteo = []
         let colors = []
-        let completos = {{ asig_completas|safe }}
+        let completos = {{ asig_completas|safe }};
         let prueba1 = []
         const getCategorias = () => {
             lista.forEach(e => {
                 categorias.push(e.categoria);
-                n_percent = (parseFloat(e.total)/completos) * 100 / 5
+                n_percent = (parseFloat(e.totalp)/completos) * 100 / 5
                 conteo.push(n_percent)
                 colors.push(getRandomColor())
-                prueba1.push(e.total)
+                prueba1.push(e.totalp)
             })
 
         }
