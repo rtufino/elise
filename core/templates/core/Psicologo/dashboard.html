@@ -72,7 +72,8 @@
                     </div>
                     <h6 class="card-title px-3" style="align-self: center;">Puntuación por Campo Profesional</h6>
                     <canvas id="myChart" class="col-12 col-md-6" style="align-self: center;"></canvas>
-                    <h6 class="card-title px-3" style="align-self: center;">Cantidad de postulantes por carrera en el estudio </h6>
+                    <h6 class="card-title px-3" style="align-self: center;">Cantidad de postulantes por carrera en el
+                        estudio </h6>
                     <canvas id="myPieChart" class="col-12 col-md-6" style="align-self: center;"></canvas>
                 </div>
             </div>
@@ -98,22 +99,28 @@
             }
             return color;
         }
+
         let lista = {{ consulta|safe }};
         let categorias = []
         let conteo = []
         let colors = []
         let completos = {{ asig_completas|safe }};
-        let prueba1 = []
+        let conteo_p = []
         const getCategorias = () => {
             lista.forEach(e => {
                 categorias.push(e.categoria);
                 {#console.log(e.totalp +' / '+ completos + ' * ' + 100);#}
-                n_percent = (((parseFloat(e.totalp)/categorias.length)/100)/completos)*100
-                conteo.push(n_percent)
+                {#n_percent = (((parseFloat(e.totalp)/categorias.length)/100)/completos)*100#}
+                {#conteo.push(n_percent)#}
+                conteo.push(parseFloat(e.totalp))
                 colors.push(getRandomColor())
-                prueba1.push(e.totalp)
             })
-
+        }
+        const getPercent = () => {
+            conteo.forEach(e => {
+                n_percent = (((e / categorias.length) / 100) / completos) * 100
+                conteo_p.push(n_percent)
+            })
         }
         getCategorias();
         {#console.log("barras")#}
@@ -130,7 +137,7 @@
                 labels: categorias,
                 datasets: [{
                     label: 'Puntuación por Campo Profesional',
-                    data: conteo,
+                    data: conteo_p,
                     backgroundColor: colors,
                     borderColor: colors,
                     borderWidth: 1
