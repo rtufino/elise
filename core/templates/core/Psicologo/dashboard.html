@@ -104,10 +104,13 @@
         let colors = []
         let completos = {{ asig_completas|safe }};
         let prueba1 = []
+        console.log('this de typr: '+ typeof completos)
+        console.log('this de : ' + completos)
         const getCategorias = () => {
             lista.forEach(e => {
                 categorias.push(e.categoria);
-                n_percent = (parseFloat(e.totalp)/completos) * 100 / 5
+                console.log(e.totalp +' / '+ completos + ' * ' + 100);
+                n_percent = (parseFloat(e.totalp)/completos) * 100
                 conteo.push(n_percent)
                 colors.push(getRandomColor())
                 prueba1.push(e.totalp)
