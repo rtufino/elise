@@ -103,13 +103,14 @@
         let conteo = []
         let colors = []
         let completos = {{ asig_completas|safe }}
-
+        let prueba1 = []
         const getCategorias = () => {
             lista.forEach(e => {
                 categorias.push(e.categoria);
-                n_percent = (e.total/completos) * 100 / 5
+                n_percent = (parseFloat(e.total)/completos) * 100 / 5
                 conteo.push(n_percent)
                 colors.push(getRandomColor())
+                prueba1.push(e.total)
             })
 
         }
@@ -117,7 +118,9 @@
         console.log("barras")
         console.log(categorias);
         console.log(conteo);
-        console.log(colors)
+        console.log(colors);
+        console.log("this are e.total ")
+        console.log(prueba1);
 
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
