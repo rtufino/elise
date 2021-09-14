@@ -42,7 +42,7 @@ def go_psicologo(request):
                         punt.append(respuesta.ponderado)
                     else:
                         indice = cat.index(respuesta.categoria.nombre)
-                        ponderado_anterior = punt[indice] + respuesta.ponderado
+                        ponderado_anterior = float(punt[indice]) + float(respuesta.ponderado)
                         punt[indice] = ponderado_anterior
                 for asignacion in asignaciones:
                     if asignacion.alumno_name.carrera_postular.nombre not in asg:
