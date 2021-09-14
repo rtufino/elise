@@ -114,6 +114,10 @@
 
         }
         getCategorias();
+        console.log("barras")
+        console.log(categorias);
+        console.log(conteo);
+        console.log(colors)
 
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -150,6 +154,9 @@
             })
         }
         getCarreras();
+        console.log('pastel')
+        console.log(carreras)
+        console.log(conteo_carreras)
         var ctx = document.getElementById('myPieChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'pie',
